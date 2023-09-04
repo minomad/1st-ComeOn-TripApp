@@ -3,10 +3,10 @@ import LeisureCategory from '../components/LeisureCategory';
 import LeisureBrand from '../components/LeisureBrand';
 import { usePocketData } from '../api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
-import { getPbImageURL } from '../utils/getPbImageURL';
-import { numberWithComma } from '../utils/numberWithComma';
 import Category from '../components/Category';
 import { useState } from 'react';
+import Exhibition from '../components/Exhibition';
+import Entertainment from '../components/Entertainment';
 
 function LeisurePage() {
   const { getListData: getLeisureData } = usePocketData('leisure');
@@ -15,8 +15,6 @@ function LeisurePage() {
   const { data: exhibitionData } = useQuery(['exhibition'], () =>
     getExhibitionData({ sort: 'ranking' }),
   );
-
-  console.log(exhibitionData);
 
   const [selectCategory, setSelectCategory] = useState('');
   const category = ['서울', '경기', '제주', '강원'];
@@ -66,42 +64,11 @@ function LeisurePage() {
           <span className='text-[14px] font-medium text-primary'>
             여름 놀거리 야놀자에서 쿠폰받고 즐기자!
           </span>
-          {leisureData?.map((item) => (
-            <div key={item.id} className='flex gap-3 border-b-[1px] border-[#f2f2f2] py-4'>
-              <img
-                src={getPbImageURL(item, 'thumbnail')}
-                alt={item.brand}
-                className='h-[120px] w-[120px] rounded-[4px] border-none'
-              />
-              <div className='flex grow flex-col justify-between'>
-                <div>
-                  <span className='line-clamp-2 text-[14px] leading-[14px]'>{item.title}</span>
-                  <div className='flex flex-wrap'>
-                    {item.label.map((label) => (
-                      <span
-                        key={label}
-                        className='mt-1 rounded-[2px] border-[1px] border-[#e6e6e6] bg-[#f2f2f2] px-1 py-[2px] text-[10px]'
-                      >
-                        {label}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className='text-end'>
-                  <span className='text-end text-[12px] leading-3 text-gray line-through'>
-                    {numberWithComma(item.price)}원
-                  </span>
-                  <div className='text-end font-bold leading-4'>
-                    <span className='text-accent'>{item.discount}</span>
-                    <span className='mr-1 text-[12px] text-accent'>%</span>
-                    <span>{numberWithComma(item.price * (100 - item.discount) * 0.01)}</span>
-                    <span className='font-normal'>원</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-          <a className='mx-[-16px] flex items-center justify-center border-[1px] border-[#f2f2f2] bg-[#fbfbfb] py-[14px]' href=''>
+          <Entertainment data={leisureData} category={'인기'} />
+          <a
+            className='mx-[-16px] flex items-center justify-center border-[1px] border-[#f2f2f2] bg-[#fbfbfb] py-[14px]'
+            href=''
+          >
             기획전 자세히보기
             <img className='h-[14px]' src='/leisure-next.png' alt='더보기' />
           </a>
@@ -120,29 +87,7 @@ function LeisurePage() {
             selectCategory={selectCategory}
             setSelectCategory={setSelectCategory}
           />
-          {exhibitionData?.map((item) => (
-            <div key={item.id} className='mb-3 flex gap-2'>
-              <img src={getPbImageURL(item, 'thumbnail')} alt={item.title} className='w-[100px] rounded-[4px]' />
-              <div className='flex grow flex-col justify-between'>
-                <div className='flex flex-col'>
-                  <span className='text-[14px]'>{item.title}</span>
-                  <span className='text-[12px] text-[#919191]'>{item.company}</span>
-                </div>
-                <div className='text-end'>
-                  {item.discount && (
-                    <span className='text-accent'>
-                      {item.discount}
-                      <span className='text-[12px]'>%</span>
-                    </span>
-                  )}
-                  <span className='ml-1 font-bold'>
-                    {item.discount ? numberWithComma((item.price * (100 - item.discount)) * 0.01) : numberWithComma(item.price)}
-                    <span className='text-[14px]'>원</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
+          <Exhibition data={exhibitionData} selectLocation={selectCategory} />
         </div>
       </section>
     </>
