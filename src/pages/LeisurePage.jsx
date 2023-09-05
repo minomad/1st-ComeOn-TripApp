@@ -1,12 +1,13 @@
-import Header from '@/components/Header';
-import LeisureCategory from '../components/LeisureCategory';
-import LeisureBrand from '../components/LeisureBrand';
-import { usePocketData } from '../api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
-import Category from '../components/Category';
 import { useState } from 'react';
-import Exhibition from '../components/Exhibition';
+import { Link } from 'react-router-dom';
+import { usePocketData } from '../api/usePocketData';
+import Header from '@/components/Header';
+import Category from '../components/Category';
 import Entertainment from '../components/Entertainment';
+import Exhibition from '../components/Exhibition';
+import LeisureBrand from '../components/LeisureBrand';
+import LeisureLink from '../components/LeisureLink';
 
 function LeisurePage() {
   const { getListData: getLeisureData } = usePocketData('leisure');
@@ -31,11 +32,13 @@ function LeisurePage() {
       <section>
         <h2 className='sr-only'>레저 페이지</h2>
         <div className='flex justify-between px-4 text-[10px]'>
-          <LeisureCategory src='/leisure-themePark.png' alt='테마파크' caption='테마파크' />
-          <LeisureCategory src='/leisure-waterPark.png' alt='워터파크' caption='워터파크' />
-          <LeisureCategory src='/leisure-reservation.png' alt='전시예매' caption='전시예매' />
-          <LeisureCategory src='/leisure-tour.png' alt='투어/관광' caption='투어/관광' />
-          <LeisureCategory
+          <Link to={'/leisuretheme'}>
+            <LeisureLink src='/leisure-themePark.png' alt='테마파크' caption='테마파크' />
+          </Link>
+          <LeisureLink src='/leisure-waterPark.png' alt='워터파크' caption='워터파크' />
+          <LeisureLink src='/leisure-reservation.png' alt='전시예매' caption='전시예매' />
+          <LeisureLink src='/leisure-tour.png' alt='투어/관광' caption='투어/관광' />
+          <LeisureLink
             src='/leisure-plus.png'
             alt='더보기'
             caption='더보기'
@@ -64,7 +67,7 @@ function LeisurePage() {
           <span className='text-[14px] font-medium text-primary'>
             여름 놀거리 야놀자에서 쿠폰받고 즐기자!
           </span>
-          <Entertainment data={leisureData} category={'인기'} />
+          <Entertainment data={leisureData} selectCategory={'인기'}  />
           <a
             className='mx-[-16px] flex items-center justify-center border-[1px] border-[#f2f2f2] bg-[#fbfbfb] py-[14px]'
             href=''
@@ -87,7 +90,7 @@ function LeisurePage() {
             selectCategory={selectCategory}
             setSelectCategory={setSelectCategory}
           />
-          <Exhibition data={exhibitionData} selectLocation={selectCategory} />
+          <Exhibition data={exhibitionData} selectLocation={selectCategory}/>
         </div>
       </section>
     </>
