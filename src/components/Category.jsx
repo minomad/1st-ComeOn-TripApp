@@ -1,4 +1,3 @@
-
 function Category({ category, selectCategory, setSelectCategory, icon, className }) {
   return (
     <ul className={`flex text-center font-semibold text-primary ${className}`}>
@@ -9,7 +8,7 @@ function Category({ category, selectCategory, setSelectCategory, icon, className
             key={item}
             aria-label={item}
             tabIndex='0'
-            className={`h-6 w-14 cursor-pointer rounded-3xl border border-primary hover:bg-primary hover:text-white ${
+            className={`h-[1.7rem] w-20 cursor-pointer rounded-3xl border border-primary hover:bg-primary hover:text-white ${
               isActive ? 'bg-primary text-white' : ''
             }`}
             onClick={() => {
