@@ -7,7 +7,7 @@ function Header({ back, logo, className, title, search, cart }) {
   };
 
   return (
-    <header className='sticky top-0 mx-auto flex h-14 max-w-3xl items-center justify-between bg-white px-4'>
+    <header className='sticky top-0 z-50 mx-auto flex h-14 max-w-3xl items-center justify-between bg-white px-4'>
       <div className='flex'>
         {back && (
           <button type='button' onClick={handleBack}>
