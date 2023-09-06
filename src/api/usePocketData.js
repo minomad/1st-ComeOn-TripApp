@@ -1,9 +1,12 @@
 import pb from './pocketbase';
 
+
 export function usePocketData(collection) {
   const defaultOptions = {
     sort: '-created',
   };
+
+
 
   const getListData = (options = {}) =>
     pb.collection(collection).getFullList({ ...defaultOptions, ...options });
