@@ -1,10 +1,10 @@
 function LeisureCategory({ category, selectCategory, setSelectCategory, icon, className }) {
   return (
-    <ul className={`flex flex-wrap font-semibold text-[#666666] border border-[#eaeef1] ${className}`}>
+    <div className={`flex flex-wrap font-semibold text-[#666666] border border-[#eaeef1] ${className}`}>
       {category.map((item) => {
         const isActive = selectCategory === item;
         return (
-          <li
+          <button
             key={item}
             aria-label={item}
             tabIndex='0'
@@ -17,10 +17,10 @@ function LeisureCategory({ category, selectCategory, setSelectCategory, icon, cl
           >
             {icon && <img src={icon} alt={item} className='' />}
             {item}
-          </li>
+          </button>
         );
       })}
-    </ul>
+    </div>
   );
 }
 

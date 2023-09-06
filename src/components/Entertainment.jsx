@@ -1,23 +1,49 @@
 import { numberWithComma } from '../utils/numberWithComma';
 import { getPbImageURL } from '../utils/getPbImageURL';
+import { useParams } from 'react-router-dom';
 
-function Entertainment({ data, selectCategory}) {
-  let filterData;
-  filterData = data;
-  if (selectCategory === '전체') {
-    filterData = data;
-  } else if (selectCategory === '놀이동산') {
-    filterData = data?.filter((leisure) => leisure.category === '놀이동산');
-  } else if (selectCategory === '아쿠아리움') {
-    filterData = data?.filter((leisure) => leisure.category === '아쿠아리움');
-  } else if (selectCategory === '수목원') {
-    filterData = data?.filter((leisure) => leisure.category === '수목원');
-  } else if (selectCategory === '동물원') {
-    filterData = data?.filter((leisure) => leisure.category === '동물원');
-  } else if (selectCategory === '기타(테마파크)') {
-    filterData = data?.filter((leisure) => leisure.category === '기타(테마파크)');
-  } else if (selectCategory === '인기') {
+function Entertainment({ data, selectCategory }) {
+  let { id } = useParams();
+  let filterData = data;
+  
+  if (selectCategory === '인기') {
     filterData = data?.filter((leisure) => leisure.category === '인기');
+  } else if (id === '테마파크') {
+    if (selectCategory === '전체') {
+      filterData = data?.filter((leisure) => leisure.largeCategory === '테마파크');
+    } else if (selectCategory === '놀이동산') {
+      filterData = data?.filter((leisure) => leisure.category === '놀이동산');
+    } else if (selectCategory === '아쿠아리움') {
+      filterData = data?.filter((leisure) => leisure.category === '아쿠아리움');
+    } else if (selectCategory === '수목원') {
+      filterData = data?.filter((leisure) => leisure.category === '수목원');
+    } else if (selectCategory === '동물원') {
+      filterData = data?.filter((leisure) => leisure.category === '동물원');
+    } else if (selectCategory === '기타(테마파크)') {
+      filterData = data?.filter((leisure) => leisure.category === '기타(테마파크)');
+    }
+  } else if (id === '워터파크') {
+    if (selectCategory === '워터파크') {
+      filterData = data?.filter((leisure) => leisure.category === '워터파크');
+    } else if (selectCategory === '스파') {
+      filterData = data?.filter((leisure) => leisure.category === '스파');
+    }
+  } else if (id === '전시·예매') {
+    if (selectCategory === '전시') {
+      filterData = data?.filter((leisure) => leisure.category === '전시');
+    } else if (selectCategory === '공연') {
+      filterData = data?.filter((leisure) => leisure.category === '공연');
+    }
+  } else if (id === '투어·관광') {
+    if (selectCategory === '투어패스') {
+      filterData = data?.filter((leisure) => leisure.category === '투어패스');
+    } else if (selectCategory === '케이블카') {
+      filterData = data?.filter((leisure) => leisure.category === '케이블카');
+    } else if (selectCategory === '유람선/요트') {
+      filterData = data?.filter((leisure) => leisure.category === '유람선/요트');
+    } else if (selectCategory === '축제') {
+      filterData = data?.filter((leisure) => leisure.category === '축제');
+    }
   }
 
   return (
@@ -38,7 +64,7 @@ function Entertainment({ data, selectCategory}) {
                 {item.label.map((label) => (
                   <span
                     key={label}
-                    className='mt-1 mr-1 rounded-[2px] border-[1px] border-[#e6e6e6] bg-[#f2f2f2] px-1 py-[2px] text-[10px]'
+                    className='mr-1 mt-1 rounded-[2px] border-[1px] border-[#e6e6e6] bg-[#f2f2f2] px-1 py-[2px] text-[10px]'
                   >
                     {label}
                   </span>

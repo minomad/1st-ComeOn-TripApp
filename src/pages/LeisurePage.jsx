@@ -32,12 +32,19 @@ function LeisurePage() {
       <section>
         <h2 className='sr-only'>레저 페이지</h2>
         <div className='flex justify-between px-4 text-[10px]'>
-          <Link to={'/leisuretheme'}>
+          <Link to='/leisure/테마파크'>
             <LeisureLink src='/leisure-themePark.png' alt='테마파크' caption='테마파크' />
           </Link>
-          <LeisureLink src='/leisure-waterPark.png' alt='워터파크' caption='워터파크' />
-          <LeisureLink src='/leisure-reservation.png' alt='전시예매' caption='전시예매' />
-          <LeisureLink src='/leisure-tour.png' alt='투어/관광' caption='투어/관광' />
+          <Link to={'/leisure/워터파크'}>
+            <LeisureLink src='/leisure-waterPark.png' alt='워터파크' caption='워터파크' />
+          </Link>
+          <Link to={'/leisure/전시·예매'}>
+            <LeisureLink src='/leisure-reservation.png' alt='전시/예매' caption='전시/예매' />
+          </Link>
+          <Link to={'/leisure/투어·관광'}>
+            <LeisureLink src='/leisure-tour.png' alt='투어/관광' caption='투어/관광' />
+          </Link>
+
           <LeisureLink
             src='/leisure-plus.png'
             alt='더보기'
@@ -67,7 +74,7 @@ function LeisurePage() {
           <span className='text-[14px] font-medium text-primary'>
             여름 놀거리 야놀자에서 쿠폰받고 즐기자!
           </span>
-          <Entertainment data={leisureData} selectCategory={'인기'}  />
+          <Entertainment data={leisureData} selectCategory={'인기'} />
           <a
             className='mx-[-16px] flex items-center justify-center border-[1px] border-[#f2f2f2] bg-[#fbfbfb] py-[14px]'
             href=''
@@ -90,7 +97,7 @@ function LeisurePage() {
             selectCategory={selectCategory}
             setSelectCategory={setSelectCategory}
           />
-          <Exhibition data={exhibitionData} selectLocation={selectCategory}/>
+          <Exhibition data={exhibitionData} selectLocation={selectCategory} />
         </div>
       </section>
     </>

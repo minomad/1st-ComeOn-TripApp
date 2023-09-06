@@ -9,7 +9,7 @@ const AroundPage = lazy(() => import('./pages/AroundPage'));
 const WishPage = lazy(() => import('./pages/WishPage'));
 const MyPage = lazy(() => import('./pages/MyPage'));
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
-const LeisureThemePage = lazy(() => import('./pages/LeisureThemePark'));
+const LeisureThemePage = lazy(() => import('./pages/LeisureThemePage'));
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       { path: 'wish', element: <WishPage /> },
       { path: 'mypage', element: <MyPage /> },
       { path: 'leisure', element: <LeisurePage /> },
-      { path: 'leisuretheme', element: <LeisureThemePage /> },
+      { path: 'leisure/:id', element: <LeisureThemePage /> },
     ],
   },
 ]);
