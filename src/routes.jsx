@@ -10,6 +10,7 @@ const MyPage = lazy(() => import('./pages/MyPage'));
 const HotelPage = lazy(() => import('./pages/HotelPage'));
 const HotelDetailPage = lazy(() => import('./pages/HotelDetailPage'));
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
+const LeisureThemePage = lazy(() => import('./pages/LeisureThemePage'));
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: 'hotel', element: <HotelPage /> },
       { path: 'hotel/:id', element: <HotelDetailPage /> },
       { path: 'leisure', element: <LeisurePage /> },
+      { path: 'leisure/:id', element: <LeisureThemePage /> },
     ],
   },
 ]);
