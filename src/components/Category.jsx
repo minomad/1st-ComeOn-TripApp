@@ -1,14 +1,14 @@
 function Category({ category, selectCategory, setSelectCategory, icon, className }) {
   return (
-    <ul className={`flex text-center font-semibold text-primary ${className}`}>
+    <div className={`flex text-center font-semibold text-primary ${className}`}>
       {category.map((item) => {
         const isActive = selectCategory === item;
         return (
-          <li
+          <button
             key={item}
             aria-label={item}
             tabIndex='0'
-            className={`h-[1.7rem] w-20 cursor-pointer rounded-3xl border border-primary hover:bg-primary hover:text-white ${
+            className={`h-[1.7rem] w-20 outline-primary cursor-pointer rounded-3xl border border-primary hover:bg-primary hover:text-white ${
               isActive ? 'bg-primary text-white' : ''
             }`}
             onClick={() => {
@@ -17,10 +17,10 @@ function Category({ category, selectCategory, setSelectCategory, icon, className
           >
             {icon && <img src={icon} alt={item} className='' />}
             {item}
-          </li>
+          </button>
         );
       })}
-    </ul>
+    </div>
   );
 }
 
