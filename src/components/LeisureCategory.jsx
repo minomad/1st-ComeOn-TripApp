@@ -1,6 +1,6 @@
-function Category({ category, selectCategory, setSelectCategory, icon, className }) {
+function LeisureCategory({ category, selectCategory, setSelectCategory, icon, className }) {
   return (
-    <div className={`flex text-center font-semibold text-primary ${className}`}>
+    <div className={`flex flex-wrap font-semibold text-[#666666] border border-[#eaeef1] ${className}`}>
       {category.map((item) => {
         const isActive = selectCategory === item;
         return (
@@ -8,8 +8,8 @@ function Category({ category, selectCategory, setSelectCategory, icon, className
             key={item}
             aria-label={item}
             tabIndex='0'
-            className={`h-[1.7rem] w-20 outline-primary cursor-pointer rounded-3xl border border-primary hover:bg-primary hover:text-white ${
-              isActive ? 'bg-primary text-white' : ''
+            className={` w-[46%] cursor-pointer border-b border-[#eaeef1] mx-[2%] px-[10px] py-3 text-[14px] ${
+              isActive ? 'bg-[#f5f5f5] px-[10px] py-3 font-bold text-[black]' : ''
             }`}
             onClick={() => {
               setSelectCategory(item);
@@ -24,4 +24,4 @@ function Category({ category, selectCategory, setSelectCategory, icon, className
   );
 }
 
-export default Category;
+export default LeisureCategory;
