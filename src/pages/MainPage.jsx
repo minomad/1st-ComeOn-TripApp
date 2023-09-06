@@ -14,7 +14,9 @@ function MainPage() {
       <Helmet>
         <title>야무지개놀자</title>
       </Helmet>
-      <Header search='search'>메인페이지</Header>
+      <Header search='search' back='back' cart='cart' title='메인페이지'>
+        메인페이지
+      </Header>
       <h1 className='sr-only'>메인 페이지</h1>
       <section className='flex flex-col items-center'>
         <ul className='flex items-center justify-center gap-6 text-center sm:gap-10'>
@@ -47,7 +49,6 @@ function MainPage() {
         <br />
         <br />
 
-
         <Category
           className='justify-center gap-5'
           category={category}
@@ -55,8 +56,6 @@ function MainPage() {
           setSelectCategory={setSelectCategory}
           // icon={icon}
         />
-
-        
       </section>
       <footer>푸터</footer>
     </>

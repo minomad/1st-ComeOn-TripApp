@@ -8,6 +8,9 @@ const LocationPage = lazy(() => import('./pages/LocationPage'));
 const AroundPage = lazy(() => import('./pages/AroundPage'));
 const WishPage = lazy(() => import('./pages/WishPage'));
 const MyPage = lazy(() => import('./pages/MyPage'));
+const MyBookingPage = lazy(() => import('./pages/MyBookingPage'));
+const MyReviewPage = lazy(() => import('./pages/MyReviewPage'));
+const MyChatPage = lazy(() => import('./pages/MyChatPage'));
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
 
 const router = createBrowserRouter([
@@ -22,6 +25,15 @@ const router = createBrowserRouter([
       { path: 'wish', element: <WishPage /> },
       { path: 'mypage', element: <MyPage /> },
       { path: 'leisure', element: <LeisurePage /> },
+    ],
+  },
+  {
+    path: '/MyPage',
+    element: <RootLayout />,
+    children: [
+      { path: 'mybooking', element: <MyBookingPage /> },
+      { path: 'myreview', element: <MyReviewPage /> },
+      { path: 'mychatroom', element: <MyChatPage /> },
     ],
   },
 ]);
