@@ -9,7 +9,7 @@ function Navigation() {
   };
 
   return (
-    <nav className='fixed bottom-0 flex h-14 w-full max-w-3xl justify-center bg-navColor'>
+    <nav className='fixed bottom-0 z-50 flex h-14 w-full max-w-3xl justify-center bg-navColor'>
       <ul className='flex items-center gap-8 text-center'>
         <li>
           <NavLink to='/location' onClick={() => handleIsActive('location')}>
@@ -33,9 +33,9 @@ function Navigation() {
           <NavLink
             to='/'
             onClick={() => handleIsActive('home')}
-            className='mb-8 flex rounded-full border-2 border-secondary bg-white p-3 shadow-md'
+            className='mb-8 flex rounded-full bg-primary p-3 shadow-md'
           >
-            <img src='/logo.svg' alt='홈' />
+            <img src='/logoHome.svg' alt='홈' />
           </NavLink>
         </li>
         <li>

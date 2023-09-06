@@ -1,19 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-function Header({ logo, title, search, className, back, cart }) {
-const navigate = useNavigate();
+function Header({ back, logo, className, title, search, cart }) {
+  const navigate = useNavigate();
   const handleBack = () => {
     navigate(-1);
   };
+
   return (
-    <header className='mx-auto flex max-w-3xl justify-between px-4 py-6'>
-      <div className="flex">
+    <header className='sticky top-0 z-50 mx-auto flex h-14 max-w-3xl items-center justify-between bg-white px-4'>
+      <div className='flex'>
         {back && (
           <button type='button' onClick={handleBack}>
             <img src='/back.svg' alt='뒤로가기' />
           </button>
         )}
-        {logo && <span>로고</span>}
+        {logo && <img src='/logo.svg' alt='로고' />}
       </div>
       <h2 className={className}>{title}</h2>
       <div className='flex gap-4'>
