@@ -28,6 +28,15 @@ const router = createBrowserRouter([
       { path: 'leisure/:id', element: <LeisureThemePage /> },
     ],
   },
+  {
+    path: '/MyPage',
+    element: <RootLayout />,
+    children: [
+      { path: 'mybooking', element: <MyBookingPage /> },
+      { path: 'myreview', element: <MyReviewPage /> },
+      { path: 'mychatroom', element: <MyChatPage /> },
+    ],
+  },
 ]);
 
 export default router;
