@@ -1,13 +1,14 @@
+import { usePocketData } from '@/api/usePocketData';
+import Category from '@/components/Category';
+import Entertainment from '@/components/Entertainment';
+import Exhibition from '@/components/Exhibition';
+import Header from '@/components/Header';
+import LeisureBrand from '@/components/LeisureBrand';
+import LeisureLink from '@/components/LeisureLink';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { usePocketData } from '../api/usePocketData';
-import Header from '@/components/Header';
-import Category from '../components/Category';
-import Entertainment from '../components/Entertainment';
-import Exhibition from '../components/Exhibition';
-import LeisureBrand from '../components/LeisureBrand';
-import LeisureLink from '../components/LeisureLink';
+
 
 function LeisurePage() {
   const { getListData: getLeisureData } = usePocketData('leisure');
@@ -59,13 +60,24 @@ function LeisurePage() {
           </a>
         </div>
         <div className='flex gap-4 px-5 pb-5'>
-          <LeisureBrand src='/leisure-everland.png' alt='에버랜드' caption='에버랜드' />
-          <LeisureBrand src='/leisure-lotteworld.png' alt='롯데월드' caption='롯데월드' />
-          <LeisureBrand src='/leisure-carribeanbay.png' alt='캐리비안베이' caption='캐리비안베이' />
+
+          <Link to={'/leisurebrand/에버랜드'}>
+            <LeisureBrand src='/leisure-everland.png' alt='에버랜드' caption='에버랜드' />
+          </Link>
+          <Link to={'/leisurebrand/롯데월드'}>
+            <LeisureBrand src='/leisure-lotteworld.png' alt='롯데월드' caption='롯데월드' />
+          </Link>
+          <Link to={'/leisurebrand/캐리비안베이'}>
+            <LeisureBrand
+              src='/leisure-carribeanbay.png'
+              alt='캐리비안베이'
+              caption='캐리비안베이'
+            />
+          </Link>
         </div>
         <div className='flex h-[118px] justify-between bg-secondary px-5 pt-3 font-bold'>
           <h3 className='text-[18px] text-white'>놀거리 기획전</h3>
-          <a href='' className='text-[14px] leading-[27px] text-white'>
+          <a href='/LeisureListPage' className='text-[14px] leading-[27px] text-white'>
             전체보기
           </a>
         </div>
