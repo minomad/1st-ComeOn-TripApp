@@ -7,6 +7,11 @@ const LocationPage = lazy(() => import('./pages/LocationPage'));
 const AroundPage = lazy(() => import('./pages/AroundPage'));
 const WishPage = lazy(() => import('./pages/WishPage'));
 const MyPage = lazy(() => import('./pages/MyPage'));
+const MyBookingPage = lazy(() => import('./pages/MyBookingPage'));
+const MyReviewPage = lazy(() => import('./pages/MyReviewPage'));
+const MyChatPage = lazy(() => import('./pages/MyChatPage'));
+const MyInfoPage = lazy(() => import('./pages/MyInfoPage'));
+const MyQnaPage = lazy(() => import('./pages/MyQnaPage'));
 const HotelPage = lazy(() => import('./pages/HotelPage'));
 const HotelDetailPage = lazy(() => import('./pages/HotelDetailPage'));
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
@@ -26,6 +31,8 @@ const router = createBrowserRouter([
       { path: 'hotel/:id', element: <HotelDetailPage /> },
       { path: 'leisure', element: <LeisurePage /> },
       { path: 'leisure/:id', element: <LeisureThemePage /> },
+      { path: 'leisure', element: <LeisurePage /> },
+      { path: 'leisure/:id', element: <LeisureThemePage /> },
     ],
   },
   {
@@ -35,6 +42,8 @@ const router = createBrowserRouter([
       { path: 'mybooking', element: <MyBookingPage /> },
       { path: 'myreview', element: <MyReviewPage /> },
       { path: 'mychatroom', element: <MyChatPage /> },
+      { path: 'myinfo', element: <MyInfoPage /> },
+      { path: 'myqna', element: <MyQnaPage /> },
     ],
   },
 ]);
