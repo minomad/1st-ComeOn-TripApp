@@ -26,6 +26,7 @@ function HotelDetailPage() {
   const { data: hotelData, isLoading: isHotelLoading } = useQuery(['hotel', id], () =>
     getHotel(id, option),
   );
+  console.log(hotelData);
   const handleChangeCategory = (category) => {
     setSelectCategory(category);
   };

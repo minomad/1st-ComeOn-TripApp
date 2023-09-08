@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import Category from '@/components/Category';
 import Hotel from '@/components/Hotel';
 import Header from '@/components/Header';
@@ -37,7 +37,7 @@ function MainPage() {
         <h2 className='sr-only'>메인페이지</h2>
 
         <figure className='flex justify-center'>
-          <img src='/ad.png' alt='광고' className='max-h-[25rem] w-full' />
+          <img src='/ad.png' alt='광고' className='max-h-[25rem] w-full max-w-2xl' />
           <figcaption className='sr-only'>야무지개놀자 광고</figcaption>
         </figure>
 

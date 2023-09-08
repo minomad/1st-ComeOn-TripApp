@@ -14,6 +14,12 @@ const HotelPage = lazy(() => import('./pages/HotelPage'));
 const HotelDetailPage = lazy(() => import('./pages/HotelDetailPage'));
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
 const LeisureThemePage = lazy(() => import('./pages/LeisureThemePage'));
+const LeisureBrandPage = lazy(() => import('./pages/LeisureBrandPage'));
+const LeisureListPage = lazy(() => import('./pages/LeisureListPage'));
+const LeisureDetailPage = lazy(() => import('./pages/LeisureDetailPage'));
+const BookingPage = lazy(() => import('./pages/BookingPage'));
+const SignInPage = lazy(() => import('./pages/SignInPage'));
+const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 
 const router = createBrowserRouter([
   {
@@ -32,6 +38,12 @@ const router = createBrowserRouter([
       { path: 'hotel/:id', element: <HotelDetailPage /> },
       { path: 'leisure', element: <LeisurePage /> },
       { path: 'leisure/:id', element: <LeisureThemePage /> },
+      { path: 'leisurebrand/:id', element: <LeisureBrandPage /> },
+      { path: 'LeisureListPage', element: <LeisureListPage /> },
+      { path: 'LeisureDetail/:id', element: <LeisureDetailPage /> },
+      { path: 'BookingPage', element: <BookingPage /> },
+      { path: 'signin', element: <SignInPage /> },
+      { path: 'signup', element: <SignUpPage /> },
     ],
   },
 ]);
