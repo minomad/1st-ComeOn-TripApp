@@ -9,7 +9,7 @@ function MySelecModal({ children, MoveTo, onClose, option1 = '확인', option2 =
           <Link to={MoveTo}>
             <button className='rounded bg-thirdary px-2 py-1 hover:bg-primary '>{option1}</button>
           </Link>
-          <button onClick={onClose} className='bg-gray-300 mr-2 rounded px-2 py-1 hover:bg-accent'>
+          <button onClick={onClose} className='mr-2 rounded bg-slate-400 px-2 py-1 hover:bg-accent'>
             {option2}
           </button>
         </div>

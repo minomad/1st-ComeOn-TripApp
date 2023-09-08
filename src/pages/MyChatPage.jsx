@@ -1,13 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { NavLink } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
-
 import Header from '@/components/Header';
-import Button from '../components/Button';
-import Category from '@/components/Category';
-import MyPage from './MyPage';
+import Input from '@/components/Input';
 
 function MyChatPage() {
   const [isActive, setIsActive] = useState('');
@@ -23,64 +17,176 @@ function MyChatPage() {
       <Header search='search' back='back' cart='cart' title='마이 페이지'>
         메인페이지
       </Header>
-      {/* 마이페이로 돌아갈 수 있는 버튼 기능의 이미지 */}
-      <section className='mb-10 flex items-center justify-center'>
-        <Link to='/mypage'>
-          <Button
-            type='button'
-            onMouseOver={() => handleIsActive('mypage')}
-            onMouseLeave={() => handleIsActive('')}
-            className={`mt-12  min-h-[90px] min-w-[90px] rounded-full border-2 border-secondary
-            bg-gray shadow-md lg:h-[90px] lg:w-[90px] xl:h-[100px] xl:w-[100px] ${
-              isActive === 'mypage' ? 'shadow-2xl' : ''
-            }`}
-          >
-            <img src='/' alt='/' />
-          </Button>
-        </Link>
-      </section>
-      <section className='flex justify-center '>
-        <ul className='box-border h-auto w-2/3 rounded-2xl bg-lightPurple px-7 py-7'>
-          <li className='font-semibold text-primary'>나의 예약</li>
 
-          <Link to=''>
-            <li
-              onMouseOver={() => handleIsActive('my')}
-              onMouseLeave={() => handleIsActive('')}
-              className={`overflow-hiden my-4 box-border flex justify-between overflow-auto whitespace-nowrap rounded-2xl bg-white p-2 ${
-                isActive === 'my' ? 'border-2 border-primary bg-secondary shadow-md' : ''
-              }`}
-            >
-              <div className='mr-8 flex'>
-                <div className='mr-3 h-[120px] w-[120px] rounded-2xl bg-slate-100 sm:h-32 sm:w-32 md:h-32 md:w-32 lg:h-36 lg:w-36 xl:h-36 xl:w-36'>
-                  이미지
-                </div>
-                <dl className='flex flex-col justify-center gap-6 whitespace-nowrap'>
-                  <div className='text-xl font-bold'>
-                    <span>지역</span> 아쿠아리움
+      <section className='relative'>
+        <article className='mx-8 my-8 box-border min-h-[calc(100vh-170px)]  rounded-2xl bg-lightPurple text-sm shadow-lg sm:mx-36'>
+          <div className='relative '>
+            <ul className='px-3 sm:px-6'>
+              <li>
+                <div className='py-5 text-sm text-primary sm:text-base'>상담원 채팅</div>
+              </li>
+              {/* 채팅 컨테이너 */}
+              <li
+                className='relative box-border max-h-[calc(100vh-250px)] min-h-[calc(100vh-250px)] overflow-scroll  rounded-2xl bg-white text-sm shadow-md
+              '
+              >
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <dt>
-                    성인<span className='font-semibold'>2인</span>
-                  </dt>
-                  <dd>총금액</dd>
-                </dl>
-              </div>
-
-              <div className='relative'>
-                <div className='hidden text-xs sm:contents'>0000.00.00</div>
-                <div className='absolute right-0 pt-8'>
-                  <img
-                    src='/public/blueArrow.svg'
-                    onMouseOver={() => handleIsActive('')}
-                    onMouseLeave={() => handleIsActive('')}
-                    className={` ${isActive === 'my' ? 'none' : 'contents shadow-md'}`}
-                    alt=''
-                  />
                 </div>
-              </div>
-            </li>
-          </Link>
-        </ul>
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='min-h-2 relative min-w-[20px] px-5 pb-3'>
+                  <div className='id mb-2 flex justify-start'>
+                    <div className='mr-3 aspect-square max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] flex-shrink-0 items-start overflow-hidden rounded-full'>
+                      <img src='/my-testimg.jpg' alt='프로필사진' className='aspect-square' />
+                    </div>
+                    <div className=''>
+                      <div className='text_container min-w-[30px] rounded-2xl bg-lightPurple px-5 py-3'>
+                        <div className='text_field max-w-[500px] overflow-auto whitespace-normal'>
+                          안녕 안녕 나는 진구야 ~ 헬륨 깨스 머거서 이르케 돼찌 ~
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 인풋 컨테이너 */}
+                <div className='absolute bottom-0 left-0 w-full bg-white py-2 pl-5 pr-3 sm:pr-3'>
+                  <div className='flex  '>
+                    <button>
+                      <img src='/my-plus.svg' alt='파일추가' className='w-4' />
+                    </button>
+                    <div className='relative w-full'>
+                      <form action='' className=' flex w-full'>
+                        <Input
+                          id='newchat'
+                          placeholder='좋아요'
+                          label='채팅입력'
+                          className={
+                            'mx-3 min-h-[25px] w-full rounded-xl border-[1px] border-primary bg-lightPurple pl-2 pr-2 shadow-md sm:h-[30px] sm:rounded-2xl sm:px-5'
+                          }
+                        ></Input>
+                        <button
+                          className='absolute right-[20px] top-[5px] sm:top-[7px]'
+                          type='submit'
+                        >
+                          <img src='/my-paperplane.svg' alt='채팅보내기' className='w-4' />
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </article>
       </section>
     </>
   );
