@@ -60,9 +60,6 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
         handleReviewSubmit={handleReviewSubmit}
         handleShowReview={handleShowReview}
       />
-
-      <Toaster />
-
       {Array.isArray(reviewData)
         ? reviewData
             .map((item) => (
@@ -81,6 +78,22 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
             ))
             .reverse()
         : null}
+      <Toaster
+        toastOptions={{
+          success: {
+            style: {
+              background: '#5D6FFF',
+              color: 'white',
+            },
+          },
+          error: {
+            style: {
+              background: '#E03B69',
+              color: 'white',
+            },
+          },
+        }}
+      />
     </section>
   );
 }

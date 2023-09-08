@@ -1,18 +1,18 @@
-
-function Input({label, type, id, inputRef, placeholder, className}) {
+function Input({ label, type, id, inputRef, placeholder, className, labelClass, ...restProps }) {
   return (
     <>
-      <label htmlFor={id} className='sr-only'>
-        {label}
-      </label>
       <input
-        ref={inputRef} 
+        ref={inputRef}
         type={type}
         name={id}
         id={id}
         placeholder={placeholder}
         className={className}
+        {...restProps}
       />
+      <label htmlFor={id} className={labelClass}>
+        {label}
+      </label>
     </>
   );
 }

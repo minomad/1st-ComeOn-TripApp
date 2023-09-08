@@ -11,11 +11,13 @@ import HotelList from '@/components/HotelList';
 
 function MainPage() {
   const { getListData } = usePocketData('hotel');
+  const filter = 'category = "강원" || category = "제주" || category = "부산" || category = "광주"';
   const {
     data: hotelData,
     isLoading: isHotelLoading,
     isError,
-  } = useQuery(['hotel'], () => getListData());
+  } = useQuery(['hotel'], () => getListData({ filter }));
+
   const [selectCategory, setSelectCategory] = useState('강원');
   const category = ['강원', '제주', '부산', '광주'];
 

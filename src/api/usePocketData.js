@@ -33,8 +33,8 @@ export function usePocketData(collection) {
 
   const deleteData = (id) => pb.collection(collection).delete(id);
 
-  const signIn = ({ username, password }) =>
-    pb.collection('users').authWithPassword(username, password);
+  const signIn = ({ email, password }) =>
+    pb.collection('users').authWithPassword(email, password);
 
   const signOut = () => pb.authStore.clear();
 

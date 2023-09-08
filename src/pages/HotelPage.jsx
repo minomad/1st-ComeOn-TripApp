@@ -11,8 +11,15 @@ import HotelList from '@/components/HotelList';
 
 function HotelPage() {
   const { getListData } = usePocketData('hotel');
-  const { data: hotelData, isLoading, isError } = useQuery(['hotel'], () => getListData());
+  const filter =
+    'category != "강원" && category != "제주" && category != "부산" && category != "광주"';
+  const {
+    data: hotelData,
+    isLoading,
+    isError,
+  } = useQuery(['hotel'], () => getListData({ filter }));
 
+  console.log(hotelData);
   const [selectCategory, setSelectCategory] = useState({
     korea: '휴가에딱',
     japan: '도쿄',
