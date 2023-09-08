@@ -9,6 +9,7 @@ import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+
 function LeisureDetailPage() {
   let { id } = useParams();
 
