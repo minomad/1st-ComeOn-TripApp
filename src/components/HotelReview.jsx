@@ -2,13 +2,18 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { usePocketData } from '@/api/usePocketData';
 import { useQueryClient } from '@tanstack/react-query';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import HotelReviewEdit from './HotelReviewEdit';
+import useStorage from '@/Hook/useStorage';
 
 function HotelReview({ star, hotel, hotelId, reviewData }) {
-  const { createData } = usePocketData('review');
-  const { updateData } = usePocketData('hotel');
+  const { createData: createReview } = usePocketData('review');
+  const { updateData: updateHotel } = usePocketData('hotel');
+  const { updateData: updateUser } = usePocketData('users');
+  const { storageData: authUser } = useStorage('pocketbase_auth');
+
   const [isShow, setIsShow] = useState(false);
+
   const queryClient = useQueryClient();
   const reviewRef = useRef(null);
   const rating = parseInt(star);
@@ -20,27 +25,30 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     const review = reviewRef.current.value;
+    const userId = authUser?.model?.id;
+
+    const reviewData = {
+      title: hotel,
+      review,
+      nickName: authUser?.model?.nickName,
+    };
 
     if (!review || review.trim() === '') {
       toast.error('리뷰를 작성해주세요');
       return;
     }
 
-    const reviewData = {
-      hotel,
-      username: '인증',
-      nickName: '익명',
-      review,
-    };
-
     try {
-      const createdData = await createData(reviewData);
-      await updateData(hotelId, {
-        'review+': createdData.id,
+      const created = await createReview(reviewData);
+      await updateHotel(hotelId, {
+        'review+': created.id,
       });
-      queryClient.invalidateQueries(['hotel']);
+      updateUser(userId, {
+        'review+': created.id,
+      });
       toast.success('리뷰가 등록되었습니다.');
       setIsShow(false);
+      queryClient.invalidateQueries(['hotel']);
     } catch (error) {
       toast.error('서버 요청 에러');
     }
@@ -54,12 +62,16 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
         <span className='text-3xl'>{star}</span>
         <span className='text-gray'>/5</span>
       </div>
-      <HotelReviewEdit
-        isShow={isShow}
-        reviewRef={reviewRef}
-        handleReviewSubmit={handleReviewSubmit}
-        handleShowReview={handleShowReview}
-      />
+
+      {authUser && (
+        <HotelReviewEdit
+          isShow={isShow}
+          reviewRef={reviewRef}
+          handleReviewSubmit={handleReviewSubmit}
+          handleShowReview={handleShowReview}
+        />
+      )}
+
       {Array.isArray(reviewData)
         ? reviewData
             .map((item) => (
@@ -69,7 +81,7 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
                     <img key={index} src='/star.svg' alt='평점' />
                   ))}
                 </div>
-                <div className='flex items-center gap-3 '>
+                <div className='flex items-center gap-3'>
                   <p className='text-lg font-bold '>{item.nickName}</p>
                   <span className='text-sm text-gray'>{item.updated.slice(0, 10)}</span>
                 </div>
@@ -78,22 +90,6 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
             ))
             .reverse()
         : null}
-      <Toaster
-        toastOptions={{
-          success: {
-            style: {
-              background: '#5D6FFF',
-              color: 'white',
-            },
-          },
-          error: {
-            style: {
-              background: '#E03B69',
-              color: 'white',
-            },
-          },
-        }}
-      />
     </section>
   );
 }

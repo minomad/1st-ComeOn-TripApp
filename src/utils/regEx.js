@@ -16,7 +16,7 @@ const regEx = {
   },
 
   pw: (text) => {
-    const re = /^[A-Za-z0-9가-힣!@#$%^&*]{8,20}$/;
+    const re = /^[A-Za-z0-9가-힣!.@#$%^&*]{8,20}$/;
     return re.test(String(text));
   },
 };

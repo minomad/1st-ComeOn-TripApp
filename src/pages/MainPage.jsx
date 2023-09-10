@@ -16,7 +16,7 @@ function MainPage() {
     data: hotelData,
     isLoading: isHotelLoading,
     isError,
-  } = useQuery(['hotel'], () => getListData({ filter }));
+  } = useQuery(['hotel', { filter }], () => getListData({ filter }));
 
   const [selectCategory, setSelectCategory] = useState('강원');
   const category = ['강원', '제주', '부산', '광주'];
@@ -69,7 +69,7 @@ function MainPage() {
             </Link>
           </li>
         </ul>
-        <section className='px-4'>
+        <section className='mx-auto max-w-2xl px-4'>
           <HotelList title='야!무지개놀자~!' subtitle='야!무지개놀자~!'>
             <Category
               className='justify-center gap-2 py-3 max-[340px]:text-sm max-[340px]:leading-6 '

@@ -11,30 +11,49 @@ import HotelRoom from '@/components/HotelRoom';
 import HotelIntro from '@/components/HotelIntro';
 import HotelService from '@/components/HotelService';
 import HotelReview from '@/components/HotelReview';
+import useStorage from '@/Hook/useStorage';
+import Button from '@/components/Button';
+import toast from 'react-hot-toast';
 
 function HotelDetailPage() {
   const { id } = useParams();
   const [selectCategory, setSelectCategory] = useState('객실선택');
   const { getIdData: getHotel } = usePocketData('hotel');
+  const { updateData: updateUser } = usePocketData('users');
+  const { storageData: authUser } = useStorage('pocketbase_auth');
+
+  const { data: hotelData, isLoading } = useQuery(['hotel', id], () =>
+    getHotel(id, { expand: 'room, review' }),
+  );
 
   const info = ['객실선택', '소개', '시설/서비스', '후기'];
+  const roomData = hotelData?.expand?.room;
+  const reviewData = hotelData?.expand?.review;
 
-  const option = {
-    expand: 'room, review',
+  const [isActive, setIsactive] = useState(false);
+
+  const handleWish = () => {
+    const userId = authUser?.model?.id;
+    setIsactive(!isActive);
+
+    if (!isActive) {
+      toast.success('찜 목록에 추가했습니다.');
+      updateUser(userId, {
+        'wishHotel+': id,
+      });
+    } else {
+      toast.error('찜 목록에서 해제하였습니다.');
+      updateUser(userId, {
+        'wishHotel-': id,
+      });
+    }
   };
 
-  const { data: hotelData, isLoading: isHotelLoading } = useQuery(['hotel', id], () =>
-    getHotel(id, option),
-  );
-  console.log(hotelData);
   const handleChangeCategory = (category) => {
     setSelectCategory(category);
   };
 
-  const roomData = hotelData?.expand?.room;
-  const reviewData = hotelData?.expand?.review;
-
-  if (isHotelLoading) {
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -59,7 +78,14 @@ function HotelDetailPage() {
               <span className='text-sm font-semibold text-gray3'>{hotelData.grade}</span>
               <div className='flex justify-between'>
                 <h3 className='text-2xl font-semibold max-[500px]:text-xl'>{hotelData.title}</h3>
-                <img src='/heartActive.svg' alt='찜' />
+                <Button>
+                  <img
+                    src={isActive ? '/heartActive.svg' : '/hotel-heartBlack.svg'}
+                    alt='찜'
+                    className='h-7 w-7 cursor-pointer'
+                    onClick={handleWish}
+                  />
+                </Button>
               </div>
               <div className='flex items-center gap-1 text-primary'>
                 <img src='/locationActive.svg' alt={hotelData.title} className='h-4 w-4' />
@@ -73,14 +99,12 @@ function HotelDetailPage() {
             </div>
           </div>
         </div>
-
         <HotelInfoCategory
           info={info}
           className='justify-between'
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-
         {selectCategory === '객실선택' && <HotelRoom data={roomData} />}
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}
         {selectCategory === '시설/서비스' && <HotelService />}

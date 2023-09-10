@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { Helmet } from 'react-helmet-async';
-import { Toaster, toast } from 'react-hot-toast';
-import Button from '@/components/Button';
+import { toast } from 'react-hot-toast';
 import Header from '@/components/Header';
+import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Form from '@/components/Form';
 import regEx from '@/utils/regEx';
@@ -15,6 +15,10 @@ function SignUpPage() {
   const { data: userData } = useQuery(['users'], () =>
     getListData({ fields: 'username,email,name' }),
   );
+  const { mutate: signUpMutate } = useMutation(async (userInfo) => {
+    await createData(userInfo);
+  });
+
   const navigate = useNavigate();
   const idRef = useRef(null);
   const emailRef = useRef(null);
@@ -82,11 +86,11 @@ function SignUpPage() {
     });
   };
 
-  const handleRegister = async (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
     const username = idRef.current.value;
     const email = emailRef.current.value;
-    const name = nickNameRef.current.value;
+    const nickName = nickNameRef.current.value;
     const password = passwordRef.current.value;
     const passwordConfirm = passwordConfirmRef.current.value;
     const agree = agreeRef.current.checked;
@@ -94,7 +98,7 @@ function SignUpPage() {
     const userInfo = {
       username,
       email,
-      name,
+      nickName,
       password,
       passwordConfirm,
     };
@@ -115,7 +119,7 @@ function SignUpPage() {
       emailRef.current.classList.remove('border-b-accent');
     }
 
-    if (!regEx.name(name)) {
+    if (!regEx.name(nickName)) {
       nickNameRef.current.classList.add('border-b-accent');
       toast.error('닉네임은 12자리까지 입력이 가능합니다.');
       return;
@@ -145,9 +149,15 @@ function SignUpPage() {
     }
 
     try {
-      toast.success('회원가입 되었습니다.');
-      await createData(userInfo);
-      navigate('/');
+      signUpMutate(userInfo, {
+        onSuccess: () => {
+          toast.success('가입성공');
+          navigate('/signin');
+        },
+        onError: () => {
+          toast.error('입력하신 내용을 확인해주세요.');
+        },
+      });
     } catch (error) {
       toast.error('서버 오류');
     }
@@ -174,7 +184,7 @@ function SignUpPage() {
             />
             <Button
               type='button'
-              className='flex-2 mt-1 flex h-7 items-center rounded-full border px-2 font-bold text-primary hover:bg-primary  hover:text-white'
+              className='flex-2 mt-1 flex h-7 items-center rounded-full border px-2 font-bold text-primary outline-primary hover:bg-primary hover:text-white'
               onClick={handleCheckId}
             >
               중복확인
@@ -192,7 +202,7 @@ function SignUpPage() {
             />
             <Button
               type='button'
-              className='flex-2 mt-1 flex h-7 items-center rounded-full border px-2 font-bold text-primary hover:bg-primary  hover:text-white'
+              className='flex-2 mt-1 flex h-7 items-center rounded-full border px-2 font-bold text-primary outline-primary hover:bg-primary hover:text-white'
               onClick={handleCheckEmail}
             >
               중복확인
@@ -210,7 +220,7 @@ function SignUpPage() {
             />
             <Button
               type='button'
-              className='flex-2 mt-1 flex h-7 items-center rounded-full border px-2 font-bold text-primary hover:bg-primary  hover:text-white'
+              className='flex-2 mt-1 flex h-7 items-center rounded-full border px-2 font-bold text-primary outline-primary hover:bg-primary hover:text-white'
               onClick={handleCheckName}
             >
               중복확인
@@ -257,8 +267,8 @@ function SignUpPage() {
                 type='checkbox'
                 label='전체 동의 (선택 포함)'
                 id='all'
-                className="checkbox cursor-pointer appearance-none pr-2 before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer text-lg font-semibold text-gray3 '
+                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                labelClass='cursor-pointer text-lg font-semibold '
                 onClick={handleAllAgree}
               />
             </li>
@@ -266,19 +276,20 @@ function SignUpPage() {
               <Input
                 inputRef={agreeRef}
                 type='checkbox'
-                label='만 14세 이상 이용 동의(필수)'
+                label='만 14세 이상 이용 동의'
                 id='agreeAge'
-                className="checkbox cursor-pointer appearance-none pr-2 before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer font-semibold text-gray3'
+                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                labelClass='cursor-pointer font-semibold'
               />
+              <span className='font-semibold text-accent'>(필수)</span>
             </li>
             <li>
               <Input
                 type='checkbox'
                 label='개인정보 수집 및 이용 동의(선택)'
                 id='agreeInfo'
-                className="checkbox cursor-pointer appearance-none pr-2 before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer font-semibold text-gray3'
+                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                labelClass='cursor-pointer font-semibold'
               />
             </li>
             <li>
@@ -286,8 +297,8 @@ function SignUpPage() {
                 type='checkbox'
                 label='특가, 쿠폰 등 마케팅 수신 동의(선택)'
                 id='agreeAd'
-                className="checkbox cursor-pointer appearance-none pr-2 before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer font-semibold text-gray3'
+                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                labelClass='cursor-pointer font-semibold'
               />
             </li>
             <li>
@@ -295,8 +306,8 @@ function SignUpPage() {
                 type='checkbox'
                 label='위치 정보 이용 약관 동의(선택)'
                 id='agreeLocation'
-                className="checkbox cursor-pointer appearance-none pr-2 before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer font-semibold text-gray3'
+                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                labelClass='cursor-pointer font-semibold'
               />
             </li>
             <li>
@@ -304,34 +315,18 @@ function SignUpPage() {
                 type='checkbox'
                 label='장기 미접속 시에도 계정 유지(선택)'
                 id='agreeGhost'
-                className="checkbox cursor-pointer appearance-none pr-2 before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer font-semibold text-gray3'
+                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                labelClass='cursor-pointer font-semibold'
               />
             </li>
           </ul>
           <Button
             type='submit'
-            className='mt-6 w-full max-w-md rounded-lg border py-2 text-center font-bold text-primary hover:bg-primary hover:text-white'
+            className='mt-6 w-full max-w-md rounded-lg border py-2 text-center font-bold text-primary outline-primary hover:bg-primary hover:text-white'
           >
             회원가입
           </Button>
         </Form>
-        <Toaster
-          toastOptions={{
-            success: {
-              style: {
-                background: '#5D6FFF',
-                color: 'white',
-              },
-            },
-            error: {
-              style: {
-                background: '#E03B69',
-                color: 'white',
-              },
-            },
-          }}
-        />
       </section>
     </>
   );

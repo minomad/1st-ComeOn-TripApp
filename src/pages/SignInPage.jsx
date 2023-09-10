@@ -1,21 +1,26 @@
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Toaster, toast } from 'react-hot-toast';
-import Button from '@/components/Button';
+import { toast } from 'react-hot-toast';
 import Header from '@/components/Header';
+import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Form from '@/components/Form';
-import { useNavigate } from 'react-router-dom';
 
 function SignInPage() {
   const { signIn } = usePocketData('users');
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
-  const handleSignIn = async (e) => {
+  const { mutate: signInMutate } = useMutation(async (loginInfo) => {
+    await signIn(loginInfo);
+  });
+
+  const handleSignIn = (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
@@ -26,11 +31,17 @@ function SignInPage() {
     };
 
     try {
-      toast.success('로그인 성공');
-      await signIn(loginInfo);
-      navigation(-1);
+      signInMutate(loginInfo, {
+        onSuccess: () => {
+          toast.success('로그인 성공');
+          navigate('/');
+        },
+        onError: () => {
+          toast.error('입력하신 내용을 확인해주세요');
+        },
+      });
     } catch (error) {
-      toast.error('입력하신 내용을 다시 확인해주세요');
+      console.error('서버 에러');
     }
   };
 
@@ -74,27 +85,11 @@ function SignInPage() {
           </div>
           <Button
             type='submit'
-            className='my-2 w-full max-w-md rounded-lg border py-2 text-center font-bold text-secondary'
+            className='my-2 w-full max-w-md rounded-lg border py-2 text-center font-bold text-secondary hover:text-primary'
           >
             로그인
           </Button>
         </Form>
-        <Toaster
-          toastOptions={{
-            success: {
-              style: {
-                background: '#5D6FFF',
-                color: 'white',
-              },
-            },
-            error: {
-              style: {
-                background: '#E03B69',
-                color: 'white',
-              },
-            },
-          }}
-        />
       </section>
     </>
   );
