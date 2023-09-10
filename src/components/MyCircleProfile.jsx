@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 
-function MyCircleProfile({ towhere, imgpath, imgalt }) {
+function MyCircleProfile({ towhere, imgpath, imgalt = '내 프로필 사진' }) {
   return (
     <section className='mb-10 flex items-center justify-center'>
       <Link to={towhere}>

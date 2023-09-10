@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function MyList({
-  imgpath,
-  imgalt,
+  src,
+  alt,
   title,
   second,
   third,
@@ -30,7 +30,7 @@ function MyList({
         <div className='mb-1 h-3 text-right text-xs'>{date}</div>
         <div className='flex overflow-hidden sm:mr-8'>
           <div className='mr-3 aspect-square  h-20  w-20 flex-shrink-0 overflow-hidden rounded-2xl  bg-slate-100 sm:h-32 sm:w-32 md:h-32 md:w-32 lg:h-36 lg:w-36 xl:h-36 xl:w-36'>
-            <img src={imgpath} alt={imgalt} className=' aspect-square h-full w-full' />
+            <img src={src} alt={alt} className=' aspect-square h-full w-full' />
           </div>
           <ul className='flex flex-col justify-between gap-0 overflow-hidden text-ellipsis sm:py-3'>
             <li className='text-md overflow-hidden text-ellipsis whitespace-nowrap font-bold sm:text-lg'>
