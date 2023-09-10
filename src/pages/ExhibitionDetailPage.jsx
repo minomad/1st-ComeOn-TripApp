@@ -10,11 +10,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-function LeisureDetailPage() {
+function ExhibitionDetailPage() {
   let { id } = useParams();
 
-  const { getIdData } = usePocketData('leisure');
-  const { data, isLoading } = useQuery(['leisure', id], () => getIdData(id, { expand: 'product' }));
+  const { getIdData } = usePocketData('exhibition');
+  const { data, isLoading } = useQuery(['exhibition', id], () => getIdData(id, { expand: 'product' }));
   console.log(data);
   const productData = data?.expand?.product;
   console.log(productData);
@@ -97,4 +97,4 @@ function LeisureDetailPage() {
   );
 }
 
-export default LeisureDetailPage;
+export default ExhibitionDetailPage;

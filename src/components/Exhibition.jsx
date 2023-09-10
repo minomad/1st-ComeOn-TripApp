@@ -1,5 +1,6 @@
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
+import { Link } from 'react-router-dom';
 
 function Exhibition({ data, selectLocation }) {
   let filterData;
@@ -17,33 +18,35 @@ function Exhibition({ data, selectLocation }) {
   return (
     <div>
       {filterData?.map((item) => (
-        <div key={item.id} className='mb-3 flex gap-2'>
-          <img
-            src={getPbImageURL(item, 'thumbnail')}
-            alt={item.title}
-            className='w-[100px] rounded-[4px]'
-          />
-          <div className='flex grow flex-col justify-between'>
-            <div className='flex flex-col'>
-              <span className='text-[14px]'>{item.title}</span>
-              <span className='text-[12px] text-[#919191]'>{item.company}</span>
-            </div>
-            <div className='text-end'>
-              {item.discount && (
-                <span className='text-accent'>
-                  {item.discount}
-                  <span className='text-[12px]'>%</span>
+        <Link to={`/exhibitionDetail/${item.id}`} key={item.id}>
+          <div key={item.id} className='mb-3 flex gap-2'>
+            <img
+              src={getPbImageURL(item, 'thumbnail')}
+              alt={item.title}
+              className='w-[100px] rounded-[4px]'
+            />
+            <div className='flex grow flex-col justify-between'>
+              <div className='flex flex-col'>
+                <span className='text-[14px]'>{item.title}</span>
+                <span className='text-[12px] text-[#919191]'>{item.company}</span>
+              </div>
+              <div className='text-end'>
+                {item.discount && (
+                  <span className='text-accent'>
+                    {item.discount}
+                    <span className='text-[12px]'>%</span>
+                  </span>
+                )}
+                <span className='ml-1 font-bold'>
+                  {item.discount
+                    ? numberWithComma(item.price * (100 - item.discount) * 0.01)
+                    : numberWithComma(item.price)}
+                  <span className='text-[14px]'>원</span>
                 </span>
-              )}
-              <span className='ml-1 font-bold'>
-                {item.discount
-                  ? numberWithComma(item.price * (100 - item.discount) * 0.01)
-                  : numberWithComma(item.price)}
-                <span className='text-[14px]'>원</span>
-              </span>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

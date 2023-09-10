@@ -20,6 +20,7 @@ function AroundPage() {
   const { data } = useQuery(['hotel'], () => getListData());
   console.log(data?.[0]);
   const data1 = data?.[17];
+  console.log(data1);
 
   const title = data1?.title;
   const img = getPbImageURL(data1, 'img');
