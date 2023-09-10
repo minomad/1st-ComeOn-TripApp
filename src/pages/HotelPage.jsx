@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import Header from '@/components/Header';
 import Category from '@/components/Category';
 import Spinner from '@/components/Spinner';
@@ -11,7 +12,13 @@ import HotelList from '@/components/HotelList';
 
 function HotelPage() {
   const { getListData } = usePocketData('hotel');
-  const { data: hotelData, isLoading, isError } = useQuery(['hotel'], () => getListData());
+  const filter =
+    'category != "강원" && category != "제주" && category != "부산" && category != "광주"';
+  const {
+    data: hotelData,
+    isLoading,
+    isError,
+  } = useQuery(['hotel', { filter }], () => getListData({ filter }));
 
   const [selectCategory, setSelectCategory] = useState({
     korea: '휴가에딱',
@@ -33,7 +40,7 @@ function HotelPage() {
   }
 
   if (isError) {
-    return <div>서버 에러 발생</div>;
+    return toast.error('서버 에러');
   }
 
   return (
