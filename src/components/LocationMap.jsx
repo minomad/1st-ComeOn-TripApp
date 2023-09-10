@@ -1,12 +1,13 @@
 import Button from './Button'
-import Kakao1 from './Kakao'
-import Kakao from './Kakao'
+import { Kakao1 } from './Kakao'
+
 
 
 function LocationMap() {
 
   return (
     <section className='relative'>
+      <h3 className='sr-only'>지도검색</h3>
       <div className='flex bg-lightPurple py-2 text-[1rem] pl-[8%]'><img  className='w-[1.3rem] h-[100%] pt-[0.1rem] mr-2' src='/aroundActive.svg' alt='찜목록' />
         서울특별시 강남구 테헤란로108길
       </div>
