@@ -4,24 +4,43 @@ import Header from '@/components/Header';
 import Button from '@/components/Button';
 import MySelecModal from '@/components/MySelecModal';
 import MyBasicButton from '@/components/MyBasicButton';
+import { useEffect } from 'react';
 
 function MyPage() {
-  const [isModalOpen, setIsModalOpen] = useState({
+  const [pageState, setPageState] = useState({
+    selectedImage: '',
     isModalOpen1: false,
     isModalOpen2: false,
   });
 
+  useEffect(() => {
+    const images = [
+      '/my-randombg1.png',
+      '/my-randombg2.png',
+      '/my-randombg3.png',
+      '/my-randombg4.png',
+    ];
+
+    const randomIndex = Math.floor(Math.random() * images.length);
+
+    setPageState((prevState) => ({
+      ...prevState,
+      selectedImage: images[randomIndex],
+    }));
+  }, []);
+
   const closeModal = (modalName) => {
-    setIsModalOpen({
-      ...isModalOpen,
+    setPageState((prevState) => ({
+      ...prevState,
       [modalName]: false,
-    });
+    }));
   };
+
   const openModal = (modalName) => {
-    setIsModalOpen({
-      ...isModalOpen,
+    setPageState((prevState) => ({
+      ...prevState,
       [modalName]: true,
-    });
+    }));
   };
 
   return (
@@ -33,22 +52,22 @@ function MyPage() {
         메인페이지
       </Header>
       <section className='relative'>
-        <button type='button' className='h-40 w-full bg-gray'>
+        <button type='button' className='h-32 max-w-[100px] overflow-hidden bg-gray sm:h-40'>
           <img
-            src='/my-testbg.jpeg'
+            src={pageState.selectedImage}
             alt='배경이미지'
-            className='h-full w-full overflow-hidden object-cover'
+            className='absolute left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 overflow-hidden border-b-2 border-secondary object-cover shadow-md'
           />
           <img
-            src='/ad.png'
-            alt='/'
-            className='absolute left-1/2 top-1/2 ml-[-45px] mt-8 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-cover shadow-md
+            src={pageState.selectedImage}
+            alt='랜덤 배경 이미지'
+            className='absolute left-1/2 top-1/2 ml-[-45px] mt-8 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-fill shadow-md
           md:ml-[-50px] md:mt-[28px] md:max-h-[100px] md:max-w-[100px] lg:ml-[-60px] lg:mt-[15px] lg:max-h-[120px] lg:max-w-[120px]'
           />
         </button>
         <h2 className='sr-only'></h2>
       </section>
-      <section className='mt-28 w-full'>
+      <section className='mt-20 w-full pb-20 sm:mt-24'>
         <ul className='flex flex-col items-center gap-2 text-center'>
           <li>
             <MyBasicButton type='button' towhere='mybooking' handler='mybooking'>
@@ -74,7 +93,7 @@ function MyPage() {
             >
               상담원 연결(채팅/통화)
             </MyBasicButton>
-            {isModalOpen.isModalOpen1 && (
+            {pageState.isModalOpen1 && (
               <MySelecModal
                 onClose={() => closeModal('isModalOpen1')}
                 MoveTo='mychatroom'
@@ -96,14 +115,19 @@ function MyPage() {
             </MyBasicButton>
           </li>
           <li>
+            <Button type='button' className='text-sm leading-3 text-slate-600 underline'>
+              로그아웃
+            </Button>
+          </li>
+          <li>
             <Button
               type='button'
               onClick={() => openModal('isModalOpen2')}
-              className={`mb-2 h-8 w-52 rounded-full text-sm font-semibold text-secondary shadow-md hover:bg-primary hover:font-bold hover:text-white md:h-11 md:w-60 md:text-base`}
+              className={`text-[3px] leading-3 text-slate-400`}
             >
               회원 탈퇴
             </Button>
-            {isModalOpen.isModalOpen2 && (
+            {pageState.isModalOpen2 && (
               <MySelecModal
                 onClose={() => closeModal('isModalOpen2')}
                 MoveTo='/'

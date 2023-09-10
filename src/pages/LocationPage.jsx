@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Children } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import Button from '@/components/Button'
 import Category from '@/components/Category'
@@ -23,11 +24,13 @@ function LocationPage() {
 
   return (
     <>
-    
-    <Header className= 'text-xl font-semibold' search='search' title='지역' back>메인페이지</Header>
+    <Helmet>
+      <title>지역</title>
+    </Helmet>
+    <Header className= 'text-xl font-semibold' search='search' title='지역' back />
     <nav>
-      <ul className='text-center  flex max-w-3xl justify-evenly border-b-[0.15rem] border-[#E1E1E1] mx-15'>
-        <li  className='w-[100%] pb-2'>
+      <ul className='text-center  flex max-w-3xl justify-evenly border-b-[0.1rem] border-[#E1E1E1] mx-15'>
+        <li  className='w-[100%] pb-1'>
           <Button onClick={() => {
               handleChangeNav('지역별')
               ;
@@ -38,7 +41,7 @@ function LocationPage() {
             } `}>{'지역별'}</Button></li>
       
         {/* <div className='border-left bg-gray w-[0.1rem] h-7'></div> */}
-        <li className='w-[100%] pb-2'>
+        <li className='w-[100%] '>
           <Button onClick={() => {
               handleChangeNav('지도검색');
             }} 
@@ -48,13 +51,14 @@ function LocationPage() {
             } `}>{'지도검색'}</Button></li>
       </ul>
       <Category
-          className='justify-center gap-4 py-3 border-b-[0.15rem] border-[#E1E1E1]'
+          className='justify-center gap-4 py-2 border-b-[0.1rem] border-[#E1E1E1]'
           category={category}
           selectCategory={selectCategory}
           setSelectCategory={setSelectCategory}
           // icon={icon}
         />
     </nav>
+    <h2 className='sr-only'>지역 페이지</h2>
     {selectNav === '지역별' && <LocationChoice /> }
     {selectNav === '지도검색' && <LocationMap/>}
     

@@ -15,8 +15,9 @@ function LocationChoice() {
   return (
     <div>   
     <section className='max-w-3xl flex justify-between gap-4'>
+    <h3 className='sr-only'>지역별</h3>
     <nav>
-      <LocationSideButton className={'w-[10rem] lg:w-[15rem] '} locationSideButton={locationSideButton} selectLocationSide={selectLocationSide} setSelectLocationSide={setSelectLocationSide}></LocationSideButton>
+      <LocationSideButton className={'w-[9.5rem] lg:w-[15rem] '} locationSideButton={locationSideButton} selectLocationSide={selectLocationSide} setSelectLocationSide={setSelectLocationSide}></LocationSideButton>
     
     </nav>
     {selectLocationSide === '서울' && 
