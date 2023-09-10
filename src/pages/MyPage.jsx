@@ -1,23 +1,27 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { NavLink } from 'react-router-dom';
-
 import Header from '@/components/Header';
-import Button from '../components/Button';
-import Category from '@/components/Category';
-import Modal from '../components/Modal';
-import MySelecModal from '../components/MySelecModal';
+import Button from '@/components/Button';
+import MySelecModal from '@/components/MySelecModal';
+import MyBasicButton from '@/components/MyBasicButton';
 
 function MyPage() {
-  const [isActive, setIsActive] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState({
+    isModalOpen1: false,
+    isModalOpen2: false,
+  });
 
-  const handleIsActive = (name) => {
-    setIsActive(name);
+  const closeModal = (modalName) => {
+    setIsModalOpen({
+      ...isModalOpen,
+      [modalName]: false,
+    });
   };
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const openModal = (modalName) => {
+    setIsModalOpen({
+      ...isModalOpen,
+      [modalName]: true,
+    });
   };
 
   return (
@@ -30,12 +34,16 @@ function MyPage() {
       </Header>
       <section className='relative'>
         <button type='button' className='h-40 w-full bg-gray'>
-          <img src='/' alt='배경이미지' />
           <img
-            src='/'
+            src='/my-testbg.jpeg'
+            alt='배경이미지'
+            className='h-full w-full overflow-hidden object-cover'
+          />
+          <img
+            src='/ad.png'
             alt='/'
-            className='absolute left-1/2 ml-[-45px] mt-[22px] min-h-[90px] min-w-[90px] rounded-full border-2 border-secondary bg-gray
-          shadow-md md:ml-[-50px] md:mt-[13px] md:h-[100px] md:w-[100px] lg:ml-[-60px] lg:mt-[7px] lg:h-[120px] lg:w-[120px]'
+            className='absolute left-1/2 top-1/2 ml-[-45px] mt-8 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-cover shadow-md
+          md:ml-[-50px] md:mt-[28px] md:max-h-[100px] md:max-w-[100px] lg:ml-[-60px] lg:mt-[15px] lg:max-h-[120px] lg:max-w-[120px]'
           />
         </button>
         <h2 className='sr-only'></h2>
@@ -43,115 +51,72 @@ function MyPage() {
       <section className='mt-28 w-full'>
         <ul className='flex flex-col items-center gap-2 text-center'>
           <li>
-            <Link to='mybooking'>
-              <Button
-                type='button'
-                onMouseOver={() => handleIsActive('mybooking')}
-                onMouseLeave={() => handleIsActive('')}
-                className={`mb-2 h-11 w-60 rounded-full border-2 font-semibold ${
-                  isActive === 'mybooking'
-                    ? 'bg-secondary font-bold text-white shadow-md'
-                    : ' border-secondary text-secondary'
-                }`}
-              >
-                나의 예약
-              </Button>
-            </Link>
+            <MyBasicButton type='button' towhere='mybooking' handler='mybooking'>
+              나의예약
+            </MyBasicButton>
           </li>
           <li>
-            <Link to='myreview'>
-              <Button
-                type='button'
-                onMouseOver={() => handleIsActive('review')}
-                onMouseLeave={() => handleIsActive('')}
-                className={`mb-2 h-11 w-60 rounded-full border-2 font-semibold ${
-                  isActive === 'review'
-                    ? 'bg-secondary font-bold text-white shadow-md'
-                    : ' border-secondary text-secondary'
-                }`}
-              >
-                나의 후기
-              </Button>
-            </Link>
+            <MyBasicButton type='button' towhere='myreview' handler='myreview'>
+              나의후기
+            </MyBasicButton>
           </li>
 
           <li>
-            <Link to='/'>
-              <Button
-                type='button'
-                onClick={isActive}
-                onMouseOver={() => handleIsActive('my')}
-                onMouseLeave={() => handleIsActive('')}
-                className={`mb-2 h-11 w-60 rounded-full border-2 font-semibold ${
-                  isActive === 'my'
-                    ? 'bg-secondary font-bold text-white shadow-md'
-                    : ' border-secondary text-secondary'
-                }`}
-              >
-                정보 변경
-              </Button>
-            </Link>
+            <MyBasicButton type='button' towhere='myinfo' handler='myinfo'>
+              정보변경
+            </MyBasicButton>
           </li>
           <li>
-            <Button
+            <MyBasicButton
               type='button'
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
-              onMouseOver={() => handleIsActive('connect')}
-              onMouseLeave={() => handleIsActive('')}
-              className={`mb-2 h-11 w-60 rounded-full border-2 font-semibold ${
-                isActive === 'connect'
-                  ? 'bg-secondary font-bold text-white shadow-md'
-                  : ' border-secondary text-secondary'
-              }`}
+              handler='connect'
+              onClick={() => openModal('isModalOpen1')}
             >
               상담원 연결(채팅/통화)
-            </Button>
-            {isModalOpen === true ? (
-              <MySelecModal onClose={closeModal} MoveTo='mychatroom' option1='채팅' option2='취소'>
+            </MyBasicButton>
+            {isModalOpen.isModalOpen1 && (
+              <MySelecModal
+                onClose={() => closeModal('isModalOpen1')}
+                MoveTo='mychatroom'
+                option1='채팅'
+                option2='취소'
+              >
                 <div>상담원 통화 가능 시간</div>
                 <div>평일(공휴일 제외)</div>
                 <div>09:00~17:00</div>
                 <div>02-1234-5678</div>
                 <div>채팅으로 연결할까요?</div>
               </MySelecModal>
-            ) : null}
+            )}
           </li>
 
           <li>
-            <Link to='/'>
-              <Button
-                type='button'
-                onClick={isActive}
-                onMouseOver={() => handleIsActive('my')}
-                onMouseLeave={() => handleIsActive('')}
-                className={`mb-2 h-11 w-60 rounded-full border-2 font-semibold ${
-                  isActive === 'my'
-                    ? 'bg-secondary font-bold text-white shadow-md'
-                    : ' border-secondary text-secondary'
-                }`}
-              >
-                1:1 문의
-              </Button>
-            </Link>
+            <MyBasicButton type='button' towhere='myqna' handler='myreview'>
+              1:1문의
+            </MyBasicButton>
           </li>
           <li>
-            <Link to='/'>
-              <Button
-                type='button'
-                onClick={isActive}
-                onMouseOver={() => handleIsActive('my')}
-                onMouseLeave={() => handleIsActive('')}
-                className={`mb-2 h-11 w-60 rounded-full border-2 font-semibold ${
-                  isActive === 'my'
-                    ? 'bg-secondary font-bold text-white shadow-md'
-                    : ' border-secondary text-secondary'
-                }`}
+            <Button
+              type='button'
+              onClick={() => openModal('isModalOpen2')}
+              className={`mb-2 h-8 w-52 rounded-full text-sm font-semibold text-secondary shadow-md hover:bg-primary hover:font-bold hover:text-white md:h-11 md:w-60 md:text-base`}
+            >
+              회원 탈퇴
+            </Button>
+            {isModalOpen.isModalOpen2 && (
+              <MySelecModal
+                onClose={() => closeModal('isModalOpen2')}
+                MoveTo='/'
+                option1='취소'
+                option2='탈퇴'
               >
-                회원 탈퇴
-              </Button>
-            </Link>
+                <div>정말 탈퇴하시나요?</div>
+                <div>2023.09.06 기준</div>
+                <div>가입자 23m 돌파</div>
+                <div>불편사항이 있으시다면</div>
+                <div>02-1234-5678</div>
+              </MySelecModal>
+            )}
           </li>
         </ul>
       </section>

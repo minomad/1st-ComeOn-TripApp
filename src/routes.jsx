@@ -17,6 +17,7 @@ const LeisureThemePage = lazy(() => import('./pages/LeisureThemePage'));
 const LeisureBrandPage = lazy(() => import('./pages/LeisureBrandPage'));
 const LeisureListPage = lazy(() => import('./pages/LeisureListPage'));
 const LeisureDetailPage = lazy(() => import('./pages/LeisureDetailPage'));
+const BookingPage = lazy(() => import('./pages/BookingPage'));
 const SignInPage = lazy(() => import('./pages/SignInPage'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: 'leisurebrand/:id', element: <LeisureBrandPage /> },
       { path: 'LeisureListPage', element: <LeisureListPage /> },
       { path: 'LeisureDetail/:id', element: <LeisureDetailPage /> },
+      { path: 'BookingPage', element: <BookingPage /> },
       { path: 'signin', element: <SignInPage /> },
       { path: 'signup', element: <SignUpPage /> },
     ],

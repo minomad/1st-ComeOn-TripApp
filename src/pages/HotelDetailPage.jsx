@@ -1,43 +1,42 @@
 import { useState } from 'react';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { getPbImageURL } from '@/utils/getPbImageURL';
-import { useParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import Spinner from '@/components/Spinner';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import HotelRoom from '@/components/HotelRoom';
-import HotelReview from '@/components/HotelReview';
 import HotelIntro from '@/components/HotelIntro';
 import HotelService from '@/components/HotelService';
+import HotelReview from '@/components/HotelReview';
 
 function HotelDetailPage() {
   const { id } = useParams();
   const [selectCategory, setSelectCategory] = useState('객실선택');
-  const { getIdData } = usePocketData('hotel');
-  const { getListData } = usePocketData('room');
-  const { data: hotelData, isLoading: isHotelLoading } = useQuery(['hotel', id], () =>
-    getIdData(id),
-  );
+  const { getIdData: getHotel } = usePocketData('hotel');
+
+  const info = ['객실선택', '소개', '시설/서비스', '후기'];
 
   const option = {
-    sort: '+created',
+    expand: 'room, review',
   };
 
-  const { data: roomData, isLoading: isRoomlLoading } = useQuery(['room'], () =>
-    getListData(option),
+  const { data: hotelData, isLoading: isHotelLoading } = useQuery(['hotel', id], () =>
+    getHotel(id, option),
   );
-
+  console.log(hotelData);
   const handleChangeCategory = (category) => {
     setSelectCategory(category);
   };
 
-  if (isHotelLoading || isRoomlLoading) {
+  const roomData = hotelData?.expand?.room;
+  const reviewData = hotelData?.expand?.review;
+
+  if (isHotelLoading) {
     return <Spinner />;
   }
-
-  const filterRoom = roomData.filter((room) => room.category === hotelData.grade);
 
   return (
     <>
@@ -45,15 +44,17 @@ function HotelDetailPage() {
         <title>{hotelData.title}</title>
       </Helmet>
       <Header back='back' home='home' cart='cart' />
-      <section>
+      <section className='relative'>
         <h2 className='sr-only'>호텔 상세 페이지</h2>
         <div className='flex justify-center'>
           <div>
-            <img
-              src={getPbImageURL(hotelData, 'img')}
-              alt={hotelData.title}
-              className='w-full max-w-[39rem]'
-            />
+            <figure>
+              <img
+                src={getPbImageURL(hotelData, 'img')}
+                alt={hotelData.title}
+                className='w-full max-w-[39rem]'
+              />
+            </figure>
             <div className='border-b-8 border-thirdary p-4'>
               <span className='text-sm font-semibold text-gray3'>{hotelData.grade}</span>
               <div className='flex justify-between'>
@@ -72,16 +73,25 @@ function HotelDetailPage() {
             </div>
           </div>
         </div>
-        
+
         <HotelInfoCategory
+          info={info}
+          className='justify-between'
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-        
-        {selectCategory === '객실선택' && <HotelRoom data={filterRoom} />}
+
+        {selectCategory === '객실선택' && <HotelRoom data={roomData} />}
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}
         {selectCategory === '시설/서비스' && <HotelService />}
-        {selectCategory === '후기' && <HotelReview />}
+        {selectCategory === '후기' && (
+          <HotelReview
+            star={hotelData.star}
+            hotel={hotelData.title}
+            hotelId={id}
+            reviewData={reviewData}
+          />
+        )}
       </section>
     </>
   );
