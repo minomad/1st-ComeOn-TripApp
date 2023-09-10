@@ -10,6 +10,9 @@ const MyPage = lazy(() => import('./pages/MyPage'));
 const MyBookingPage = lazy(() => import('./pages/MyBookingPage'));
 const MyReviewPage = lazy(() => import('./pages/MyReviewPage'));
 const MyChatPage = lazy(() => import('./pages/MyChatPage'));
+const MyQnaPage = lazy(() => import('./pages/MyQnaPage'));
+const MyInfoPage = lazy(() => import('./pages/MyInfoPage'));
+const MyAuth = lazy(() => import('./pages/MyAuth'));
 const HotelPage = lazy(() => import('./pages/HotelPage'));
 const HotelDetailPage = lazy(() => import('./pages/HotelDetailPage'));
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
@@ -30,10 +33,13 @@ const router = createBrowserRouter([
       { path: 'location', element: <LocationPage /> },
       { path: 'around', element: <AroundPage /> },
       { path: 'wish', element: <WishPage /> },
+      { path: 'myauth', element: <MyAuth /> },
       { path: 'mypage', element: <MyPage /> },
-      { path: 'mybooking', element: <MyBookingPage /> },
-      { path: 'myreview', element: <MyReviewPage /> },
-      { path: 'mychatroom', element: <MyChatPage /> },
+      { path: 'mypage/mybooking', element: <MyBookingPage /> },
+      { path: 'mypage/myreview', element: <MyReviewPage /> },
+      { path: 'mypage/mychatroom', element: <MyChatPage /> },
+      { path: 'mypage/myinfo', element: <MyInfoPage /> },
+      { path: 'mypage/myqna', element: <MyQnaPage /> },
       { path: 'hotel', element: <HotelPage /> },
       { path: 'hotel/:id', element: <HotelDetailPage /> },
       { path: 'leisure', element: <LeisurePage /> },
