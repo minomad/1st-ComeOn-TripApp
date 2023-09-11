@@ -50,7 +50,7 @@ const router = createBrowserRouter([
       { path: 'LeisureListPage', element: <LeisureListPage /> },
       { path: 'LeisureDetail/:id', element: <LeisureDetailPage /> },
       { path: 'ExhibitionDetail/:id', element: <ExhibitionDetailPage /> },
-      { path: 'BookingPage', element: <BookingPage /> },
+      { path: 'booking/:id/:title', element: <BookingPage /> },
       { path: 'signin', element: <SignInPage /> },
       { path: 'signup', element: <SignUpPage /> },
     ],

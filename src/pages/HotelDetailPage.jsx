@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { getPbImageURL } from '@/utils/getPbImageURL';
+import { toast, Toaster } from 'react-hot-toast';
 import Header from '@/components/Header';
 import Spinner from '@/components/Spinner';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
@@ -13,7 +14,6 @@ import HotelService from '@/components/HotelService';
 import HotelReview from '@/components/HotelReview';
 import useStorage from '@/Hook/useStorage';
 import Button from '@/components/Button';
-import toast from 'react-hot-toast';
 
 function HotelDetailPage() {
   const { id } = useParams();
@@ -105,7 +105,7 @@ function HotelDetailPage() {
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-        {selectCategory === '객실선택' && <HotelRoom data={roomData} />}
+        {selectCategory === '객실선택' && <HotelRoom data={roomData} title={hotelData.title} />}
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}
         {selectCategory === '시설/서비스' && <HotelService />}
         {selectCategory === '후기' && (
@@ -116,6 +116,23 @@ function HotelDetailPage() {
             reviewData={reviewData}
           />
         )}
+        <Toaster
+          toastOptions={{
+            duration: 1000,
+            success: {
+              style: {
+                background: '#5D6FFF',
+                color: 'white',
+              },
+            },
+            error: {
+              style: {
+                background: '#E03B69',
+                color: 'white',
+              },
+            },
+          }}
+        />
       </section>
     </>
   );

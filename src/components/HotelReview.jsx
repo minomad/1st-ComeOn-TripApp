@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import { usePocketData } from '@/api/usePocketData';
 import { useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import HotelReviewEdit from './HotelReviewEdit';
 import useStorage from '@/Hook/useStorage';
 
@@ -90,6 +90,23 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
             ))
             .reverse()
         : null}
+      <Toaster
+        toastOptions={{
+          duration: 1000,
+          success: {
+            style: {
+              background: '#5D6FFF',
+              color: 'white',
+            },
+          },
+          error: {
+            style: {
+              background: '#E03B69',
+              color: 'white',
+            },
+          },
+        }}
+      />
     </section>
   );
 }

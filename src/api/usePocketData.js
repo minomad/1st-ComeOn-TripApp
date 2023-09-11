@@ -36,13 +36,7 @@ export function usePocketData(collection) {
 
   const isAuth = () => pb.authStore.model();
 
-  const emailVerified = (email) => pb.collection(collection).requestVerification(email);
-
-  const emailconfirm = (token) => pb.collection(collection).confirmVerification(token);
-
   const authRefresh = () => pb.collection(collection).authRefresh();
-
-  const passwordReset = (email) => pb.collection(collection).requestPasswordReset(email);
 
   return {
     getListData,
@@ -53,9 +47,6 @@ export function usePocketData(collection) {
     signIn,
     signOut,
     isAuth,
-    emailVerified,
-    emailconfirm,
     authRefresh,
-    passwordReset,
   };
 }

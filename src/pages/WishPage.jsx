@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
@@ -23,28 +23,64 @@ function WishPage() {
 
   const { data, isLoading } = useQuery(
     ['users', id],
-    () => getIdData(id, { expand: 'wishHotel,wishLeisure' }),
+    () => getIdData(id, { expand: 'wishHotel, wishLeisure' }),
     {
       refetchOnWindowFocus: false,
+      enabled: !!id,
     },
   );
+
+  const wishHotel = data?.expand?.wishHotel;
+  const wishLeisure = data?.expand?.wishLeisure;
+
+  if (!authUser) {
+    return (
+      <>
+        <Header back='back' cart='cart' className='text-xl font-semibold' title='찜한 목록' />
+        <section className='px-4 pb-24'>
+          <h3 className='sr-only'>찜한 목록</h3>
+          <HotelInfoCategory
+            info={tag}
+            selectCategory={selectCategory}
+            handleChangeCategory={setSelectCategory}
+            className='text-xl'
+          />
+          {!authUser && (
+            <div className='text-gray-600 flex flex-col items-center pt-20 font-semibold'>
+              <p>로그인 후 찜한 목록을 확인해주세요.</p>
+              <Link
+                to='/signin'
+                className='my-2 w-full max-w-sm rounded bg-primary py-2 text-center text-white'
+              >
+                로그인
+              </Link>
+              <Link
+                to='/signup'
+                className='my-2 w-full max-w-sm rounded border py-2 text-center text-black hover:text-primary'
+              >
+                회원가입
+              </Link>
+            </div>
+          )}
+        </section>
+      </>
+    );
+  }
 
   if (isLoading) {
     return <Spinner />;
   }
-  const wishHotel = data?.expand?.wishHotel;
-  const wishLeisure = data?.expand?.wishLeisure || null;
 
-  const handleWishHotel = (itemId) => {
-    updateUser(id, {
+  const handleWishHotel = async (itemId) => {
+    await updateUser(id, {
       'wishHotel-': itemId,
     });
     toast.error('찜 목록에서 해제하였습니다.');
     queryClient.invalidateQueries(['users']);
   };
 
-  const handleWishLeisure = (itemId) => {
-    updateUser(id, {
+  const handleWishLeisure = async (itemId) => {
+    await updateUser(id, {
       'wishLeisure-': itemId,
     });
     toast.error('찜 목록에서 해제하였습니다.');
@@ -56,36 +92,15 @@ function WishPage() {
       <Helmet>
         <title>찜한 목록</title>
       </Helmet>
-      <Header back='back' cart='cart' className=' text-xl font-semibold' title='찜한 목록' />
-      <section className='px-4 pb-24'>
-        <h3 className='sr-only'>찜한 목록</h3>
-        <HotelInfoCategory
-          info={tag}
-          selectCategory={selectCategory}
-          handleChangeCategory={setSelectCategory}
-          className='text-xl'
-        />
-
-        {!authUser && (
-          <div className='flex flex-col items-center font-semibold text-gray2'>
-            <p>로그인 후</p>
-            <p>찜목록을 확인해주세요</p>
-            <Link
-              to='/signin'
-              className='my-2 w-full max-w-md rounded bg-primary py-2 text-center text-white'
-            >
-              로그인
-            </Link>
-            <Link
-              to='/signup'
-              className='my-2 w-full max-w-md rounded border py-2 text-center text-black hover:text-primary'
-            >
-              회원가입
-            </Link>
-          </div>
-        )}
-
-        {selectCategory === '숙소' && (
+      <Header back='back' cart='cart' className='text-xl font-semibold' title='찜한 목록' />
+      <HotelInfoCategory
+        info={tag}
+        selectCategory={selectCategory}
+        handleChangeCategory={setSelectCategory}
+        className='text-xl'
+      />
+      <section className='px-4 pb-20'>
+        {selectCategory === '숙소' && authUser && !wishHotel && (
           <section className='mt-20 flex flex-col items-center gap-2 font-semibold'>
             <figure>
               <img src='/heartActive.svg' alt='하트' className='w-14' />
@@ -140,7 +155,7 @@ function WishPage() {
           </>
         )}
 
-        {selectCategory === '레저' && !wishLeisure && (
+        {selectCategory === '레저' && authUser && !wishLeisure && (
           <section className='mt-20 flex flex-col items-center gap-2 font-semibold'>
             <figure>
               <img src='/heartActive.svg' alt='하트' className='w-14' />
@@ -192,6 +207,17 @@ function WishPage() {
             ))}
           </>
         )}
+        <Toaster
+          toastOptions={{
+            duration: 1000,
+            error: {
+              style: {
+                background: '#E03B69',
+                color: 'white',
+              },
+            },
+          }}
+        />
       </section>
     </>
   );

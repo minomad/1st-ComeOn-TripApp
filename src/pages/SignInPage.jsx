@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
@@ -90,6 +90,23 @@ function SignInPage() {
             로그인
           </Button>
         </Form>
+        <Toaster
+          toastOptions={{
+            duration: 1000,
+            success: {
+              style: {
+                background: '#5D6FFF',
+                color: 'white',
+              },
+            },
+            error: {
+              style: {
+                background: '#E03B69',
+                color: 'white',
+              },
+            },
+          }}
+        />
       </section>
     </>
   );

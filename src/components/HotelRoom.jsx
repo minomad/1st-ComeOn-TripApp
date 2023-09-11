@@ -3,7 +3,7 @@ import { getPbImageURL } from '@/utils/getPbImageURL';
 import { Link } from 'react-router-dom';
 import Button from './Button';
 
-function HotelRoom({ data }) {
+function HotelRoom({ data,title }) {
   if (!Array.isArray(data)) {
     return null;
   }
@@ -27,7 +27,7 @@ function HotelRoom({ data }) {
             <p className='text-lg text-primary'>{numberWithComma(item.price)}원</p>
           </div>
           <div className='flex justify-end'>
-            <Link>
+            <Link to={`/booking/${item.id}/${title}`}>
               <Button className='mt-5 h-8 w-52 rounded bg-primary text-white max-[420px]:w-32'>
                 객실 예약하기
               </Button>
