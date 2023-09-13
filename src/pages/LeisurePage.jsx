@@ -9,7 +9,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-
 function LeisurePage() {
   const { getListData: getLeisureData } = usePocketData('leisure');
   const { getListData: getExhibitionData } = usePocketData('exhibition');
@@ -18,7 +17,7 @@ function LeisurePage() {
     getExhibitionData({ sort: 'ranking' }),
   );
 
-  const [selectCategory, setSelectCategory] = useState('');
+  const [selectCategory, setSelectCategory] = useState('서울');
   const category = ['서울', '경기', '제주', '강원'];
 
   return (
@@ -45,22 +44,11 @@ function LeisurePage() {
           <Link to={'/leisure/투어·관광'}>
             <LeisureLink src='/leisure-tour.png' alt='투어/관광' caption='투어/관광' />
           </Link>
-
-          <LeisureLink
-            src='/leisure-plus.png'
-            alt='더보기'
-            caption='더보기'
-            className='text-center'
-          />
         </div>
         <div className='mx-5 flex justify-between py-[14px] font-bold'>
           <h3 className='text-[18px]'>인기 브랜드관</h3>
-          <a href='' className='text-[14px] leading-[27px] text-primary'>
-            전체보기
-          </a>
         </div>
         <div className='flex gap-4 px-5 pb-5'>
-
           <Link to={'/leisurebrand/에버랜드'}>
             <LeisureBrand src='/leisure-everland.png' alt='에버랜드' caption='에버랜드' />
           </Link>
@@ -101,7 +89,6 @@ function LeisurePage() {
               <h3 className='text-[18px] font-bold leading-[18px]'>지역별 전시 TOP 랭킹</h3>
               <span className='text-[12px] leading-[12px]'>최근 1주간 판매량이 가장 많았어요</span>
             </div>
-            <a className='text-primary'>전체보기</a>
           </div>
           <Category
             className='mb-4 justify-center gap-5'

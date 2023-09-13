@@ -5,7 +5,7 @@ import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 // import { numberWithComma } from '@/utils/numberWithComma';
-import Input from '@/components/Input'
+import Input from '@/components/Input';
 import Category from '@/components/Category';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
@@ -14,7 +14,7 @@ import AroundList, { AroundLeisureList } from '@/components/AroundList';
 
 function AroundPage() {
   const [selectCategory, setSelectCategory] = useState('숙소');
-  const [isCheck, setCheck] = useState(false)
+  const [isCheck, setCheck] = useState(false);
   const aroundSearch = useRef();
   const category = ['숙소', '레저/티켓'];
 
@@ -22,9 +22,10 @@ function AroundPage() {
   const { data: leisureData } = useQuery(['leisure'], () => getLeisureData());
 
   const { getListData } = usePocketData('hotel');
-  const { data: hotelData,
+  const {
+    data: hotelData,
     isLoading: isHotelLoading,
-    isError , 
+    isError,
   } = useQuery(['hotel'], () => getListData());
 
   const {latitude, longitude } = useParams();
@@ -34,15 +35,14 @@ function AroundPage() {
   if (isHotelLoading) {
     return <Spinner />;
   }
-  
+
   if (isError) {
     return <div>서버 에러 발생</div>;
   }
 
-
   return (
     <>
-    <Helmet>
+      <Helmet>
         <title>내주변</title>
       </Helmet>
       <header className='fixed top-0 left-0 right-0 z-20 mx-auto bg-white flex text text-center max-w-3xl justify-between px-5 m:px-[5rem] pt-4 gap-5'>
@@ -64,8 +64,8 @@ function AroundPage() {
           />
       </nav>
       <h2 className='sr-only'>내주변 페이지</h2>
-        {/* 첫번째 지도 섹션 */}
-      
+      {/* 첫번째 지도 섹션 */}
+
       {/* {selectCategory==='목록' && selectCategory==='숙소' ? <AroundList img={img} title={title} star={data1?.star} price={data1?.price} />
       :( selectCategory==='숙소' ?<AroundMap img={img} title={title} star={data1?.star} price={data1?.price}  />:'')
       } */}
@@ -80,7 +80,7 @@ function AroundPage() {
   ? <AroundList data={hotelData}  selectCategory={selectCategory}  /> 
   : (!isCheck && selectCategory==='숙소' ? <AroundMap data={hotelData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
 
-   {/* {isCheck && selectCategory==='레저/티켓' ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory} setSelectCategory={setSelectCategory} img={img} title={title} star={data1?.star} price={data1?.price} /> :<AroundMap data={leisureData} selectCategory={selectCategory} img={img} title={title} star={data1?.star} price={data1?.price}  />} */}
+      {/* {isCheck && selectCategory==='레저/티켓' ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory} setSelectCategory={setSelectCategory} img={img} title={title} star={data1?.star} price={data1?.price} /> :<AroundMap data={leisureData} selectCategory={selectCategory} img={img} title={title} star={data1?.star} price={data1?.price}  />} */}
       {/* {selectCategory=='레저/티켓'? <AroundList data={hotelData}  selectCategory={selectCategory} setSelectCategory={setSelectCategory} img={img} title={title} star={data1?.star} price={data1?.price} /> :<AroundMap data={hotelData} selectCategory={selectCategory} img={img} title={title} star={data1?.star} price={data1?.price}  />} */}
   {
   isCheck && selectCategory==='레저/티켓' 
@@ -95,8 +95,6 @@ function AroundPage() {
         {isCheck ?<img src='/around-map.svg' alt='targetButton' className='py-2 translate-y-[-0.25rem]' />:<img src='/around-list.svg' alt='targetButton' className='py-2 translate-y-[-0.15rem]' />}  {isCheck ? "지도" : "목록"}
       </Button>
     </>
-  )
+  );
 }
-export default AroundPage
-
-
+export default AroundPage;
