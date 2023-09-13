@@ -4,13 +4,15 @@ import { usePocketData } from '@/api/usePocketData';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import HotelReviewEdit from './HotelReviewEdit';
-import useStorage from '@/Hook/useStorage';
+import useAuthStore from '@/store/useAuthStore';
 
 function HotelReview({ star, hotel, hotelId, reviewData }) {
   const { createData: createReview } = usePocketData('review');
   const { updateData: updateHotel } = usePocketData('hotel');
   const { updateData: updateUser } = usePocketData('users');
-  const { storageData: authUser } = useStorage('pocketbase_auth');
+
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const user = useAuthStore((state) => state.user);
 
   const [isShow, setIsShow] = useState(false);
 
@@ -22,15 +24,15 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
     setIsShow((prev) => !prev);
   };
 
-  const handleReviewSubmit = async (e) => {
+  const handleSubmitReview = async (e) => {
     e.preventDefault();
     const review = reviewRef.current.value;
-    const userId = authUser?.model?.id;
+    const userId = user?.id;
 
     const reviewData = {
       title: hotel,
       review,
-      nickName: authUser?.model?.nickName,
+      nickName: user?.nickName,
     };
 
     if (!review || review.trim() === '') {
@@ -63,11 +65,11 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
         <span className='text-gray'>/5</span>
       </div>
 
-      {authUser && (
+      {isAuth && (
         <HotelReviewEdit
           isShow={isShow}
           reviewRef={reviewRef}
-          handleReviewSubmit={handleReviewSubmit}
+          handleSubmitReview={handleSubmitReview}
           handleShowReview={handleShowReview}
         />
       )}
