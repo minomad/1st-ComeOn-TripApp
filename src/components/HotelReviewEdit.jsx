@@ -1,6 +1,6 @@
 import Button from './Button';
 
-function HotelReviewEdit({ isShow, reviewRef, handleReviewSubmit, handleShowReview }) {
+function HotelReviewEdit({ isShow, reviewRef, handleSubmitReview, handleShowReview }) {
   return (
     <>
       <div className='flex justify-end'>
@@ -11,7 +11,7 @@ function HotelReviewEdit({ isShow, reviewRef, handleReviewSubmit, handleShowRevi
         )}
       </div>
       {isShow && (
-        <form onSubmit={handleReviewSubmit} className='pb-10'>
+        <form onSubmit={handleSubmitReview} className='pb-10'>
           <textarea
             ref={reviewRef}
             name='review'

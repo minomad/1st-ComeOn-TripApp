@@ -13,20 +13,15 @@ function Navigation() {
       <ul className='flex items-center gap-8 text-center'>
         <li>
           <NavLink to='/location' onClick={() => handleIsActive('location')}>
-            {isActive === 'location' ? (
-              <img src='/locationActive.svg' alt='지역' />
-            ) : (
-              <img src='/location.svg' alt='지역' />
-            )}
+            <img
+              src={isActive === 'location' ? '/locationActive.svg' : '/location.svg'}
+              alt='지역'
+            />
           </NavLink>
         </li>
         <li>
           <NavLink to='/around' onClick={() => handleIsActive('around')}>
-            {isActive === 'around' ? (
-              <img src='/aroundActive.svg' alt='내주변' />
-            ) : (
-              <img src='/around.svg' alt='내주변' />
-            )}
+            <img src={isActive === 'around' ? '/aroundActive.svg' : '/around.svg'} alt='내주변' />
           </NavLink>
         </li>
         <li>
@@ -40,20 +35,12 @@ function Navigation() {
         </li>
         <li>
           <NavLink to='/wish' onClick={() => handleIsActive('heart')}>
-            {isActive === 'heart' ? (
-              <img src='/heartActive.svg' alt='찜목록' />
-            ) : (
-              <img src='/heart.svg' alt='찜목록' />
-            )}
+            <img src={isActive === 'heart' ? '/heartActive.svg' : '/heart.svg'} alt='찜목록' />
           </NavLink>
         </li>
         <li>
           <NavLink to='/mypage' onClick={() => handleIsActive('my')}>
-            {isActive === 'my' ? (
-              <img src='/myActive.svg' alt='마이페이지' />
-            ) : (
-              <img src='/my.svg' alt='마이페이지' />
-            )}
+            <img src={isActive === 'my' ? '/myActive.svg' : '/my.svg'} alt='마이페이지' />
           </NavLink>
         </li>
       </ul>

@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 // import { numberWithComma } from '@/utils/numberWithComma';
 import Input from '@/components/Input';
 import Category from '@/components/Category';
@@ -27,6 +28,10 @@ function AroundPage() {
     isError,
   } = useQuery(['hotel'], () => getListData());
 
+  const {latitude, longitude } = useParams();
+  
+
+
   if (isHotelLoading) {
     return <Spinner />;
   }
@@ -40,28 +45,23 @@ function AroundPage() {
       <Helmet>
         <title>내주변</title>
       </Helmet>
-      <header className='text flex max-w-3xl justify-between gap-5 px-5 pt-4 text-center'>
-        <form action='' method='get' className='w-[100%]'>
-          <Input
-            id='aroundSearch'
-            label='장소 검색'
-            type='search'
-            labelClass='sr-only'
-            inputRef={aroundSearch}
-            placeholder='장소, 지명 검색'
-            className='focus:ring-none search-cancel:rotate-45  h-9 w-[100%] rounded-full bg-lightPurple px-5 focus:outline-none focus:ring-secondary'
-          />
-        </form>
-        <Button>{<img src='/cart.svg' alt='장바구니' className='py-0.4 h-7' />}</Button>
+      <header className='fixed top-0 left-0 right-0 z-20 mx-auto bg-white flex text text-center max-w-3xl justify-between px-5 m:px-[5rem] pt-4 gap-5'>
+        <form action="" method="get" className='w-[100%]'>
+          <Input id='aroundSearch' label='장소 검색' type='search' labelClass='sr-only' inputRef={aroundSearch} placeholder='장소, 지명 검색' className='bg-lightPurple w-[100%]  h-9 rounded-full px-5 focus:outline-none focus:ring-none focus:ring-secondary search-cancel:rotate-45'  />
+          </form>
+        <Button>
+          {<img src='/cart.svg' alt='장바구니' className='h-7 py-0.4' />}
+
+        </Button>
       </header>
-      <nav>
+      <nav className='fixed mx-auto max-w-3xl bg-white pt-14 top-0 left-0 right-0 z-10'>
         <Category
-          className='gap-2 border-b-[0.15rem] border-[#E1E1E1] px-5 pb-2 pt-2'
-          category={category}
-          selectCategory={selectCategory}
-          setSelectCategory={setSelectCategory}
-          // icon={icon}
-        />
+            className='px-5 gap-2 pb-2 pt-2 border-b-[0.13rem] border-[#E1E1E1]'
+            category={category}
+            selectCategory={selectCategory}
+            setSelectCategory={setSelectCategory}
+            // icon={icon}
+          />
       </nav>
       <h2 className='sr-only'>내주변 페이지</h2>
       {/* 첫번째 지도 섹션 */}
@@ -71,43 +71,28 @@ function AroundPage() {
       } */}
 
       {/* 두번째 호텔 섹션 */}
-      {}
-
-      {isCheck && selectCategory === '숙소' ? (
-        <AroundList data={hotelData} selectCategory={selectCategory} />
-      ) : !isCheck && selectCategory === '숙소' ? (
-        <AroundMap data={hotelData} selectCategory={selectCategory} />
-      ) : (
-        ''
-      )}
+      {
+        
+      }
+  
+  {
+  isCheck && selectCategory==='숙소' 
+  ? <AroundList data={hotelData}  selectCategory={selectCategory}  /> 
+  : (!isCheck && selectCategory==='숙소' ? <AroundMap data={hotelData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
 
       {/* {isCheck && selectCategory==='레저/티켓' ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory} setSelectCategory={setSelectCategory} img={img} title={title} star={data1?.star} price={data1?.price} /> :<AroundMap data={leisureData} selectCategory={selectCategory} img={img} title={title} star={data1?.star} price={data1?.price}  />} */}
       {/* {selectCategory=='레저/티켓'? <AroundList data={hotelData}  selectCategory={selectCategory} setSelectCategory={setSelectCategory} img={img} title={title} star={data1?.star} price={data1?.price} /> :<AroundMap data={hotelData} selectCategory={selectCategory} img={img} title={title} star={data1?.star} price={data1?.price}  />} */}
-      {isCheck && selectCategory === '레저/티켓' ? (
-        <AroundLeisureList data={leisureData} selectCategory={selectCategory} />
-      ) : !isCheck && selectCategory === '레저/티켓' ? (
-        <AroundMap data={leisureData} selectCategory={selectCategory} />
-      ) : (
-        ''
-      )}
+  {
+  isCheck && selectCategory==='레저/티켓' 
+  ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory}  /> 
+  : (!isCheck && selectCategory==='레저/티켓' ? <AroundMap data={leisureData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
 
-      <Button
-        type='button'
-        className={`fixed inset-x-0 bottom-[5.2rem] z-10 mx-auto flex h-[2.5rem] w-[5.5rem] gap-2 rounded-full  bg-primary  px-4 py-2 text-[1rem] font-semibold shadow-md ${
-          isCheck
-            ? 'bottom-[4.9rem] border-[0.12rem] border-primary bg-white text-primary'
-            : 'bottom-[4.9rem] text-white md:bottom-[18rem]'
-        } `}
-        onClick={() => {
-          setCheck((e) => !e);
-        }}
-      >
-        {isCheck ? (
-          <img src='/around-map.svg' alt='targetButton' className='translate-y-[-0.25rem] py-2' />
-        ) : (
-          <img src='/around-list.svg' alt='targetButton' className='translate-y-[-0.15rem] py-2' />
-        )}{' '}
-        {isCheck ? '지도' : '목록'}
+
+      <Button type='button' className={`fixed bottom-[5.2rem] inset-x-0 z-10 mx-auto flex rounded-full w-[5.5rem] h-[2.5rem] bg-primary  font-semibold  text-[1rem] shadow-md py-2 px-4 gap-2 ${isCheck ?'bg-white text-primary border-primary border-[0.12rem] bottom-[4.9rem]':'text-white bottom-[4.9rem] ' } `} 
+      onClick={() => {setCheck((e) => !e);
+            }}
+        >
+        {isCheck ?<img src='/around-map.svg' alt='targetButton' className='py-2 translate-y-[-0.25rem]' />:<img src='/around-list.svg' alt='targetButton' className='py-2 translate-y-[-0.15rem]' />}  {isCheck ? "지도" : "목록"}
       </Button>
     </>
   );
