@@ -52,16 +52,19 @@ function MyPage() {
         메인페이지
       </Header>
       <section className='relative'>
-        <button type='button' className='h-32 max-w-[100px] overflow-hidden bg-gray sm:h-40'>
+        <button
+          type='button'
+          className='h-28 w-full max-w-2xl overflow-hidden bg-gray sm:mb-0 sm:h-40 '
+        >
           <img
             src={pageState.selectedImage}
             alt='배경이미지'
-            className='absolute left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 overflow-hidden border-b-2 border-secondary object-cover shadow-md'
+            className='absolute left-1/2  h-full w-full -translate-x-1/2 -translate-y-1/2 overflow-hidden border-b-2 border-secondary object-cover shadow-md'
           />
           <img
             src={pageState.selectedImage}
             alt='랜덤 배경 이미지'
-            className='absolute left-1/2 top-1/2 ml-[-45px] mt-8 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-fill shadow-md
+            className='absolute left-1/2 top-1/2 ml-[-45px] mt-3 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-fill shadow-md sm:mt-8
           md:ml-[-50px] md:mt-[28px] md:max-h-[100px] md:max-w-[100px] lg:ml-[-60px] lg:mt-[15px] lg:max-h-[120px] lg:max-w-[120px]'
           />
         </button>
