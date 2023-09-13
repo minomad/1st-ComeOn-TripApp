@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { Helmet } from 'react-helmet-async';
-import { toast } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
@@ -13,13 +13,15 @@ import regEx from '@/utils/regEx';
 function SignUpPage() {
   const { createData, getListData } = usePocketData('users');
   const { data: userData } = useQuery(['users'], () =>
-    getListData({ fields: 'username,email,name' }),
+    getListData({ fields: 'username,email,nickName' }),
   );
-  const { mutate: signUpMutate } = useMutation(async (userInfo) => {
+
+  const { mutate: signUp } = useMutation(async (userInfo) => {
     await createData(userInfo);
   });
 
   const navigate = useNavigate();
+
   const idRef = useRef(null);
   const emailRef = useRef(null);
   const nickNameRef = useRef(null);
@@ -64,7 +66,7 @@ function SignUpPage() {
       toast.error('닉네임을 입력해주세요.');
       return;
     }
-    if (userData.some((user) => user.name === nickName)) {
+    if (userData.some((user) => user.nickName === nickName)) {
       toast.error('이미 사용 중인 닉네임입니다.');
     } else {
       toast.success('사용 가능한 닉네임입니다.');
@@ -149,10 +151,13 @@ function SignUpPage() {
     }
 
     try {
-      signUpMutate(userInfo, {
+      signUp(userInfo, {
         onSuccess: () => {
-          toast.success('가입성공');
-          navigate('/signin');
+          toast.success('회원가입이 완료되었습니다.');
+          setTimeout(() => {
+            toast.dismiss();
+            navigate('/');
+          }, 1000);
         },
         onError: () => {
           toast.error('입력하신 내용을 확인해주세요.');
@@ -327,6 +332,23 @@ function SignUpPage() {
             회원가입
           </Button>
         </Form>
+        <Toaster
+          toastOptions={{
+            duration: 1000,
+            success: {
+              style: {
+                background: '#5D6FFF',
+                color: 'white',
+              },
+            },
+            error: {
+              style: {
+                background: '#E03B69',
+                color: 'white',
+              },
+            },
+          }}
+        />
       </section>
     </>
   );

@@ -21,7 +21,7 @@ function MyBookingPage() {
       {/* 마이페이로 돌아갈 수 있는 버튼 기능의 이미지 */}
       <MyCircleProfile towhere='/mypage' imgpath='/ad.png' imgalt='프로필사진'></MyCircleProfile>
 
-      <section className='flex justify-center'>
+      <section className='flex justify-center pb-20'>
         <ul className='box-border h-auto w-2/3 rounded-2xl bg-lightPurple px-3 pb-1 pt-4 text-sm'>
           <li className=' flex flex-row items-center justify-between  text-primary'>
             <div className='font-semibold'>예약 내역</div>

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header({ back, logo, className, title, search, cart }) {
   const navigate = useNavigate();
@@ -18,8 +18,20 @@ function Header({ back, logo, className, title, search, cart }) {
       </div>
       <h2 className={className}>{title}</h2>
       <div className='flex gap-4'>
-        {search && <img src='/search.svg' alt='검색' />}
-        {cart && <img src='/cart.svg' alt='장바구니' />}
+        {search && (
+          <Link to='/search'>
+            <button type='button'>
+              <img src='/search.svg' alt='검색' />
+            </button>
+          </Link>
+        )}
+        {cart && (
+          <Link to='/cart'>
+            <button type='button'>
+              <img src='/cart.svg' alt='장바구니' />
+            </button>
+          </Link>
+        )}
       </div>
     </header>
   );

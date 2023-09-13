@@ -4,45 +4,58 @@ import { usePocketData } from '@/api/usePocketData';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import HotelReviewEdit from './HotelReviewEdit';
-import useAuthStore from '@/store/useAuthStore';
+import useStorage from '@/Hook/useStorage';
 
-function HotelReview({ star, hotel, hotelId, reviewData }) {
-  const { createData: createReview } = usePocketData('review');
-  const { updateData: updateHotel } = usePocketData('hotel');
+function MyNewQna({ star, hotel, hotelId, reviewData }) {
+  const { createData: createQna } = usePocketData('qna');
+  const { updateData: updateQna } = usePocketData('qna');
   const { updateData: updateUser } = usePocketData('users');
-
-  const isAuth = useAuthStore((state) => state.isAuth);
-  const user = useAuthStore((state) => state.user);
+  const { storageData: authUser } = useStorage('pocketbase_auth');
 
   const [isShow, setIsShow] = useState(false);
 
   const queryClient = useQueryClient();
-  const reviewRef = useRef(null);
-  const rating = parseInt(star);
+  const formRef = useRef(null);
+  const photoRef = useRef(null);
+  const titleRef = useRef(null);
+  const textRef = useRef(null);
 
-  const handleShowReview = () => {
-    setIsShow((prev) => !prev);
-  };
-
-  const handleSubmitReview = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    const review = reviewRef.current.value;
-    const userId = user?.id;
+    const titleValue = titleRef.current.value;
+    const textValue = textRef.current.value;
+    const photoValue = photoRef.current.files;
 
-    const reviewData = {
-      title: hotel,
-      review,
-      nickName: user?.nickName,
-    };
+    if (!titleValue && !textValue) {
+      toast('제목, 내용 입력이 필요합니다.', {
+        icon: '🚨',
+        ariaProps: {
+          role: 'status',
+          'aria-live': 'polite',
+        },
+      });
 
-    if (!review || review.trim() === '') {
-      toast.error('리뷰를 작성해주세요');
       return;
     }
 
+    const formData = new FormData();
+
+    formData.append('title', titleValue);
+    formData.append('text', textValue);
+
+    if (photoValue) {
+      formData.append('img', photoValue[0]);
+    }
+
+    const qnaData = {
+      title,
+      email,
+      text,
+    };
+
     try {
-      const created = await createReview(reviewData);
-      await updateHotel(hotelId, {
+      const created = await createQna(qnaData);
+      await updateQna(hotelId, {
         'review+': created.id,
       });
       updateUser(userId, {
@@ -65,11 +78,11 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
         <span className='text-gray'>/5</span>
       </div>
 
-      {isAuth && (
+      {authUser && (
         <HotelReviewEdit
           isShow={isShow}
           reviewRef={reviewRef}
-          handleSubmitReview={handleSubmitReview}
+          handleReviewSubmit={handleReviewSubmit}
           handleShowReview={handleShowReview}
         />
       )}
@@ -96,4 +109,4 @@ function HotelReview({ star, hotel, hotelId, reviewData }) {
   );
 }
 
-export default HotelReview;
+export default MyNewQna;

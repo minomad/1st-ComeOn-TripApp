@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
 import Header from '@/components/Header';
 import Category from '@/components/Category';
 import Spinner from '@/components/Spinner';
@@ -40,7 +39,7 @@ function HotelPage() {
   }
 
   if (isError) {
-    return toast.error('서버 에러');
+    return <div className='text-accent'>서버 에러 발생</div>;
   }
 
   return (
