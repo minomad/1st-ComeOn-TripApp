@@ -1,19 +1,19 @@
-// import { numberWithComma } from '@/utils/numberWithComma';
+import { numberWithComma } from '@/utils/numberWithComma';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { useState } from 'react'
 import Kakao from './Kakao'
 
 
 
-function AroundMap({data, selectCategory,}) {
+function AroundMap({data, selectCategory, latitude, longitude}) {
   const [selectMarker, setselectMarker]=useState('')
   
   return (
     <section className='relative  '>
     <h2 className='sr-only'>내 주변 숙소 지도</h2>
-    <Kakao data={data} selectMarker={selectMarker} setselectMarker={setselectMarker}  />
+    <Kakao data={data} selectCategory={selectCategory} selectMarker={selectMarker} setselectMarker={setselectMarker} latitude={latitude} longitude={longitude} />
     {selectMarker==='' ? '' :
-      <div className='fixed bottom-[4.6rem] mx-auto w-[95%] lg:w-[40rem] md:h-[12rem] inset-x-0 z-10  h-[8.3rem] py-3 px-3   flex  shadow-md  bg-white rounded-3xl'>
+      <div className='fixed bottom-[4.6rem] mx-auto w-[95%] md:w-[40rem] md:h-[11rem] inset-x-0 z-10  h-[8.3rem] py-3 px-3   flex  shadow-md  bg-white rounded-3xl'>
         <figure className='w-[35%]  overflow-hidden mr-4 rounded-2xl'>
         <img src={selectCategory==='숙소'  ? getPbImageURL(selectMarker, 'img'): getPbImageURL(selectMarker, 'main') } alt={selectMarker.title} className=' h-[110%] w-[100%]  cover object-cover' /> 
           <figcaption className='sr-only'>{selectMarker.title} </figcaption>
@@ -39,7 +39,7 @@ function AroundMap({data, selectCategory,}) {
           )}
           <div className='block absolute right-5 bottom-5 '>
             
-            <span className=' text-[1.2rem] font-bold '>{selectMarker.price}원</span>
+            <span className=' text-[1.2rem] font-bold '>{numberWithComma(selectMarker.price)}원</span>
           </div>
         </div>
       </div>
