@@ -9,26 +9,22 @@ import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import CartController from '../components/CartController';
+import Button from '../components/Button';
+import useStorage from '../Hook/useStorage';
+import toast from 'react-hot-toast';
 
 function LeisureDetailPage() {
-  let { id } = useParams();
+  const { id } = useParams();
+
+  const [selectCategory, setSelectCategory] = useState('상품선택');
+  const [isActive, setIsactive] = useState(false);
 
   const { getIdData } = usePocketData('leisure');
   const { data, isLoading } = useQuery(['leisure', id], () => getIdData(id, { expand: 'product' }));
-  console.log(data);
+  const { updateData: updateUser } = usePocketData('users');
+  const { storageData: authUser } = useStorage('pocketbase_auth');
   const productData = data?.expand?.product;
-  console.log(productData);
-
-  const [selectCategory, setSelectCategory] = useState('상품선택');
-  // const [count, setCount] = useState(0);
-  // console.log(count);
-  // const handleCountUp = () => {
-  //   setCount(count + 1);
-  // };
-
-  // const handleCountDown = () => {
-  //   setCount(count - 1);
-  // };
 
   const handleChangeCategory = (category) => {
     setSelectCategory(category);
@@ -40,6 +36,23 @@ function LeisureDetailPage() {
   const { title, discount, price, brand } = data;
   const discountPrice = price * (100 - discount) * 0.01;
 
+  const handleWish = () => {
+    const userId = authUser?.model?.id;
+    setIsactive(!isActive);
+
+    if (!isActive) {
+      toast.success('찜 목록에 추가했습니다.');
+      updateUser(userId, {
+        'wishLeisure+': id,
+      });
+    } else {
+      toast.error('찜 목록에서 해제하였습니다.');
+      updateUser(userId, {
+        'wishLeisure-': id,
+      });
+    }
+  };
+
   return (
     <>
       <Header className='ml-10 text-xl font-semibold ' back='back' search='search' cart='cart' />
@@ -49,8 +62,14 @@ function LeisureDetailPage() {
           <div className='flex justify-between'>
             <span className='text-[20px] font-bold'>{title}</span>
             <div className='mt-1 flex gap-2'>
-              <button className='h-[20px] w-[20px] bg-[url("/leisure-share.png")]'></button>
-              <button className='h-[20px] w-[20px] bg-[url("/leisure-heart.png")]'></button>
+              <Button>
+                <img
+                  src={isActive ? '/heartActive.svg' : '/hotel-heartBlack.svg'}
+                  alt='찜'
+                  className='h-7 w-7 cursor-pointer'
+                  onClick={handleWish}
+                />
+              </Button>
             </div>
           </div>
           <div className='my-3 flex flex-col'>
@@ -80,7 +99,11 @@ function LeisureDetailPage() {
               <span className='text-[#616161]'>~ 2024.02.09</span>
             </div>
           </div>
-          <img src={getPbImageURL(data, 'detail')} alt='' className='border-none rounded-[4px] w-full' />
+          <img
+            src={getPbImageURL(data, 'detail')}
+            alt=''
+            className='w-full rounded-[4px] border-none'
+          />
         </div>
 
         <div className='h-2 w-full bg-slate-300'></div>
@@ -92,6 +115,7 @@ function LeisureDetailPage() {
 
         {selectCategory === '상품선택' && <LeisureProduct data={data} productData={productData} />}
         {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
+        <CartController />
       </section>
     </>
   );

@@ -21,10 +21,12 @@ const LeisureBrandPage = lazy(() => import('./pages/LeisureBrandPage'));
 const LeisureListPage = lazy(() => import('./pages/LeisureListPage'));
 const LeisureDetailPage = lazy(() => import('./pages/LeisureDetailPage'));
 const ExhibitionDetailPage = lazy(() => import('./pages/ExhibitionDetailPage'));
-
 const BookingPage = lazy(() => import('./pages/BookingPage'));
 const SignInPage = lazy(() => import('./pages/SignInPage'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
+const TrafficPage = lazy(() => import('./pages/TrafficPage'));
+const TrafficTrainPage = lazy(() => import('./pages/TrafficTrainPage'));
+const AppInstallPage = lazy(() => import('./pages/AppInstallPage'));
 
 const router = createBrowserRouter([
   {
@@ -53,6 +55,9 @@ const router = createBrowserRouter([
       { path: 'BookingPage', element: <BookingPage /> },
       { path: 'signin', element: <SignInPage /> },
       { path: 'signup', element: <SignUpPage /> },
+      { path: 'traffic', element: <TrafficPage /> },
+      { path: 'train', element: <TrafficTrainPage /> },
+      { path: 'install', element: <AppInstallPage /> },
     ],
   },
 ]);

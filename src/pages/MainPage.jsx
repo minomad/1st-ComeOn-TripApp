@@ -57,7 +57,7 @@ function MainPage() {
             </Link>
           </li>
           <li>
-            <Link to='/' className='flex flex-col items-center gap-2'>
+            <Link to='/traffic' className='flex flex-col items-center gap-2'>
               <img src='/bus.svg' alt='교통' />
               교통
             </Link>
