@@ -1,10 +1,28 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import MyChatMessage from '@/components/MyChatMessage';
 
 function MyChatPage() {
+  const [messages, setMessages] = useState([]);
+  const inputRef = useRef();
+  const chatRef = useRef();
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (inputRef.current.value !== '') {
+      setMessages([...messages, inputRef.current.value]);
+      inputRef.current.value = '';
+    }
+  };
+
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <>
       <Helmet>
@@ -15,29 +33,23 @@ function MyChatPage() {
       </Header>
 
       <section className='absolute left-1/2 top-1/2 h-[77%] w-[90%] -translate-x-1/2 -translate-y-1/2  transform rounded-3xl bg-lightPurple  shadow-lg sm:max-w-[500px]'>
-        <article className='transformpy-8 absolute left-1/2 top-1/2 mb-3 h-[95%] w-[93%] -translate-x-1/2 -translate-y-1/2 rounded-3xl'>
+        <article className='absolute left-1/2 top-1/2 mb-3 h-[95%] w-[93%] -translate-x-1/2 -translate-y-1/2 transform rounded-3xl py-8'>
           <div className='absolute left-1/2 top-[53%] h-[95%] w-[100%] -translate-x-1/2 -translate-y-1/2 transform rounded-2xl bg-white'>
             <div className='absolute left-1/2 top-[50%] h-[93%] w-[91%] -translate-x-1/2 -translate-y-1/2 transform  '>
               <ul className=''>
-                <li className=' absolute left-1/2 top-[50%] h-[100%] w-[100%] -translate-x-1/2 -translate-y-1/2 transform overflow-scroll pb-6'>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
-                  <MyChatMessage></MyChatMessage>
+                <li
+                  className=' absolute left-1/2 top-[50%] h-[100%] w-[100%] -translate-x-1/2 -translate-y-1/2 transform overflow-scroll pb-6'
+                  ref={chatRef}
+                >
+                  {messages.map((message, index) => (
+                    <MyChatMessage key={index} message={message}></MyChatMessage>
+                  ))}
                 </li>
                 <li>
                   {/* 인풋 컨테이너 */}
                   <div className='absolute bottom-0 left-0 w-full bg-white'>
                     <div className='flex  '>
-                      <button className='hover:fill-pri fill-secondary'>
+                      <button className='hover:fill-pri fill-secondary' type='file'>
                         <img
                           src='/my-plus.svg'
                           alt='파일추가'
@@ -45,8 +57,9 @@ function MyChatPage() {
                         />
                       </button>
                       <div className='relative w-full pl-3'>
-                        <form action='' className=' flex w-full'>
+                        <form action='' onSubmit={handleSendMessage} className=' flex w-full'>
                           <Input
+                            inputRef={inputRef}
                             id='newchat'
                             placeholder=''
                             label='채팅입력'

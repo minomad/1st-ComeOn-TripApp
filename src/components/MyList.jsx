@@ -9,6 +9,8 @@ function MyList({
   third,
   date,
   handler,
+  className0 = 'justify-between',
+  className1,
   className2,
   className3,
   ...restProps
@@ -22,21 +24,27 @@ function MyList({
   return (
     <Link to=''>
       <li
-        className='min-h-170 relative my-4 box-border rounded-2xl bg-white p-2 hover:m-[-2px] hover:my-[18px] hover:border-[1px] hover:border-primary hover:shadow-md '
+        className='min-h-170 relative my-4 box-border  rounded-2xl border-[1px] border-transparent bg-white p-2  hover:border-primary hover:shadow-md '
         {...restProps}
         onMouseOver={() => handleIsActive({ handler })}
         onMouseLeave={() => handleIsActive('')}
       >
-        <div className='mb-1 h-3 text-right text-xs'>{date}</div>
-        <div className='flex overflow-hidden sm:mr-8'>
-          <div className='mr-3 aspect-square  h-20  w-20 flex-shrink-0 overflow-hidden rounded-2xl  bg-slate-100 sm:h-32 sm:w-32 md:h-32 md:w-32 lg:h-36 lg:w-36 xl:h-36 xl:w-36'>
+        <div className='mx-1 mb-3 box-border h-3 text-right text-xs'>{date}</div>
+        <div className='box-border flex overflow-hidden sm:mr-8'>
+          <div className='mr-3 box-border aspect-square  h-20  w-20 flex-shrink-0 overflow-hidden rounded-2xl  bg-slate-100 sm:h-32 sm:w-32 md:h-32 md:w-32 lg:h-36 lg:w-36 xl:h-36 xl:w-36'>
             <img src={src} alt={alt} className=' aspect-square h-full w-full' />
           </div>
-          <ul className='flex flex-col justify-between gap-0 overflow-hidden text-ellipsis sm:py-3'>
-            <li className='text-md overflow-hidden text-ellipsis whitespace-nowrap font-bold sm:text-lg'>
+          <ul
+            className={`box-border flex flex-col gap-0 overflow-hidden text-ellipsis sm:py-3 ${className0}`}
+          >
+            <li
+              className={` text-md box-border overflow-hidden text-ellipsis whitespace-nowrap font-bold sm:text-lg  ${className1}`}
+            >
               {title}
             </li>
-            <li className={`touch-none overflow-auto text-ellipsis break-words  ${className2} `}>
+            <li
+              className={`box-border touch-none overflow-hidden text-ellipsis break-words  ${className2} `}
+            >
               {second}
             </li>
             <li className={`overflow-hidden overflow-ellipsis whitespace-nowrap ${className3}`}>
@@ -46,8 +54,8 @@ function MyList({
           <div className='text-right sm:mt-10 lg:mt-12'>
             <img
               src='/myBlueArrow.svg'
-              className={`w-3 opacity-0 
-            ${isActive ? 'sm:absolute sm:right-2 sm:w-5 sm:opacity-100' : ''}`}
+              className={`absolute right-2 w-5 opacity-0 
+            ${isActive ? 'sm:opacity-100' : ''}`}
               alt=''
             />
           </div>

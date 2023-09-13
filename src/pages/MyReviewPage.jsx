@@ -12,26 +12,17 @@ import Spinner from '@/components/Spinner';
 
 function MyReviewPage() {
   const { id } = useParams();
-  // const [selectReview, setSelectReview] = useState('');
-  const { getIdData: getReview } = usePocketData('review');
 
-  const option = {
-    expand: 'hotel, review, created',
-  };
+  const { getIdData: getUser } = usePocketData('users');
+  const { data: userData, isLoading } = useQuery(['users', id], () =>
+    getUser(id, { expand: 'review, hotel' }),
+  );
 
-  const { data: reviewData, isLoading: isReviewLoading } = useQuery(['review', id], () => {
-    getReview(id, option);
-  });
+  const reviewData = userData?.expand?.review;
 
-  const hotelData = reviewData?.expand?.hotel;
-  const contextData = reviewData?.expand?.review;
-  const createdData = reviewData?.expand?.created;
-
-  // console.log(reviewData);
-
-  // if (isReviewLoading) {
-  //   return <Spinner />;
-  // }
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -49,14 +40,21 @@ function MyReviewPage() {
           <li className=' flex flex-row items-center justify-between  text-primary'>
             <div className='font-semibold'>나의 후기</div>
           </li>
-          <MyList
-            handler=''
-            title='ok'
-            second='ssddddddddddddddddsadasdasdsadsadsadsadsadasdasdasdasdasdasdasdasdsadsadsadsdsadsadsadasdasdasdasdasdsadsadsadsadasdasdasdasdsaddsadasdasdsadasdasd'
-            third='별점'
-            className2='text-sm line-clamp-2 h-[35px] sm:line-clamp-3 sm:h-[60px] sm:text-sm'
-            className3='text-sm font-semibold sm:text-md'
-          ></MyList>
+          {reviewData?.map((item) => {
+            return (
+              <MyList
+                handler=''
+                alt={item.title}
+                key={item.id}
+                date={item.created.slice(0, 10)}
+                title={item.title}
+                second={item.review}
+                third='별점'
+                className2='text-sm line-clamp-2 h-[35px] sm:line-clamp-3 sm:h-[60px] sm:text-sm'
+                className3='text-sm font-semibold sm:text-md'
+              ></MyList>
+            );
+          })}
         </ul>
       </section>
     </>

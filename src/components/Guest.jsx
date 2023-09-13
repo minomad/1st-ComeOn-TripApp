@@ -1,17 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import Header from '@/components/Header';
 import Button from '@/components/Button';
 
-function MyPage() {
+function Guest() {
   return (
     <>
-      <Helmet>
-        <title>야무지개놀자</title>
-      </Helmet>
-      <Header search='search' back='back' cart='cart' title='마이 페이지'>
-        메인페이지
-      </Header>
       <section className='tranform absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 '>
         <article className='flex flex-col items-center justify-center'>
           <div className=' relative mb-2 h-[30vh] w-[50vh] items-center whitespace-nowrap rounded-full border-[1px] border-red-700 bg-lightPurple text-center align-middle text-[1rem] text-xs font-semibold text-primary shadow-md md:text-lg'>
@@ -48,4 +40,4 @@ function MyPage() {
     </>
   );
 }
-export default MyPage;
+export default Guest;
