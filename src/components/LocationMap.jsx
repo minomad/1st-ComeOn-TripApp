@@ -1,18 +1,26 @@
-import Button from './Button'
+import { useState } from 'react'
 import { Kakao1 } from './Kakao'
+import { Link } from 'react-router-dom';
+import Button from './Button'
 
 
 
 function LocationMap() {
+  const [selectAddress, setselectAddress] = useState({address: '원하는 장소를 클릭해주세요',
+    latitude: '',
+    longitude: ''
+})
 
   return (
-    <section className='relative'>
+    <section className='relative '>
       <h3 className='sr-only'>지도검색</h3>
-      <div className='flex bg-lightPurple py-2 text-[1rem] pl-[8%]'><img  className='w-[1.3rem] h-[100%] pt-[0.1rem] mr-2' src='/aroundActive.svg' alt='찜목록' />
-        서울특별시 강남구 테헤란로108길
+      <div className='fixed pt-[9rem] text-[1rem] font-semibold bg-opacity-4 max-w-3xl mx-auto top-0 left-0 right-0 z-10 flex bg-[#E0E4FF] py-2  pl-[8%]'><img  className='w-[1.3rem] h-[100%] pt-[0.1rem] mr-2' src='/aroundActive.svg' alt='찜목록' />
+        {selectAddress.address}
       </div>
-      <Kakao1 />
+      <Kakao1 setselectAddress={setselectAddress}/>
+      <Link to={`/around/${selectAddress.latitude}/${selectAddress.longitude} `}>
       <Button type='button'  className=' fixed bottom-[5.2rem] inset-x-0  z-10 px-[1.1rem] py-[0.75rem] flex mx-auto bg-primary font-bold text-white w-[8rem] h-[3rem] rounded-full shadow-lg'>위치 지정 완료</Button>
+      </Link>
     </section>
   )
 }
