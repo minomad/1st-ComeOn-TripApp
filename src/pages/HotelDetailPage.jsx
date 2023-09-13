@@ -8,11 +8,11 @@ import { toast, Toaster } from 'react-hot-toast';
 import Header from '@/components/Header';
 import Spinner from '@/components/Spinner';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
-import HotelRoom from '@/components/HotelRoom';
+import HotelRoomPage from '@/pages/HotelRoomPage';
 import HotelIntro from '@/components/HotelIntro';
 import HotelService from '@/components/HotelService';
 import HotelReview from '@/components/HotelReview';
-import useStorage from '@/Hook/useStorage';
+import useAuthStore from '@/store/useAuthStore';
 import Button from '@/components/Button';
 
 function HotelDetailPage() {
@@ -20,7 +20,8 @@ function HotelDetailPage() {
   const [selectCategory, setSelectCategory] = useState('객실선택');
   const { getIdData: getHotel } = usePocketData('hotel');
   const { updateData: updateUser } = usePocketData('users');
-  const { storageData: authUser } = useStorage('pocketbase_auth');
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const user = useAuthStore((state) => state.user);
 
   const { data: hotelData, isLoading } = useQuery(['hotel', id], () =>
     getHotel(id, { expand: 'room, review' }),
@@ -33,7 +34,7 @@ function HotelDetailPage() {
   const [isActive, setIsactive] = useState(false);
 
   const handleWish = () => {
-    const userId = authUser?.model?.id;
+    const userId = user?.id;
     setIsactive(!isActive);
 
     if (!isActive) {
@@ -78,14 +79,16 @@ function HotelDetailPage() {
               <span className='text-sm font-semibold text-gray3'>{hotelData.grade}</span>
               <div className='flex justify-between'>
                 <h3 className='text-2xl font-semibold max-[500px]:text-xl'>{hotelData.title}</h3>
-                <Button>
-                  <img
-                    src={isActive ? '/heartActive.svg' : '/hotel-heartBlack.svg'}
-                    alt='찜'
-                    className='h-7 w-7 cursor-pointer'
-                    onClick={handleWish}
-                  />
-                </Button>
+                {isAuth && (
+                  <Button>
+                    <img
+                      src={isActive ? '/heartActive.svg' : '/hotel-heartBlack.svg'}
+                      alt='찜'
+                      className='h-7 w-7 cursor-pointer'
+                      onClick={handleWish}
+                    />
+                  </Button>
+                )}
               </div>
               <div className='flex items-center gap-1 text-primary'>
                 <img src='/locationActive.svg' alt={hotelData.title} className='h-4 w-4' />
@@ -105,7 +108,7 @@ function HotelDetailPage() {
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-        {selectCategory === '객실선택' && <HotelRoom data={roomData} title={hotelData.title} />}
+        {selectCategory === '객실선택' && <HotelRoomPage data={roomData} title={hotelData.title} />}
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}
         {selectCategory === '시설/서비스' && <HotelService />}
         {selectCategory === '후기' && (

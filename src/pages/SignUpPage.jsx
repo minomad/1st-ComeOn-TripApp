@@ -15,7 +15,8 @@ function SignUpPage() {
   const { data: userData } = useQuery(['users'], () =>
     getListData({ fields: 'username,email,nickName' }),
   );
-  const { mutate: signUpMutate } = useMutation(async (userInfo) => {
+
+  const { mutate: signUp } = useMutation(async (userInfo) => {
     await createData(userInfo);
   });
 
@@ -150,10 +151,13 @@ function SignUpPage() {
     }
 
     try {
-      signUpMutate(userInfo, {
+      signUp(userInfo, {
         onSuccess: () => {
-          toast.success('가입성공');
-          navigate('/signin');
+          toast.success('회원가입이 완료되었습니다.');
+          setTimeout(() => {
+            toast.dismiss();
+            navigate('/');
+          }, 1000);
         },
         onError: () => {
           toast.error('입력하신 내용을 확인해주세요.');

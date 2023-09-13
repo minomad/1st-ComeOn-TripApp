@@ -6,20 +6,20 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
+import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
-import useStorage from '@/Hook/useStorage';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 
 function WishPage() {
-  const { storageData: authUser } = useStorage('pocketbase_auth');
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const user = useAuthStore((state) => state.user);
   const { getIdData, updateData: updateUser } = usePocketData('users');
   const [selectCategory, setSelectCategory] = useState('숙소');
   const queryClient = useQueryClient();
-
   const tag = ['숙소', '레저'];
-  const id = authUser?.model?.id;
+  const id = user?.id;
 
   const { data, isLoading } = useQuery(
     ['users', id],
@@ -33,7 +33,7 @@ function WishPage() {
   const wishHotel = data?.expand?.wishHotel;
   const wishLeisure = data?.expand?.wishLeisure;
 
-  if (!authUser) {
+  if (!isAuth) {
     return (
       <>
         <Header back='back' cart='cart' className='text-xl font-semibold' title='찜한 목록' />
@@ -45,7 +45,7 @@ function WishPage() {
             handleChangeCategory={setSelectCategory}
             className='text-xl'
           />
-          {!authUser && (
+          {!isAuth && (
             <div className='text-gray-600 flex flex-col items-center pt-20 font-semibold'>
               <p>로그인 후 찜한 목록을 확인해주세요.</p>
               <Link
@@ -100,7 +100,7 @@ function WishPage() {
         className='text-xl'
       />
       <section className='px-4 pb-20'>
-        {selectCategory === '숙소' && authUser && !wishHotel && (
+        {selectCategory === '숙소' && isAuth && !wishHotel && (
           <section className='mt-20 flex flex-col items-center gap-2 font-semibold'>
             <figure>
               <img src='/heartActive.svg' alt='하트' className='w-14' />
@@ -114,7 +114,6 @@ function WishPage() {
             </Link>
           </section>
         )}
-
         {selectCategory === '숙소' && (
           <>
             {wishHotel?.map((item) => (
@@ -155,7 +154,7 @@ function WishPage() {
           </>
         )}
 
-        {selectCategory === '레저' && authUser && !wishLeisure && (
+        {selectCategory === '레저' && isAuth && !wishLeisure && (
           <section className='mt-20 flex flex-col items-center gap-2 font-semibold'>
             <figure>
               <img src='/heartActive.svg' alt='하트' className='w-14' />

@@ -22,7 +22,7 @@ export function usePocketData(collection) {
   // isLoading,
   // isError,
   // data,
-  // } = useQuery(['hotel', id], () => getDramaId(id));
+  // } = useQuery(['hotel', id], () => getIdData(id));
 
   const createData = (data) => pb.collection(collection).create(data);
 
@@ -30,23 +30,11 @@ export function usePocketData(collection) {
 
   const deleteData = (id) => pb.collection(collection).delete(id);
 
-  const signIn = ({ email, password }) => pb.collection('users').authWithPassword(email, password);
-
-  const signOut = () => pb.authStore.clear();
-
-  const isAuth = () => pb.authStore.model();
-
-  const authRefresh = () => pb.collection(collection).authRefresh();
-
   return {
     getListData,
     getIdData,
     createData,
     updateData,
     deleteData,
-    signIn,
-    signOut,
-    isAuth,
-    authRefresh,
   };
 }

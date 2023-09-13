@@ -1,26 +1,21 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { usePocketData } from '@/api/usePocketData';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { toast, Toaster } from 'react-hot-toast';
+import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Form from '@/components/Form';
 
 function SignInPage() {
-  const { signIn } = usePocketData('users');
+  const { signIn } = useAuthStore();
   const navigate = useNavigate();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
-  const { mutate: signInMutate } = useMutation(async (loginInfo) => {
-    await signIn(loginInfo);
-  });
-
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
@@ -31,17 +26,14 @@ function SignInPage() {
     };
 
     try {
-      signInMutate(loginInfo, {
-        onSuccess: () => {
-          toast.success('로그인 성공');
-          navigate('/');
-        },
-        onError: () => {
-          toast.error('입력하신 내용을 확인해주세요');
-        },
-      });
+      await signIn(loginInfo);
+      toast.success('로그인 되었습니다.');
+      setTimeout(() => {
+        toast.dismiss();
+        navigate('/');
+      }, 1000);
     } catch (error) {
-      console.error('서버 에러');
+      toast('입력하신 내용을 확인해주세요.');
     }
   };
 
@@ -85,7 +77,7 @@ function SignInPage() {
           </div>
           <Button
             type='submit'
-            className='my-2 w-full max-w-md rounded-lg border py-2 text-center font-bold text-secondary hover:text-primary'
+            className='my-2 w-full max-w-md rounded-lg border py-2 text-center font-bold text-primary hover:bg-primary hover:text-white'
           >
             로그인
           </Button>
