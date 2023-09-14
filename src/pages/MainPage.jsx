@@ -39,7 +39,7 @@ function MainPage() {
         <title>야무지개놀자</title>
       </Helmet>
       <Header logo='logo' search='search' cart='cart' />
-      <section className='pb-24'>
+      <section className=''>
         <h2 className='sr-only'>메인페이지</h2>
         <div className='mb-4'>
           <Swiper
@@ -101,7 +101,19 @@ function MainPage() {
           </HotelList>
         </section>
       </section>
-      <footer></footer>
+      <footer className='textb mx-auto max-w-2xl bg-slate-50 p-4 pb-20 text-gray3'>
+        <div className='flex items-center gap-1'>
+          <img src='/logo.svg' alt='로고' />
+          <p>(주)야무지개놀자</p>
+        </div>
+        <div className='flex flex-col'>
+          <p>대표 : 강경민, 김종윤, 신명화, 장효윤</p>
+          <p>메일 : help@yamoossam.com</p>
+          <p>주소 : 서울특별시 강남구 테헤란로108길 42 </p>
+          <p>고객센터 : 1234-1234 (9시 - 3시)</p>
+          <p>&copy; 2023 (주) 야무지개놀자 모든 권리 보유</p>
+        </div>
+      </footer>
     </>
   );
 }

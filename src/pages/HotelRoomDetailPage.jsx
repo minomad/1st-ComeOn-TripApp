@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { usePocketData } from '@/api/usePocketData';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
@@ -19,8 +19,15 @@ import 'swiper/css/navigation';
 function HotelRoomDetailPage() {
   const { id, hotel } = useParams();
   const { getIdData: getRoom } = usePocketData('room');
-  const { data: roomData, isLoading } = useQuery(['room', id], () => getRoom(id));
+  const { updateData: updateUser } = usePocketData('users');
+  const { data: roomData, isLoading: roomLoading } = useQuery(['room', id], () => getRoom(id));
+
   const isAuth = useAuthStore((state) => state.isAuth);
+  const user = useAuthStore((state) => state.user);
+  const userId = user.id;
+
+  const queryClient = useQueryClient();
+
   const navigation = useNavigate();
 
   const [isShowPayment, setIsShowPayment] = useState(false);
@@ -47,7 +54,7 @@ function HotelRoomDetailPage() {
               <Button
                 className='rounded-lg bg-accent px-1 py-2 text-white'
                 onClick={() => {
-                  toast.dismiss(f.id);
+                  toast.dismiss();
                 }}
               >
                 아니오
@@ -71,15 +78,20 @@ function HotelRoomDetailPage() {
     navigation(`/booking/${roomData.id}/${hotel}`);
   };
 
-  const handleCart = () => {
+  const handleCart = async () => {
+    await updateUser(userId, {
+      'cartRoom+': id,
+    });
+    queryClient.invalidateQueries(['users']);
+
     toast(
-      (f) => (
+      (c) => (
         <div className='flex gap-1 font-semibold'>
-          <div className='text-white'>장바구니에 담겼습니다.</div>
+          <div className='text-primary'>장바구니에 담겼습니다.</div>
           <Button
             className='text-accent'
             onClick={() => {
-              toast.dismiss(f.id);
+              toast.dismiss(c.id);
               setTimeout(() => {
                 navigation('/cart');
               }, 1000);
@@ -99,7 +111,7 @@ function HotelRoomDetailPage() {
     setIsShowPayment(false);
   };
 
-  if (isLoading) {
+  if (roomLoading) {
     return <Spinner />;
   }
 
@@ -163,9 +175,9 @@ function HotelRoomDetailPage() {
             className='fixed bottom-0 z-[100] flex w-full max-w-3xl flex-col gap-1 border-t-2 border-[#919191] bg-white px-5 py-4 font-bold'
           >
             <div className='flex justify-end'>
-              <button onClick={handleClosePayment} className='pb-2'>
+              <Button onClick={handleClosePayment} className='pb-2'>
                 <img src='/close.svg' alt='닫기' />
-              </button>
+              </Button>
             </div>
             <div className='flex items-center justify-between'>
               <span className='pl-1'>총</span>
@@ -175,27 +187,24 @@ function HotelRoomDetailPage() {
               결제 단계에서 쿠폰 적용시 추가 할인 가능
             </span>
             <div className='flex justify-between gap-2 font-bold'>
-              <button
+              <Button
                 className='w-[50%] rounded-[4px] border border-primary px-4 py-2 text-primary'
                 onClick={handleCart}
               >
                 장바구니 담기
-              </button>
-              <button
+              </Button>
+              <Button
                 className='w-[50%] rounded-[4px] border bg-primary px-4 py-2 text-white'
                 onClick={handlePayment}
               >
                 바로 예약하기
-              </button>
+              </Button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
       <Toaster
         toastOptions={{
-          style: {
-            background: 'rgba(1, 1, 1)',
-          },
           success: {
             style: {
               background: '#5D6FFF',
@@ -209,7 +218,6 @@ function HotelRoomDetailPage() {
             },
           },
         }}
-        position='bottom-center'
       />
     </>
   );

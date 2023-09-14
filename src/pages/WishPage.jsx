@@ -20,11 +20,12 @@ function WishPage() {
   const { getIdData, updateData: updateUser } = usePocketData('users');
   const [selectCategory, setSelectCategory] = useState('숙소');
   const tag = ['숙소', '레저'];
+
   const queryClient = useQueryClient();
   const id = user?.id;
 
   const { data, isLoading } = useQuery(
-    ['users', id],
+    ['userWish', id],
     () => getIdData(id, { expand: 'wishHotel, wishLeisure' }),
     {
       refetchOnWindowFocus: false,
@@ -78,7 +79,7 @@ function WishPage() {
       'wishHotel-': itemId,
     });
     toast.error('찜 목록에서 해제하였습니다.');
-    queryClient.invalidateQueries(['users']);
+    queryClient.invalidateQueries(['userWish']);
   };
 
   const handleWishLeisure = async (itemId) => {
@@ -86,7 +87,7 @@ function WishPage() {
       'wishLeisure-': itemId,
     });
     toast.error('찜 목록에서 해제하였습니다.');
-    queryClient.invalidateQueries(['users']);
+    queryClient.invalidateQueries(['userWish']);
   };
 
   return (
@@ -107,6 +108,7 @@ function WishPage() {
             <WishList heart='heart' hotel='hotel' link='hotel' />
           </>
         )}
+
         {selectCategory === '숙소' && (
           <>
             <AnimatePresence>

@@ -1,5 +1,5 @@
-import { string } from 'prop-types';
 import { Link } from 'react-router-dom';
+import { string } from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from './Button';
 
@@ -38,7 +38,6 @@ function WishList({ link, heart, hotel, leisure, cart }) {
   );
 }
 export default WishList;
-
 WishList.propTypes = {
   link: string,
   heart: string,

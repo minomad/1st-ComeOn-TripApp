@@ -99,9 +99,9 @@ function HotelDetailPage() {
               </div>
               <div className='flex items-center gap-1 text-primary'>
                 <img src='/locationActive.svg' alt={hotelData.title} className='h-4 w-4' />
-                <button type='button' onClick={handleShowMap}>
+                <Button type='button' onClick={handleShowMap}>
                   {hotelData.location}
-                </button>
+                </Button>
               </div>
               <div className='flex items-center gap-1 pt-1 text-sm text-gray2'>
                 <img src='/star.svg' alt='평점' className='h-4 w-4' />
@@ -120,16 +120,16 @@ function HotelDetailPage() {
               transition={{ duration: 0.5 }}
               className='fixed bottom-0 left-0 right-0 top-0 z-[100] flex items-center justify-center'
             >
-              <div className='w-full max-w-2xl rounded-lg bg-white p-4 shadow-lg'>
+              <div className='w-full max-w-2xl rounded-lg bg-white shadow-lg'>
                 <Kakao2
                   data={hotelData}
                   latitude={hotelData.latitude}
                   longitude={hotelData.longitude}
                   className='mb-2 h-[50vh] w-auto max-w-3xl'
                 />
-                <button onClick={handleShowMap}>
-                  <img src='/close.svg' alt='닫기' />
-                </button>
+                <Button onClick={handleShowMap} className='pl-2'>
+                  <img src='/close.svg' alt='닫기' className='h-5 w-5' />
+                </Button>
               </div>
             </motion.div>
           )}
