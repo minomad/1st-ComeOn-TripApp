@@ -33,7 +33,7 @@ function SignInPage() {
         navigate('/');
       }, 1000);
     } catch (error) {
-      toast('입력하신 내용을 확인해주세요.');
+      toast.error('입력하신 내용을 확인해주세요.');
     }
   };
 

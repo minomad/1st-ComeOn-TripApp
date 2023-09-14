@@ -1,24 +1,26 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toast, Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
+import { toast, Toaster } from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
+import WishList from '@/components/WishList';
 
 function WishPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
   const { getIdData, updateData: updateUser } = usePocketData('users');
   const [selectCategory, setSelectCategory] = useState('숙소');
-  const queryClient = useQueryClient();
   const tag = ['숙소', '레저'];
+  const queryClient = useQueryClient();
   const id = user?.id;
 
   const { data, isLoading } = useQuery(
@@ -101,72 +103,61 @@ function WishPage() {
       />
       <section className='px-4 pb-20'>
         {selectCategory === '숙소' && isAuth && !wishHotel && (
-          <section className='mt-20 flex flex-col items-center gap-2 font-semibold'>
-            <figure>
-              <img src='/heartActive.svg' alt='하트' className='w-14' />
-            </figure>
-            <p>찜한 숙소가 없습니다.</p>
-            <Link
-              to='/hotel'
-              className='my-2 rounded border px-20 py-2  text-center text-gray2 hover:text-primary'
-            >
-              숙소 보러가기
-            </Link>
-          </section>
+          <>
+            <WishList heart='heart' hotel='hotel' link='hotel' />
+          </>
         )}
         {selectCategory === '숙소' && (
           <>
-            {wishHotel?.map((item) => (
-              <article
-                key={item.id}
-                className='relative mx-auto mt-3 w-full max-w-xl gap-3 rounded-3xl bg-white p-3 shadow-lg min-[400px]:flex'
-              >
-                <figure className='overflow-hidden rounded-2xl max-[450px]:mb-2'>
-                  <img
-                    src={getPbImageURL(item, 'img')}
-                    alt={item.title}
-                    className='h-[130px] w-full min-[400px]:max-w-[130px]'
-                  />
-                  <figcaption className='sr-only'>{item.title}</figcaption>
-                </figure>
-                <Button className='absolute right-5 h-7 w-7 cursor-pointer'>
-                  <img src='/heartActive.svg' alt='찜' onClick={() => handleWishHotel(item.id)} />
-                </Button>
-                <Link to={`/hotel/${item.id}`} className='hover:text-primary'>
-                  <div>
-                    <h2 className='text-lg font-bold'>{item.title}</h2>
-                    <div className='flex items-center'>
-                      <img src='/star.svg' alt='평점' className='h-4 w-4' />
-                      <span className='text-sm'>{item.star}</span>
+            <AnimatePresence>
+              {wishHotel?.map((item) => (
+                <motion.article
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.5 }}
+                  key={item.id}
+                  className='relative mx-auto mt-3 w-full max-w-xl gap-3 rounded-3xl bg-white p-3 shadow-lg min-[400px]:flex'
+                >
+                  <figure className='overflow-hidden rounded-2xl max-[450px]:mb-2'>
+                    <img
+                      src={getPbImageURL(item, 'img')}
+                      alt={item.title}
+                      className='h-[130px] w-full min-[400px]:max-w-[130px]'
+                    />
+                    <figcaption className='sr-only'>{item.title}</figcaption>
+                  </figure>
+                  <Button className='absolute right-5 h-7 w-7 cursor-pointer'>
+                    <img src='/heartActive.svg' alt='찜' onClick={() => handleWishHotel(item.id)} />
+                  </Button>
+                  <Link to={`/hotel/${item.id}`} className='hover:text-primary'>
+                    <div>
+                      <h2 className='text-lg font-bold'>{item.title}</h2>
+                      <div className='flex items-center'>
+                        <img src='/star.svg' alt='평점' className='h-4 w-4' />
+                        <span className='text-sm'>{item.star}</span>
+                      </div>
+                    </div>
+                  </Link>
+                  <div className='flex items-center gap-1 text-sm text-gray2 max-[450px]:pt-2'>
+                    <div className='absolute bottom-[10px] right-5'>
+                      <span className='mr-3 text-[0.9rem] text-gray2'>숙박: 15:00~</span>
+                      <span className='text-[1.2rem] font-bold text-primary'>
+                        {numberWithComma(item.price)}원
+                      </span>
                     </div>
                   </div>
-                </Link>
-                <div className='flex items-center gap-1 text-sm text-gray2 max-[450px]:pt-2'>
-                  <div className='absolute bottom-[10px] right-5'>
-                    <span className='mr-3 text-[0.9rem] text-gray2'>숙박: 15:00~</span>
-                    <span className='text-[1.2rem] font-bold text-primary'>
-                      {numberWithComma(item.price)}원
-                    </span>
-                  </div>
-                </div>
-              </article>
-            ))}
+                </motion.article>
+              ))}
+            </AnimatePresence>
           </>
         )}
+        <AnimatePresence />
 
         {selectCategory === '레저' && isAuth && !wishLeisure && (
-          <section className='mt-20 flex flex-col items-center gap-2 font-semibold'>
-            <figure>
-              <img src='/heartActive.svg' alt='하트' className='w-14' />
-            </figure>
-            <p>찜한 레저가 없습니다.</p>
-            <Link
-              to='/leisure'
-              className='my-2 rounded border px-20 py-2  text-center text-gray2 hover:text-primary'
-            >
-              레저 보러가기
-            </Link>
-          </section>
+          <>
+            <WishList heart='heart' leisure='leisure' link='leisure' />
+          </>
         )}
 
         {selectCategory === '레저' && (
@@ -208,7 +199,7 @@ function WishPage() {
         )}
         <Toaster
           toastOptions={{
-            duration: 1000,
+            duration: 900,
             error: {
               style: {
                 background: '#E03B69',

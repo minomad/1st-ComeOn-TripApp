@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { toast, Toaster } from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Kakao2 } from '@/components/Kakao';
 import Header from '@/components/Header';
 import Spinner from '@/components/Spinner';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
@@ -32,6 +34,7 @@ function HotelDetailPage() {
   const reviewData = hotelData?.expand?.review;
 
   const [isActive, setIsactive] = useState(false);
+  const [isShowMap, setIsShowMap] = useState(false);
 
   const handleWish = () => {
     const userId = user?.id;
@@ -50,6 +53,10 @@ function HotelDetailPage() {
     }
   };
 
+  const handleShowMap = () => {
+    setIsShowMap(!isShowMap);
+  };
+
   const handleChangeCategory = (category) => {
     setSelectCategory(category);
   };
@@ -63,7 +70,7 @@ function HotelDetailPage() {
       <Helmet>
         <title>{hotelData.title}</title>
       </Helmet>
-      <Header back='back' home='home' cart='cart' />
+      <Header back='back' cart='cart' title={hotelData.title} className='text-xl font-bold' />
       <section className='relative'>
         <h2 className='sr-only'>호텔 상세 페이지</h2>
         <div className='flex justify-center'>
@@ -92,7 +99,9 @@ function HotelDetailPage() {
               </div>
               <div className='flex items-center gap-1 text-primary'>
                 <img src='/locationActive.svg' alt={hotelData.title} className='h-4 w-4' />
-                {hotelData.location}
+                <button type='button' onClick={handleShowMap}>
+                  {hotelData.location}
+                </button>
               </div>
               <div className='flex items-center gap-1 pt-1 text-sm text-gray2'>
                 <img src='/star.svg' alt='평점' className='h-4 w-4' />
@@ -102,6 +111,29 @@ function HotelDetailPage() {
             </div>
           </div>
         </div>
+        <AnimatePresence>
+          {isShowMap && (
+            <motion.div
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -100 }}
+              transition={{ duration: 0.5 }}
+              className='fixed bottom-0 left-0 right-0 top-0 z-[100] flex items-center justify-center'
+            >
+              <div className='w-full max-w-2xl rounded-lg bg-white p-4 shadow-lg'>
+                <Kakao2
+                  data={hotelData}
+                  latitude={hotelData.latitude}
+                  longitude={hotelData.longitude}
+                  className='mb-2 h-[50vh] w-auto max-w-3xl'
+                />
+                <button onClick={handleShowMap}>
+                  <img src='/close.svg' alt='닫기' />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <HotelInfoCategory
           info={info}
           className='justify-between'
@@ -121,7 +153,7 @@ function HotelDetailPage() {
         )}
         <Toaster
           toastOptions={{
-            duration: 1000,
+            duration: 900,
             success: {
               style: {
                 background: '#5D6FFF',

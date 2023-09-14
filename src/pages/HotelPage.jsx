@@ -12,7 +12,7 @@ import HotelList from '@/components/HotelList';
 function HotelPage() {
   const { getListData } = usePocketData('hotel');
   const filter =
-    'category != "강원" && category != "제주" && category != "부산" && category != "광주"';
+    'category = "휴가에딱" || category = "도심힐링" || category = "바다낭만" || category = "리조트"|| category = "도쿄" || category = "오사카" || category = "후쿠오카" || category = "교토"';
   const {
     data: hotelData,
     isLoading,

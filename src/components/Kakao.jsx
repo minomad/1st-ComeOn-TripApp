@@ -128,7 +128,7 @@ export function Kakao1({setselectAddress}) {
     kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
         searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                let detailAddr = !!result[0].road_address ? result[0].road_address.address_name  : result[0].address.address_name;
+                let detailAddr = result[0].road_address ? result[0].road_address.address_name  : result[0].address.address_name;
                 // detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
                 
                 // const content = '<div class="bAddr" style="width:8rem; border-radius: 25% 10%; border: solid red;  translate:0px -0.3rem;">' +
@@ -201,3 +201,49 @@ export function Kakao1({setselectAddress}) {
   )
 }
 
+//사용 예시 : <Kakao2 latitude='37.474690139678195' longitude='126.99379931705693' className='w-[100%] h-[80vh] mt-[5rem]'/>
+
+export function Kakao2({latitude , longitude, className}) {
+
+  useEffect(() => {
+    const mapContainer = document.getElementById('map');
+    const mapOption = {
+      center: new kakao.maps.LatLng(latitude, longitude),
+      level: 4
+    };
+    
+    const map = new kakao.maps.Map(mapContainer, mapOption);
+
+    // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+    const mapTypeControl = new kakao.maps.MapTypeControl();
+
+    // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+    // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    const imageSrc = '/around-lodgingMarker.svg', // 마커이미지의 주소입니다    
+    imageSize = new kakao.maps.Size(45, 45), // 마커이미지의 크기입니다
+    imageOption = {offset: new kakao.maps.Point(50, 50)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
+    // 좌표를 이용하여 마커와 커스텀 오버레이 생성
+    
+    const marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(latitude, longitude),
+        image: markerImage
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+    
+  }, []);
+
+  return (
+    <div id="map" className={className}></div>
+  )
+}
