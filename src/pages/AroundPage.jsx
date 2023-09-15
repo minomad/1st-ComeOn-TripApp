@@ -22,12 +22,12 @@ function AroundPage() {
   const { data: leisureData } = useQuery(['leisure'], () => getLeisureData());
 
   const { getListData } = usePocketData('hotel');
+  const filter = 'category = "도심힐링" || category = "강원" || category = "제주" || category = "부산" || category = "광주"'
   const {
     data: hotelData,
     isLoading: isHotelLoading,
     isError,
-  } = useQuery(['hotel'], () => getListData());
-
+  } = useQuery(['hotel'], () => getListData({filter}));
   const {latitude, longitude } = useParams();
   
 
@@ -45,13 +45,13 @@ function AroundPage() {
       <Helmet>
         <title>내주변</title>
       </Helmet>
+      <h2 className='sr-only'>내주변 페이지</h2>
       <header className='fixed top-0 left-0 right-0 z-20 mx-auto bg-white flex text text-center max-w-3xl justify-between px-5 m:px-[5rem] pt-4 gap-5'>
         <form action="" method="get" className='w-[100%]'>
           <Input id='aroundSearch' label='장소 검색' type='search' labelClass='sr-only' inputRef={aroundSearch} placeholder='장소, 지명 검색' className='bg-lightPurple w-[100%]  h-9 rounded-full px-5 focus:outline-none focus:ring-none focus:ring-secondary search-cancel:rotate-45'  />
           </form>
         <Button>
           {<img src='/cart.svg' alt='장바구니' className='h-7 py-0.4' />}
-
         </Button>
       </header>
       <nav className='fixed mx-auto max-w-3xl bg-white pt-14 top-0 left-0 right-0 z-10'>
@@ -63,38 +63,24 @@ function AroundPage() {
             // icon={icon}
           />
       </nav>
-      <h2 className='sr-only'>내주변 페이지</h2>
-      {/* 첫번째 지도 섹션 */}
-
-      {/* {selectCategory==='목록' && selectCategory==='숙소' ? <AroundList img={img} title={title} star={data1?.star} price={data1?.price} />
-      :( selectCategory==='숙소' ?<AroundMap img={img} title={title} star={data1?.star} price={data1?.price}  />:'')
-      } */}
-
-      {/* 두번째 호텔 섹션 */}
       {
-        
-      }
-  
-  {
-  isCheck && selectCategory==='숙소' 
-  ? <AroundList data={hotelData}  selectCategory={selectCategory}  /> 
-  : (!isCheck && selectCategory==='숙소' ? <AroundMap data={hotelData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
+      isCheck && selectCategory==='숙소' 
+      ? <AroundList data={hotelData}  selectCategory={selectCategory}  /> 
+      : (!isCheck && selectCategory==='숙소' ? <AroundMap data={hotelData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
 
-      {/* {isCheck && selectCategory==='레저/티켓' ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory} setSelectCategory={setSelectCategory} img={img} title={title} star={data1?.star} price={data1?.price} /> :<AroundMap data={leisureData} selectCategory={selectCategory} img={img} title={title} star={data1?.star} price={data1?.price}  />} */}
-      {/* {selectCategory=='레저/티켓'? <AroundList data={hotelData}  selectCategory={selectCategory} setSelectCategory={setSelectCategory} img={img} title={title} star={data1?.star} price={data1?.price} /> :<AroundMap data={hotelData} selectCategory={selectCategory} img={img} title={title} star={data1?.star} price={data1?.price}  />} */}
-  {
-  isCheck && selectCategory==='레저/티켓' 
-  ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory}  /> 
-  : (!isCheck && selectCategory==='레저/티켓' ? <AroundMap data={leisureData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
+      {
+      isCheck && selectCategory==='레저/티켓' 
+      ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory}  /> 
+      : (!isCheck && selectCategory==='레저/티켓' ? <AroundMap data={leisureData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
 
 
-      <Button type='button' className={`fixed bottom-[5.2rem] inset-x-0 z-10 mx-auto flex rounded-full w-[5.5rem] h-[2.5rem] bg-primary  font-semibold  text-[1rem] shadow-md py-2 px-4 gap-2 ${isCheck ?'bg-white text-primary border-primary border-[0.12rem] bottom-[4.9rem]':'text-white bottom-[4.9rem] ' } `} 
-      onClick={() => {setCheck((e) => !e);
-            }}
-        >
-        {isCheck ?<img src='/around-map.svg' alt='targetButton' className='py-2 translate-y-[-0.25rem]' />:<img src='/around-list.svg' alt='targetButton' className='py-2 translate-y-[-0.15rem]' />}  {isCheck ? "지도" : "목록"}
-      </Button>
-    </>
+          <Button type='button' className={`fixed bottom-[5.2rem] inset-x-0 z-10 mx-auto flex rounded-full w-[5.5rem] h-[2.5rem] bg-primary  font-semibold  text-[1rem] shadow-md py-2 px-4 gap-2 ${isCheck ?'bg-white text-primary border-primary border-[0.12rem] bottom-[4.9rem]':'text-white bottom-[4.9rem] ' } `} 
+          onClick={() => {setCheck((e) => !e);
+                }}
+            >
+            {isCheck ?<img src='/around-map.svg' alt='targetButton' className='py-2 translate-y-[-0.25rem]' />:<img src='/around-list.svg' alt='targetButton' className='py-2 translate-y-[-0.15rem]' />}  {isCheck ? "지도" : "목록"}
+          </Button>
+        </>
   );
 }
 export default AroundPage;

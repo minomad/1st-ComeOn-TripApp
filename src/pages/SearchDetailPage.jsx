@@ -16,13 +16,14 @@ function LocationDetailPage() {
 
   const [selectCategory, setSelectCategory]= useState(category);
 
-  const { getListData } = usePocketData('hotel');
-  const { data: hotelData,
-    isLoading: isHotelLoading,
-    isError , 
-  } = useQuery(['hotel'], () => getListData());
 
-  if (isHotelLoading) {
+  const { getListData:getLeisureData } = usePocketData('leisure');
+  const { data: leisureData,
+    isLoading,
+    isError ,
+  } = useQuery(['leisure'], () => getLeisureData());
+
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -37,11 +38,11 @@ function LocationDetailPage() {
     case '강원':
       hotelCategoryData = hotelData.filter((hotel) => hotel.category === '강원');
       break;
-    case '광주':
-      hotelCategoryData = hotelData.filter((hotel) => hotel.category === '광주');
+    case '놀이동산':
+      hotelCategoryData = leisureData.filter((leisure) => leisure.category === '놀이동산');
       break;
     default:
-      hotelCategoryData = hotelData.filter((hotel) => hotel.category === selectCategory);
+      hotelCategoryData = leisureData.filter((leisure) => leisure.category === selectCategory);
       break;
     
   }
@@ -85,7 +86,7 @@ function LocationDetailPage() {
                 <span className='block text-[1.2rem] font-extrabold mr-2 '>{numberWithComma(item.price)}원</span>
             </div>
             
-            <Link to={`hotel/${item.id}`}>
+            <Link to={`/LeisureDetail/${item.id}`}>
               <Button type='button' className='ml-auto mr-0 mb-2 mt-auto flex rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '
               > {'숙소 예약하기'}
               </Button>
