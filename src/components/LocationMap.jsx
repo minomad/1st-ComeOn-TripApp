@@ -14,7 +14,7 @@ function LocationMap() {
   return (
     <section className='relative '>
       <h3 className='sr-only'>지도검색</h3>
-      <div className='fixed pt-[9rem] text-[1rem] font-semibold bg-opacity-4 max-w-3xl mx-auto top-0 left-0 right-0 z-10 flex bg-[#E0E4FF] py-2  pl-[8%]'><img  className='w-[1.3rem] h-[100%] pt-[0.1rem] mr-2' src='/aroundActive.svg' alt='찜목록' />
+      <div className='fixed pt-[6.3rem] text-[1rem] font-semibold bg-opacity-4 max-w-3xl mx-auto top-0 left-0 right-0 z-10 flex bg-[#E0E4FF] py-2  pl-[8%]'><img  className='w-[1.3rem] h-[100%] pt-[0.1rem] mr-2' src='/aroundActive.svg' alt='찜목록' />
         {selectAddress.address}
       </div>
       <Kakao1 setselectAddress={setselectAddress}/>

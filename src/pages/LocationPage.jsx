@@ -3,6 +3,7 @@ import { Children } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
+import { Kakao2 } from '../components/Kakao';
 import Button from '@/components/Button'
 import Category from '@/components/Category'
 import Header from '@/components/Header'
@@ -14,16 +15,17 @@ import Spinner from '@/components/Spinner';
 function LocationPage() {
   const [selectNav, setSelectNav] = useState('지역별');
   const [selectCategory, setSelectCategory] = useState('');
-  const category = ['강원', '제주', '부산', '광주'];
+  // const category = ['강원', '제주', '부산', '광주'];
 
   
   const { getListData } = usePocketData('hotel');
+  const filter = 'category = "도심힐링" || category = "강원" || category = "제주" || category = "부산" || category = "광주" || category = "도쿄"|| category = "후쿠오카" || category = "오사카" || category = "교토"|| category = "싱가포르"|| category = "베트남" || category = "태국"|| category = "스페인"|| category = "프랑스"|| category = "스위스"|| category = "이탈리아"';
   const { data: hotelData,
     isLoading: isHotelLoading,
     isError , 
-  } = useQuery(['hotel'], () => getListData());
+  } = useQuery(['hotel'], () => getListData({filter}));
 
-
+  
   const handleChangeNav = (nav) => {
     setSelectNav(nav);
   };
@@ -44,6 +46,7 @@ function LocationPage() {
     <Helmet>
       <title>지역</title>
     </Helmet>
+    <h2 className='sr-only'>지역 페이지</h2>
     <Header className= 'text-xl font-semibold' search='search' title='지역' back />
     <nav className='fixed bg-white pt-14 top-0 left-0 right-0 z-20'>
       <ul className='text-center mx-auto flex max-w-3xl justify-evenly border-b-[0.1rem] border-[#E1E1E1] mx-15'>
@@ -67,17 +70,18 @@ function LocationPage() {
               : 'text-gray2'
             } `}>{'지도검색'}</Button></li>
       </ul>
-      <Category
+    {/*   <Category
           className='justify-center max-w-3xl mx-auto gap-4 py-2 border-b-[0.1rem] border-[#E1E1E1]'
           category={category}
           selectCategory={selectCategory}
           setSelectCategory={setSelectCategory}
           // icon={icon}
-        />
+        /> */}
     </nav>
-    <h2 className='sr-only'>지역 페이지</h2>
+    
     {selectNav === '지역별' && <LocationChoice data={hotelData} /> }
     {selectNav === '지도검색' && <LocationMap/>}
+
     
     </>
   )
@@ -86,36 +90,6 @@ export default LocationPage
 
 
 
-/* export function LocationSideButtonList({ locationSideButton, selectLocationSide, setSelectLocationSide, className }) {
-  return (
-    <ul className={`flex  flex-col  ${className}`}>
-      {locationSideButton.map((item) => {
-        const isActive = selectLocationSide === item;
-        return (
-          
-          <li
-            key={item}
-            aria-label={item}
-            tabIndex='0'
-            className={``}
-          onClick={() => {
-            setSelectLocationSide(item);
-          }}
-          >
-            <Button 
-            className={` w-[100%] text-gray2 font-bold px-[3.9rem] py-7  bg-lightPurple border-b-[0.1rem] border-[#E1E1E1] 
-            ${isActive ? 'bg-white text-black' : ''
-            }`} 
-            onClick={() => {
-              setSelectLocationSide(item);
-            }}
-            >{item}</Button>
-            
-          </li>
-        );
-      })}
-    </ul>
-  );
-} */
+
 
 

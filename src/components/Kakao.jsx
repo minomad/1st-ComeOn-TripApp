@@ -191,7 +191,7 @@ export function Kakao1({setselectAddress}) {
   return (
     <>
     <div className="relative w-[100%] ">
-        <div id="map" className='w-[100%] h-[85vh] mt-[7rem]'></div>
+        <div id="map" className='w-[100%] h-[85vh] mt-[4.7rem]'></div>
           <div className="absolute left-3 top-3 rounded-md bg-white z-10  shadow-md">
             <div className="title text-sm bg-primary rounded-t-md text-white w-[100%] px-2 pt-2 pb-[0.2rem] font-bold">지도중심기준 행정동 주소정보</div>
             <span id="centerAddr" className='block font-normal py-1 px-2 text-sm'></span>
@@ -200,6 +200,7 @@ export function Kakao1({setselectAddress}) {
     </>
   )
 }
+
 
 //사용 예시 : <Kakao2 latitude='37.474690139678195' longitude='126.99379931705693' className='w-[100%] h-[80vh] mt-[5rem]'/>
 

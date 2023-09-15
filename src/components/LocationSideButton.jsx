@@ -13,7 +13,6 @@ function LocationSideButton({ locationSideButton, selectLocationSide, setSelectL
           const isActive = selectLocationSide === item;
       
           return (
-      
             <li
               key={item}
               aria-label={item}
@@ -22,23 +21,19 @@ function LocationSideButton({ locationSideButton, selectLocationSide, setSelectL
             onClick={() => {
               setSelectLocationSide(item);
               handleChangeLocationSide(item)
-            }}
-              
-            >
+            }}>
               <Button
-              className={` w-full text-gray2 font-bold px-[3.9rem] py-7 text-[0.9rem] bg-lightPurple border-b-[0.1rem] border-[#E1E1E1]
+              className={` w-full text-gray2 font-bold px-[3rem] py-7 text-[0.9rem] bg-lightPurple border-b-[0.1rem] border-[#E1E1E1]
               ${isActive ? 'bg-white  text-[#000000] ' : ''
               }`}
               onClick={() => {
                 setSelectLocationSide(item);
               }}
               >{item}</Button>
-      
             </li>
           );
         })}
       </ul>
-      
     </>
   );
 }
