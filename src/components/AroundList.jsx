@@ -27,12 +27,9 @@ function AroundList({data, selectCategory}) {
   }
 
 
-
-
-
   return (
     <section className='relative'>
-      <h2 className='sr-only'>내 주변 숙소 목록</h2>
+    <h3 className='sr-only'>내 주변 숙소 목록</h3>
     <nav className='fixed bg-white pt-[6rem] top-0 left-0 right-0 max-w-3xl mx-auto'>
       <Button type='button' className='ml-auto mr-3 mt-auto flex rounded-full text-[0.9rem] pt-2 pb-1 px-4 font-bold'
         onClick={() => {setSelectOrder((e) => !e);}}
@@ -62,14 +59,17 @@ function AroundList({data, selectCategory}) {
           </figure>
           {/* 호텔명, 별점, 가격 설명박스 */}
           <div className='px-6 pt-3  '>
-            <h2 className='font-bold text-lg'>{item.title}</h2>
+            <h4 className='font-bold text-lg'>{item.title}</h4>
             <img src='/star.svg' alt='별점' className='inline-block mb-[0.3rem] mr-[0.3rem] '/>
             <span className='font-extrabold text-[0.9rem]'>{item.star} </span>
             <span className='font-bold text-gray2 text-[0.9rem]'>&#183; {item.grade} </span>
+            <div className=' bg-lightPurple inline-block ml-1 pr-3 pl-2 pb-1 rounded-full'>
+              <img src='/locationActive.svg' alt='위치' className='inline-block h-4  mr-[0.2rem] '/>
+              <span className='font-medium text-primary text-[0.8rem] mb-[1rem]'>{item.location} </span>
+            </div>
             <div className=' flex justify-between py-4  '>
-              <span className='block text-[0.9rem] mr-3 text-gray2'>숙박: 15:00~
-              </span>
-                <span className='block text-[1.2rem] font-extrabold '>{numberWithComma(item.price)}원</span>
+              <span className='block text-[0.9rem] mr-3 text-gray2'>숙박: 15:00~</span>
+              <span className='block text-[1.2rem] font-extrabold mr-2'>{numberWithComma(item.price)}원</span>
             </div>
             <Link to={`hotel/${item.id}`}>
               <Button type='button' className='ml-auto mr-0 mb-2 mt-auto flex rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '
