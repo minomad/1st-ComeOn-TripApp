@@ -248,5 +248,3 @@ export function Kakao2({latitude , longitude, className}) {
     <div id="map" className={className}></div>
   )
 }
-
-

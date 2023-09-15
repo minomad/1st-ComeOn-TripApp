@@ -33,10 +33,12 @@ function TrafficPage() {
               <span className='text-[12px]'>기차</span>
             </li>
           </Link>
-          <li className='flex items-center gap-1'>
-            <img src='/leisure-car.png' alt='렌트카' className='h-[58px] w-[38px] py-[10px]' />
-            <span className='text-[12px]'>렌트카</span>
-          </li>
+          <Link to={'/car'}>
+            <li className='flex items-center gap-1'>
+              <img src='/leisure-car.png' alt='렌트카' className='h-[58px] w-[38px] py-[10px]' />
+              <span className='text-[12px]'>렌트카</span>
+            </li>
+          </Link>
         </ul>
         <div>
           <h3 className='mb-3 text-[18px] font-bold'>렌터카 상품 추천</h3>
