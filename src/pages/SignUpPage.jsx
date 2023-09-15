@@ -285,6 +285,7 @@ function SignUpPage() {
                 id='agreeAge'
                 className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
+                aria-required
               />
               <span className='font-semibold text-accent'>(필수)</span>
             </li>

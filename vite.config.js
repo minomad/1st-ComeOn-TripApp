@@ -16,7 +16,7 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom'],
           reactRouter: ['react-router-dom'],
-          animations: ['framer-motion'],
+          animations: ['framer-motion','swiper'],
           extra: ['@tanstack/react-query'],
         },
       },

@@ -106,7 +106,7 @@ function BookingPage() {
 
         <Toaster
           toastOptions={{
-            duration: 1000, 
+            duration: 1500, 
             success: {
               style: {
                 background: '#5D6FFF',
@@ -115,7 +115,7 @@ function BookingPage() {
             },
           }}
           containerStyle={{
-            top: 320,
+            top: 420,
           }}
         />
       </section>
