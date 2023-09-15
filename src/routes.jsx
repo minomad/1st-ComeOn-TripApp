@@ -25,6 +25,7 @@ const LeisureDetailPage = lazy(() => import('./pages/LeisureDetailPage'));
 const ExhibitionDetailPage = lazy(() => import('./pages/ExhibitionDetailPage'));
 const TrafficPage = lazy(() => import('./pages/TrafficPage'));
 const TrafficTrainPage = lazy(() => import('./pages/TrafficTrainPage'));
+const TrafficCarPage = lazy(() => import('./pages/TrafficCarPage'));
 const AppInstallPage = lazy(() => import('./pages/AppInstallPage'));
 const SearchPage = lazy(() => import('./pages/SearchPage'));
 const CartPage = lazy(() => import('./pages/CartPage'));
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
       { path: 'around/:latitude/:longitude/LeisureDetail/:id', element:  <LeisureDetailPage /> },
       { path: 'wish', element: <WishPage /> },
       { path: 'myauth', element: <MyAuth /> },
+      { path: 'mypage', element: <MyPage /> },
       { path: 'mypage/:id', element: <MyPage /> },
       { path: 'mypage/:id/mybooking', element: <MyBookingPage /> },
       { path: 'mypage/:id/myreview', element: <MyReviewPage /> },
@@ -67,6 +69,7 @@ const router = createBrowserRouter([
       { path: 'ExhibitionDetail/:id', element: <ExhibitionDetailPage /> },
       { path: 'traffic', element: <TrafficPage /> },
       { path: 'train', element: <TrafficTrainPage /> },
+      { path: 'car', element: <TrafficCarPage /> },
       { path: 'install', element: <AppInstallPage /> },
       { path: 'search', element: <SearchPage /> },
       { path: 'cart', element: <CartPage /> },
