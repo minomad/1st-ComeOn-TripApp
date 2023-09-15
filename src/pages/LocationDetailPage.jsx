@@ -47,20 +47,19 @@ function LocationDetailPage() {
   }
   
 
-  console.log(hotelCategoryData)
 
   return (
     <>
     <Helmet>
       <title>지역-리스트</title>
     </Helmet>
-    <Header back='back'  search='search' title='' />
+    <Header back='back' search='search' title='' />
     <section>
-      <h2 className='fixed bg-white w-full font-bold text-[1.5rem] z-10 md:text-[1.7rem] px-[2.5rem] pb-1.5 '>
+      <h2 className='fixed bg-white rounded-b-3xl w-full font-bold text-[1.4rem] max-w-3xl z-10 md:text-[1.7rem] px-[2.5rem] pb-2 '>
         <img src='/locationActive.svg' alt='위치' className='inline-block h-6 md:h-7 mb-0.5 mr-[0.1rem] '/>
         { category === '도심힐링' ? '서울' : category }
       </h2>
-      <div className='pt-11'>
+      <div className='pt-[3.1rem] pb-[5rem]'>
       {hotelCategoryData?.map((item) => (
         <article key={item.id} className='h-[30rem] lg:h-[33rem] py-1.2   shadow-md  bg-white '>
           <figure className='w-[100%] h-[57%] lg:h-[65%]  overflow-hidden mr-4 '>
@@ -83,7 +82,7 @@ function LocationDetailPage() {
             <div className=' flex justify-between py-4  '>
               <span className='block text-[0.9rem] mr-3 text-gray2'>숙박: 15:00~
               </span>
-                <span className='block text-[1.2rem] font-extrabold '>{numberWithComma(item.price)}원</span>
+                <span className='block text-[1.2rem] font-extrabold mr-2 '>{numberWithComma(item.price)}원</span>
             </div>
             
             <Link to={`hotel/${item.id}`}>
