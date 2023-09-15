@@ -32,7 +32,28 @@ function MainPage() {
   if (isError) {
     return <div>서버 에러 발생</div>;
   }
-
+  const breakpoints = {
+    // 화면 너비가 320px 미만일 때
+    320: {
+      slidesPerView: 1, // 슬라이드 수
+      spaceBetween: 10, // 슬라이드 간 간격
+    },
+    // 화면 너비가 480px 미만일 때
+    480: {
+      slidesPerView: 2,
+      spaceBetween: 20,
+    },
+    // 화면 너비가 640px 미만일 때
+    640: {
+      slidesPerView: 3,
+      spaceBetween: 30,
+    },
+    // 화면 너비가 768px 미만일 때
+    768: {
+      slidesPerView: 4,
+      spaceBetween: 40,
+    },
+  };
   return (
     <>
       <Helmet>
@@ -100,6 +121,87 @@ function MainPage() {
             <Hotel data={hotelData} selectCategory={selectCategory} />
           </HotelList>
         </section>
+      </section>
+      <section className='mx-auto mb-10 max-w-2xl py-12'>
+        <Swiper
+          modules={[Navigation, A11y]}
+          spaceBetween={5}
+          navigation
+          loop={true}
+          a11y={true}
+          scrollbar={{ draggable: true }}
+          breakpoints={{
+            320: {
+              slidesPerView: 2,
+            },
+            480: {
+              slidesPerView: 3,
+            },
+            610: {
+              slidesPerView: 3,
+            },
+            611: {
+              slidesPerView: 4,
+            },
+          }}
+        >
+          <SwiperSlide>
+            <img
+              src='/sale.png'
+              alt='광고'
+              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src='/sale2.png'
+              alt='광고'
+              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src='/sale3.png'
+              alt='광고'
+              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src='/sale4.png'
+              alt='광고'
+              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src='/sale5.png'
+              alt='광고'
+              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src='/sale6.png'
+              alt='광고'
+              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src='/sale7.png'
+              alt='광고'
+              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img
+              src='/sale8.png'
+              alt='광고'
+              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+            />
+          </SwiperSlide>
+        </Swiper>
       </section>
       <footer className='textb mx-auto max-w-2xl bg-slate-50 p-4 pb-20 text-gray3'>
         <div className='flex items-center gap-1'>
