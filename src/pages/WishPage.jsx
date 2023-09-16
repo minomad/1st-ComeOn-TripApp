@@ -13,6 +13,7 @@ import HotelInfoCategory from '@/components/HotelInfoCategory';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import WishList from '@/components/WishList';
+import Guest from './../components/Guest';
 
 function WishPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -49,21 +50,7 @@ function WishPage() {
             className='text-xl'
           />
           {!isAuth && (
-            <div className='text-gray-600 flex flex-col items-center pt-20 font-semibold'>
-              <p>로그인 후 찜한 목록을 확인해주세요.</p>
-              <Link
-                to='/signin'
-                className='my-2 w-full max-w-sm rounded bg-primary py-2 text-center text-white'
-              >
-                로그인
-              </Link>
-              <Link
-                to='/signup'
-                className='my-2 w-full max-w-sm rounded border py-2 text-center text-black hover:text-primary'
-              >
-                회원가입
-              </Link>
-            </div>
+            <Guest />
           )}
         </section>
       </>

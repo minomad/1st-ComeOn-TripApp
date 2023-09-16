@@ -20,7 +20,7 @@ function MainPage() {
     data: hotelData,
     isLoading: isHotelLoading,
     isError,
-  } = useQuery(['hotel', { filter }], () => getListData({ filter }));
+  } = useQuery(['hotelMain', { filter }], () => getListData({ filter }));
 
   const [selectCategory, setSelectCategory] = useState('강원');
   const category = ['강원', '제주', '부산', '광주'];
@@ -32,28 +32,7 @@ function MainPage() {
   if (isError) {
     return <div>서버 에러 발생</div>;
   }
-  const breakpoints = {
-    // 화면 너비가 320px 미만일 때
-    320: {
-      slidesPerView: 1, // 슬라이드 수
-      spaceBetween: 10, // 슬라이드 간 간격
-    },
-    // 화면 너비가 480px 미만일 때
-    480: {
-      slidesPerView: 2,
-      spaceBetween: 20,
-    },
-    // 화면 너비가 640px 미만일 때
-    640: {
-      slidesPerView: 3,
-      spaceBetween: 30,
-    },
-    // 화면 너비가 768px 미만일 때
-    768: {
-      slidesPerView: 4,
-      spaceBetween: 40,
-    },
-  };
+
   return (
     <>
       <Helmet>
@@ -122,6 +101,7 @@ function MainPage() {
           </HotelList>
         </section>
       </section>
+      
       <section className='mx-auto mb-10 max-w-2xl py-12'>
         <Swiper
           modules={[Navigation, A11y]}
@@ -146,60 +126,76 @@ function MainPage() {
           }}
         >
           <SwiperSlide>
-            <img
-              src='/sale.png'
-              alt='광고'
-              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
-            />
+            <Link to='hotel/m4urk47aq525vh7'>
+              <img
+                src='/sale.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src='/sale2.png'
-              alt='광고'
-              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
-            />
+            <Link to='location/도쿄'>
+              <img
+                src='/sale2.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src='/sale3.png'
-              alt='광고'
-              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
-            />
+            <Link to='hotel/z52wykesuxft1mp'>
+              <img
+                src='/sale3.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src='/sale4.png'
-              alt='광고'
-              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
-            />
+            <Link to='leisurebrand/롯데월드'>
+              <img
+                src='/sale4.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src='/sale5.png'
-              alt='광고'
-              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
-            />
+            <Link to='leisurebrand/에버랜드'>
+              <img
+                src='/sale5.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src='/sale6.png'
-              alt='광고'
-              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
-            />
+            <Link to='location/싱가포르'>
+              <img
+                src='/sale6.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src='/sale7.png'
-              alt='광고'
-              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
-            />
+            <Link to='hotel/dzhawq266mfn76v'>
+              <img
+                src='/sale7.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <img
-              src='/sale8.png'
-              alt='광고'
-              className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
-            />
+            <Link to='hotel/xikeqxqtyx1wp1c'>
+              <img
+                src='/sale8.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
           </SwiperSlide>
         </Swiper>
       </section>
