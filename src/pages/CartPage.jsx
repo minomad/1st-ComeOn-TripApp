@@ -12,8 +12,8 @@ import Spinner from '@/components/Spinner';
 import WishList from '@/components/WishList';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-import HotelInfoCategory from '@/components/HotelInfoCategory';
 import Guest from '@/components/Guest';
+import HotelInfoCategory from '@/components/HotelInfoCategory';
 
 function CartPage() {
   const isAuth = useAuthStore((state) => state.isAuth);

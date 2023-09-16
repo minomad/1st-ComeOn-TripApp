@@ -61,7 +61,7 @@ function BookingPage() {
   return (
     <>
       <Helmet>
-        <title>예약</title>
+        <title>야무지개놀자 예약</title>
       </Helmet>
       <Header back='back' className='mr-7 text-xl font-semibold' title='예약' />
       <section className='px-4 pb-20'>
@@ -106,7 +106,7 @@ function BookingPage() {
 
         <Toaster
           toastOptions={{
-            duration: 1500, 
+            duration: 1500,
             success: {
               style: {
                 background: '#5D6FFF',

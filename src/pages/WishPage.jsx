@@ -9,11 +9,11 @@ import { toast, Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
-import HotelInfoCategory from '@/components/HotelInfoCategory';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import WishList from '@/components/WishList';
-import Guest from './../components/Guest';
+import Guest from '@/components/Guest';
+import HotelInfoCategory from '@/components/HotelInfoCategory';
 
 function WishPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -49,9 +49,7 @@ function WishPage() {
             handleChangeCategory={setSelectCategory}
             className='text-xl'
           />
-          {!isAuth && (
-            <Guest />
-          )}
+          {!isAuth && <Guest />}
         </section>
       </>
     );
@@ -80,7 +78,7 @@ function WishPage() {
   return (
     <>
       <Helmet>
-        <title>찜한 목록</title>
+        <title>야무지개놀자 찜한 목록</title>
       </Helmet>
       <Header back='back' cart='cart' className='text-xl font-semibold' title='찜한 목록' />
       <HotelInfoCategory

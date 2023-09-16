@@ -171,7 +171,7 @@ function SignUpPage() {
   return (
     <>
       <Helmet>
-        <title>회원가입</title>
+        <title>야무지개놀자 회원가입</title>
       </Helmet>
       <Header search='search' back='back' className='text-xl font-semibold' title='회원가입' />
       <section className='px-5 pb-20 pt-10'>

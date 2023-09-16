@@ -13,7 +13,7 @@ import HotelInfoCategory from '@/components/HotelInfoCategory';
 import HotelRoomPage from '@/pages/HotelRoomPage';
 import HotelIntro from '@/components/HotelIntro';
 import HotelService from '@/components/HotelService';
-import HotelReview from '@/components/HotelReview';
+import HotelReviewPage from '@/pages/HotelReviewPage';
 import useAuthStore from '@/store/useAuthStore';
 import Button from '@/components/Button';
 
@@ -68,7 +68,7 @@ function HotelDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{hotelData.title}</title>
+        <title>아무지개놀자 {hotelData.title}</title>
       </Helmet>
       <Header back='back' cart='cart' title={hotelData.title} className='text-xl font-bold' />
       <section className='relative'>
@@ -144,7 +144,7 @@ function HotelDetailPage() {
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}
         {selectCategory === '시설/서비스' && <HotelService />}
         {selectCategory === '후기' && (
-          <HotelReview
+          <HotelReviewPage
             star={hotelData.star}
             hotel={hotelData.title}
             hotelId={id}
