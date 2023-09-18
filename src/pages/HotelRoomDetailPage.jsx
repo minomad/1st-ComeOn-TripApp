@@ -15,6 +15,7 @@ import Header from '@/components/Header';
 import Spinner from '@/components/Spinner';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
+import MetaTag from '@/components/MetaTag';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -150,6 +151,7 @@ function HotelRoomDetailPage() {
 
   return (
     <>
+    <MetaTag title={hotel} description="숙소 상세정보"/>
       <Header back='back' cart='cart' title={hotel} className='text-xl font-bold' />
       <section className=' mx-auto max-w-2xl px-4 pb-32'>
         <h3 className='sr-only'>{hotel}</h3>

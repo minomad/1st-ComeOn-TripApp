@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { toast, Toaster } from 'react-hot-toast';
@@ -10,6 +9,7 @@ import WishCart from '@/components/WishCart';
 import Guest from '@/components/Guest';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import WishList from '@/components/WishList';
+import MetaTag from '@/components/MetaTag';
 
 function WishPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -73,9 +73,7 @@ function WishPage() {
 
   return (
     <>
-      <Helmet>
-        <title>야무지개놀자 찜한 목록</title>
-      </Helmet>
+      <MetaTag title='찜한목록' description='야무지개놀자 회원이 찜한 목록' />
       <Header back='back' cart='cart' className='text-xl font-semibold ' title='찜한 목록' />
       <HotelInfoCategory
         info={tag}

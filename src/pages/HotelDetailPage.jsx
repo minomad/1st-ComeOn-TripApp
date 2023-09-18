@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { toast, Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,6 +15,7 @@ import HotelService from '@/components/HotelService';
 import HotelReviewPage from '@/pages/HotelReviewPage';
 import useAuthStore from '@/store/useAuthStore';
 import Button from '@/components/Button';
+import MetaTag from '@/components/MetaTag';
 
 function HotelDetailPage() {
   const { id } = useParams();
@@ -67,9 +67,7 @@ function HotelDetailPage() {
 
   return (
     <>
-      <Helmet>
-        <title>아무지개놀자 {hotelData.title}</title>
-      </Helmet>
+      <MetaTag title={hotelData.title} />
       <Header back='back' cart='cart' title={hotelData.title} className='text-xl font-bold' />
       <section className='relative'>
         <h2 className='sr-only'>호텔 상세 페이지</h2>

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Category from '@/components/Category';
 import Spinner from '@/components/Spinner';
 import Hotel from '@/components/Hotel';
 import HotelList from '@/components/HotelList';
+import MetaTag from '@/components/MetaTag';
 
 function HotelPage() {
   const { getListData } = usePocketData('hotel');
@@ -44,9 +44,7 @@ function HotelPage() {
 
   return (
     <>
-      <Helmet>
-        <title>야무지개놀자 호텔/리조트</title>
-      </Helmet>
+      <MetaTag title='야무지개놀자 호텔/리조트' description='호캉스를 위한 호텔리스트' />
       <Header
         search='search'
         back='back'
