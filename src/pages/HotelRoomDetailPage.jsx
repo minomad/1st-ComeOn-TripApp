@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
@@ -9,16 +9,18 @@ import { toast, Toaster } from 'react-hot-toast';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, A11y } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
+import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
 import Spinner from '@/components/Spinner';
+import Input from '@/components/Input';
 import Button from '@/components/Button';
-import useAuthStore from '@/store/useAuthStore';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 function HotelRoomDetailPage() {
   const { id, hotel } = useParams();
   const { getIdData: getRoom } = usePocketData('room');
+  const { createData } = usePocketData('order');
   const { updateData: updateUser } = usePocketData('users');
   const { data: roomData, isLoading: roomLoading } = useQuery(['room', id], () => getRoom(id));
 
@@ -32,18 +34,21 @@ function HotelRoomDetailPage() {
 
   const [isShowPayment, setIsShowPayment] = useState(false);
 
+  const checkInRef = useRef(null);
+  const checkOutRef = useRef(null);
+
   const handleBookingRoom = () => {
     if (!isAuth) {
       toast(
-        (f) => (
-          <div className='flex-col items-center gap-5 font-semibold'>
+        (t) => (
+          <div className='tlex-col items-center gap-5 font-semibold'>
             <div className='text-center text-sm text-accent'>로그인이 필요합니다.</div>
             <div className='text-lg text-primary'>로그인 하시겠습니까?</div>
             <div className='flex justify-between py-2'>
               <Button
                 className='rounded-lg bg-primary px-4 py-2 text-white'
                 onClick={() => {
-                  toast.dismiss(f.id);
+                  toast.dismiss(t.id);
                   setTimeout(() => {
                     navigation('/signIn');
                   }, 1000);
@@ -69,19 +74,41 @@ function HotelRoomDetailPage() {
       return;
     }
 
+    const checkIn = checkInRef.current.value;
+    const checkOut = checkOutRef.current.value;
+
+    if (checkIn == '' || checkOut == '') {
+      return toast.error('체크인 / 아웃 날짜를 선택해주세요');
+    }
+
     if (isAuth) {
       setIsShowPayment(true);
     }
   };
 
   const handlePayment = () => {
-    navigation(`/booking/${roomData.id}/${hotel}`);
+    const checkIn = checkInRef.current.value;
+    const checkOut = checkOutRef.current.value;
+    navigation(`/booking/${roomData.id}/${hotel}/${checkIn}/${checkOut}`);
   };
 
   const handleCart = async () => {
+    const username = user.username;
+    const checkin = checkInRef.current.value;
+    const checkout = checkOutRef.current.value;
+    const orderData = {
+      username,
+      title: hotel,
+      orderid: id,
+      checkin,
+      checkout,
+    };
+
+    await createData(orderData);
     await updateUser(userId, {
       'cartRoom+': id,
     });
+
     queryClient.invalidateQueries(['users']);
 
     toast(
@@ -137,25 +164,55 @@ function HotelRoomDetailPage() {
           </SwiperSlide>
         </Swiper>
 
-        <p className='py-2 text-lg font-bold' key={roomData.id}>
-          {roomData.title}
-        </p>
-        <span className='rounded bg-slate-100 px-2 py-1 font-semibold text-gray2'>
-          {roomData.info}
-        </span>
-        <div className='mt-1 flex justify-between py-2 font-bold'>
-          <span>숙박(15:00~)</span>
-          <p className='text-lg text-primary'>{numberWithComma(roomData.price)}원</p>
+        <div className='border-b-8 border-thirdary pb-4'>
+          <p className='py-2 text-lg font-bold' key={roomData.id}>
+            {roomData.title}
+          </p>
+          <span className='rounded bg-slate-100 px-2 py-1 font-semibold text-gray2'>
+            {roomData.info}
+          </span>
         </div>
-        <div className='flex justify-end border-b-8 border-thirdary pb-4 leading-8'>
-          <Button
-            className='mt-5 h-8 w-52 rounded bg-primary font-bold text-white max-[420px]:w-32'
-            onClick={() => handleBookingRoom()}
-          >
-            객실 예약하기
-          </Button>
+        <div className='flex'></div>
+        <div className='mt-2 flex justify-around py-2 font-bold shadow-md'>
+          <div className='flex flex-col items-center'>
+            <span className='text-primary'>체크인</span>
+            <Input
+              inputRef={checkInRef}
+              label='체크인'
+              type='date'
+              id='checkin'
+              className='font-semibold focus:outline-none'
+              labelClass='sr-only'
+            />
+          </div>
+          <div className='flex flex-col items-center'>
+            <span className='text-accent'>체크아웃</span>
+            <Input
+              inputRef={checkOutRef}
+              label='체크아웃'
+              type='date'
+              id='checkout'
+              className='font-semibold focus:outline-none'
+              labelClass='sr-only'
+            />
+          </div>
         </div>
-        <div className='my-5 border-b border-gray pb-4 leading-7'>
+        <div className='flex flex-col leading-8'>
+          <p className='mt-4 text-right text-lg font-bold text-primary'>
+            {numberWithComma(roomData.price)}원
+          </p>
+          <div className='flex justify-end'>
+            <Button
+              type='button'
+              className='mt-4 h-8 w-52 rounded bg-primary font-bold text-white max-[420px]:w-32'
+              onClick={() => handleBookingRoom()}
+            >
+              객실 예약하기
+            </Button>
+          </div>
+        </div>
+
+        <div className='my-5 border-y border-gray py-4 leading-7'>
           <p className='text-lg font-bold'>기본 정보</p>
           <p className='whitespace-pre-line text-gray3'>{roomData.desc}</p>
         </div>
@@ -175,7 +232,7 @@ function HotelRoomDetailPage() {
             className='fixed bottom-0 z-[100] flex w-full max-w-3xl flex-col gap-1 border-t-2 border-[#919191] bg-white px-5 py-4 font-bold'
           >
             <div className='flex justify-end'>
-              <Button onClick={handleClosePayment} className='pb-2'>
+              <Button onClick={handleClosePayment} className='w-5 pb-2'>
                 <img src='/close.svg' alt='닫기' />
               </Button>
             </div>

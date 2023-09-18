@@ -139,7 +139,6 @@ function WishPage() {
             </AnimatePresence>
           </>
         )}
-        <AnimatePresence />
 
         {selectCategory === '레저' && isAuth && !wishLeisure && (
           <>

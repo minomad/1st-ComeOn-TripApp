@@ -6,23 +6,23 @@ import { Helmet } from 'react-helmet-async';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { toast, Toaster } from 'react-hot-toast';
+import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
-import useStorage from '@/Hook/useStorage';
 
 function BookingPage() {
-  const { id, title } = useParams();
+  const { id, title, checkin, checkout } = useParams();
   const { getIdData } = usePocketData('room');
+  const { updateData: updateUser } = usePocketData('users');
   const { data: roomData, isLoading } = useQuery(['room', id], () => getIdData(id));
 
-  const { updateData: updateUser } = usePocketData('users');
-  const { storageData: authUser } = useStorage('pocketbase_auth');
-
+  const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
 
   const handlePayment = () => {
-    const userId = authUser?.model?.id;
+    const userId = user.id;
+ 
     toast((t) => (
       <div className='flex-col items-center gap-5'>
         <span className='text-lg'>결제 하시겠습니까?</span>
@@ -81,12 +81,12 @@ function BookingPage() {
             <div className='flex justify-between border-b border-gray pb-2 font-semibold'>
               <div>
                 <p>체크인</p>
-                <p>2023.09.28(목)</p>
+                <p>{checkin}</p>
                 <p>15:00</p>
               </div>
               <div>
                 <p>체크아웃</p>
-                <p>2023.09.30(토)</p>
+                <p>{checkout}</p>
                 <p>11:00</p>
               </div>
             </div>

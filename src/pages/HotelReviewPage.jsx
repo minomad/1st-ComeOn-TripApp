@@ -82,15 +82,17 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
       nickName: user.nickName,
     };
     await updateReview(itemId, data);
-    toast.success('리뷰가 수정되었습니다.');
+
     queryClient.invalidateQueries(['hotel']);
+    toast.success('리뷰가 수정되었습니다.');
     setIsShowUpdata((prev) => !prev);
   };
 
   const handleDeleteReview = async (itemId) => {
     await deleteReview(itemId);
-    toast.error('리뷰가 삭제되었습니다.');
+    
     queryClient.invalidateQueries(['hotel']);
+    toast.error('리뷰가 삭제되었습니다.');
   };
 
   return (
