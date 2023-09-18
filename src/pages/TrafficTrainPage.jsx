@@ -2,10 +2,7 @@ import Header from '@/components/Header';
 import { useState } from 'react';
 import TrafficCategory from '../components/TrafficCategory';
 import SelectModal from '../components/SelectModal';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-// import Form from "react-bootstrap/Form";
-import { ko } from 'date-fns/esm/locale';
+import Input from '@/components/Input';
 
 function TrafficTrainPage() {
   const [selectCategory, setSelectCategory] = useState('편도');
@@ -15,16 +12,6 @@ function TrafficTrainPage() {
   const [arrival, setArrival] = useState('선택');
   const [click, setClick] = useState('출발');
 
-  const [startDate, setStartDate] = useState(null); // 가는 날 상태
-  const [endDate, setEndDate] = useState(null); //오는 날 상태
-
-  console.log(startDate, endDate);
-
-  const onChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
   const clickDeparture = () => {
     setClick('출발');
   };
@@ -117,10 +104,34 @@ function TrafficTrainPage() {
           </div>
           <div className='mx-5 my-5 h-[2px] bg-[#e6e6e6]'></div>
           <div className='my-3 flex flex-col px-5 text-[#919191]'>
-            {selectCategory === '편도' && <span className='text-[10px]'>가는날</span>}
-            {selectCategory === '왕복' && <span className='text-[10px]'>가는날 - 오는날</span>}
-            <span className='text-[16px]'>날짜를 선택해주세요.</span>
+            <span className='text-start text-[16px]'>가는 날짜를 선택해주세요.</span>
             <span className='text-[12px]'>(탑승일 기준 1일 전 예약은 00:00~02:00 가능)</span>
+            <form action=''>
+              <Input
+                label='날짜'
+                type='date'
+                id='숙소날짜'
+                placeholder='지역, 숙소명 키워드로 찾아보세요'
+                className=' ml-4 mt-2 text-[1rem] font-semibold focus:outline-none'
+                labelClass='sr-only'
+              />
+            </form>
+            {selectCategory === '왕복' && (
+              <>
+                <div className='my-5 h-[2px] bg-[#e6e6e6]'></div>
+                <span className='text-start text-[16px]'>오는 날짜를 선택해주세요.</span>
+                <form action=''>
+                  <Input
+                    label='날짜'
+                    type='date'
+                    id='숙소날짜'
+                    placeholder='지역, 숙소명 키워드로 찾아보세요'
+                    className=' ml-4 mt-2 text-[1rem] font-semibold focus:outline-none'
+                    labelClass='sr-only'
+                  />
+                </form>
+              </>
+            )}
           </div>
           <div className='mx-5 my-3 h-[2px] bg-[#e6e6e6]'></div>
           <div className='my-3 flex flex-col px-5'>
@@ -170,22 +181,6 @@ function TrafficTrainPage() {
               </div>
             </div>
           </div>
-        </div>
-        <div className='flex flex-col'>
-          <DatePicker
-            locale={ko} // 한글로 변경
-            selected={startDate}
-            onChange={onChange}
-            minDate={new Date()}
-            startDate={startDate}
-            endDate={endDate}
-            selectsRange
-            inline
-            monthsShown={2}
-            dateFormat='yyyy.MM.dd (eee)' // 시간 포맷 변경
-            showPopperArrow={false}
-            showDisabledMonthNavigation
-          />
         </div>
       </section>
     </>

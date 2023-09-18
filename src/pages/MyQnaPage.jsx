@@ -30,7 +30,7 @@ function MyQnaPage() {
         item[fileName]
       }`;
     } else {
-      return '/public/Myzipedairplane.jpg';
+      return '/Myzipedairplane.jpg';
     }
   };
 
@@ -100,7 +100,7 @@ function MyQnaPage() {
           <section className='box-border flex  justify-center pb-20'>
             <ul className=' box-border h-auto w-2/3 rounded-2xl bg-lightPurple px-3 pb-1 pt-4 text-sm'>
               <li className='box-border flex flex-row items-center justify-between  pb-3 text-primary'>
-                <div className='font-semibold'>문의 내역 ({qnaData?.length || '로딩중...'})</div>
+                <div className='font-semibold'>문의 내역 ({qnaData?.length || '0'})</div>
                 <Link to='mynewqna' tabIndex='-1'>
                   <Button type='button' className='rounded-md bg-primary px-1 text-white'>
                     문의하기

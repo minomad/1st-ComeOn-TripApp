@@ -27,7 +27,6 @@ const AirlinePage = lazy(() => import('./pages/AirlinePage'));
 const TrafficPage = lazy(() => import('./pages/TrafficPage'));
 const TrafficTrainPage = lazy(() => import('./pages/TrafficTrainPage'));
 const TrafficCarPage = lazy(() => import('./pages/TrafficCarPage'));
-const TrafficCarDetailPage = lazy(() => import('./pages/TrafficCarDetailPage'));
 const AppInstallPage = lazy(() => import('./pages/AppInstallPage'));
 
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
@@ -69,7 +68,7 @@ const router = createBrowserRouter([
       { path: 'mypage/myqna', element: <MyQnaPage /> },
       { path: 'mypage/myqna/mynewqna', element: <MyNewQnaPage /> },
       { path: 'MyQnaDetailPage/:id', element: <MyQnaDetailPage /> },
-      { path: 'mypage/myinfo/myinfochange', element: <MyInfoChangePage /> },
+      { path: 'mypage/myinfochange', element: <MyInfoChangePage /> },
       { path: 'mypage/mywithdrawal', element: <MyWithdrawalPage /> },
       { path: 'hotel', element: <HotelPage /> },
       { path: 'hotel/:id', element: <HotelDetailPage /> },
@@ -78,7 +77,6 @@ const router = createBrowserRouter([
       { path: 'traffic', element: <TrafficPage /> },
       { path: 'train', element: <TrafficTrainPage /> },
       { path: 'car', element: <TrafficCarPage /> },
-      { path: 'carDetail/:id', element: <TrafficCarDetailPage /> }
       { path: 'install', element: <AppInstallPage /> },
       { path: 'leisure', element: <LeisurePage /> },
       { path: 'leisure/:id', element: <LeisureThemePage /> },
