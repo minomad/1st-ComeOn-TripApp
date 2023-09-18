@@ -51,20 +51,6 @@ function MyNewQnaPage() {
       toast.error('내용을 작성해주세요');
     }
 
-    //   try {
-    //     await createQna({
-    //       title,
-    //       text,
-    //     });
-
-    //     toast.success('QnA가 등록되었습니다.');
-
-    //     navigate('/mypage/myqna');
-    //   } catch (error) {
-    //     toast.error('저장 불가합니다.');
-    //   }
-    // };
-
     try {
       const created = await createQna(formData);
 
@@ -73,14 +59,6 @@ function MyNewQnaPage() {
       });
       queryClient.invalidateQueries(['newQna']);
       navigate('/mypage/myqna');
-      // toast.promise({
-      //   loading: '등록 중...',
-      //   success: () => {
-      //     navigate('/mypage/myqna');
-      //     return 'QnA가 등록되었습니다.';
-      //   },
-      //   error: '저장 불가합니다.',
-      // });
     } catch (error) {
       toast.error('저장 불가합니다.');
     }
@@ -88,14 +66,6 @@ function MyNewQnaPage() {
 
   const [fileName, setFileName] = useState('');
 
-  // const handleUpload = (e) => {
-  //   const { files } = e.target;
-  //   const fileImages = Array.from(files).map((file) => ({
-  //     image: URL.createObjectURL(file),
-  //     label: file.name,
-  //   }));
-  //   setFileName(fileImages[0].label);
-  // };
   const handleUpload = async (e) => {
     const { files } = e.target;
     if (files.length > 0) {
@@ -105,11 +75,8 @@ function MyNewQnaPage() {
       }));
       setFileName(fileImages[0].label);
 
-      // 여기서 바로 파일 전송
       const formData = new FormData();
       formData.append('img', files[0]);
-
-      // 서버에 파일 전송하는 코드...
     }
   };
 
@@ -117,7 +84,7 @@ function MyNewQnaPage() {
     titleRef.current.value = '';
     textRef.current.value = '';
     photoRef.current.files = null;
-    setFileName(''); // 파일명 초기화
+    setFileName('');
   };
 
   return (

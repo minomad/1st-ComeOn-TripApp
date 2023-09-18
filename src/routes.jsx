@@ -27,6 +27,7 @@ const AirlinePage = lazy(() => import('./pages/AirlinePage'));
 const TrafficPage = lazy(() => import('./pages/TrafficPage'));
 const TrafficTrainPage = lazy(() => import('./pages/TrafficTrainPage'));
 const TrafficCarPage = lazy(() => import('./pages/TrafficCarPage'));
+const TrafficCarDetailPage = lazy(() => import('./pages/TrafficCarDetailPage'));
 const AppInstallPage = lazy(() => import('./pages/AppInstallPage'));
 
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
@@ -77,6 +78,7 @@ const router = createBrowserRouter([
       { path: 'traffic', element: <TrafficPage /> },
       { path: 'train', element: <TrafficTrainPage /> },
       { path: 'car', element: <TrafficCarPage /> },
+      { path: 'carDetail/:id', element: <TrafficCarDetailPage /> },
       { path: 'install', element: <AppInstallPage /> },
       { path: 'leisure', element: <LeisurePage /> },
       { path: 'leisure/:id', element: <LeisureThemePage /> },

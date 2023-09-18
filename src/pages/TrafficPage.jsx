@@ -82,21 +82,15 @@ function TrafficPage() {
           </section>
           <section>
             <h3 className='mb-3 mt-3 text-[18px] font-bold'>교통편 바로예매</h3>
-            <button
-              type='button'
-              className='flex w-full items-center justify-between gap-3 rounded-[4px] border border-[#cccccc] px-4 py-3'
-            >
-              <div className='flex items-center gap-1'>
-                <img src='/leisure-bus.png' alt='고속버스' className='h-10 w-10' />
-                <span className='font-bold'>고속버스</span>
-              </div>
-              <div className='flex gap-1'>
-                <span className='text-[14px] text-[#919191]'>출발/도착 선택</span>
-                <img src='/leisure-next.png' alt='다음으로' />
-              </div>
-            </button>
-            <TrafficReserveButton src={'/leisure-train.png'} alt={'기차'} />
+            <Link to={'/install'}>
+              <TrafficReserveButton src={'/leisure-bus.png'} alt={'고속버스'} />
+            </Link>
+            <Link to={'/train'}>
+              <TrafficReserveButton src={'/leisure-train.png'} alt={'기차'} />
+            </Link>
+            <Link to={'/airline'}>
             <TrafficReserveButton src={'/leisure-airplane.png'} alt={'항공권'} />
+            </Link>
           </section>
         </div>
       </section>

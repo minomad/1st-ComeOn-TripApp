@@ -1,38 +1,16 @@
+import { useParams } from 'react-router-dom';
 import { usePocketData } from '@/api/usePocketData';
-import Header from '@/components/Header';
-import LeisureInfoCategory from '@/components/LeisureInfoCategory';
-import LeisureProduct from '@/components/LeisureProduct';
-import LeisureProductInfo from '@/components/LeisureProductInfo';
-import Spinner from '@/components/Spinner';
+import { useQuery } from '@tanstack/react-query';
+import  Spinner  from '@/components/Spinner';
+import  Header  from '@/components/Header';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-
-function ExhibitionDetailPage() {
+function TrafficCarDetailPage() {
   let { id } = useParams();
 
-  const { getIdData } = usePocketData('exhibition');
-  const { data, isLoading } = useQuery(['exhibition', id], () => getIdData(id, { expand: 'product' }));
-  
-  const productData = data?.expand?.product;
-  console.log(productData);
-
-  const [selectCategory, setSelectCategory] = useState('상품선택');
-  // const [count, setCount] = useState(0);
-  // console.log(count);
-  // const handleCountUp = () => {
-  //   setCount(count + 1);
-  // };
-
-  // const handleCountDown = () => {
-  //   setCount(count - 1);
-  // };
-
-  const handleChangeCategory = (category) => {
-    setSelectCategory(category);
-  };
+  const { getIdData } = usePocketData('traffic');
+  const { data, isLoading } = useQuery(['traffic', id], () => getIdData(id, { expand: 'product' }));
+  console.log(data);
 
   if (isLoading) {
     return <Spinner />;
@@ -85,16 +63,10 @@ function ExhibitionDetailPage() {
 
         <div className='h-2 w-full bg-slate-300'></div>
 
-        <LeisureInfoCategory
-          selectCategory={selectCategory}
-          handleChangeCategory={handleChangeCategory}
-        />
-
-        {selectCategory === '상품선택' && <LeisureProduct data={data} productData={productData} />}
-        {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
       </section>
     </>
   );
+
 }
 
-export default ExhibitionDetailPage;
+export default TrafficCarDetailPage
