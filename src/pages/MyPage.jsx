@@ -12,6 +12,8 @@ function MyPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
   const [avatarSrc, setAvatarSrc] = useState('/My-ProfileBasic.jpeg');
+  const [selectedImage, setSelectedImage] = useState('');
+  const [bgImgSrc, setBgImgSrc] = useState(selectedImage);
 
   useEffect(() => {
     if (user && user.avatar) {
@@ -21,6 +23,29 @@ function MyPage() {
       } catch (error) {
         setAvatarSrc('/My-ProfileBasic.jpeg');
       }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const images = [
+      '/my-randombg1.png',
+      '/my-randombg2.png',
+      '/my-randombg3.png',
+      '/my-randombg4.png',
+    ];
+
+    const randomIndex = Math.floor(Math.random() * images.length);
+    setSelectedImage(images[randomIndex]);
+
+    if (user && user.bgimg) {
+      try {
+        const url = getPbImageURL(user, 'bgimg');
+        setBgImgSrc(url);
+      } catch (error) {
+        setBgImgSrc(images[randomIndex]); // 기본 랜덤 이미지로 설정
+      }
+    } else {
+      setBgImgSrc(images[randomIndex]); // user.bgimg가 없는 경우 기본 랜덤 이미지로 설정
     }
   }, [user]);
 
@@ -76,17 +101,21 @@ function MyPage() {
               type='button'
               className='h-28 w-full max-w-2xl overflow-hidden bg-gray sm:mb-0 sm:h-40 '
             >
-              <img
-                src={pageState.selectedImage}
-                alt='배경이미지'
-                className='absolute left-1/2  h-full w-full -translate-x-1/2 -translate-y-1/2 overflow-hidden border-b-2 border-secondary object-cover shadow-md'
-              />
-              <img
-                src={avatarSrc}
-                alt='프로필사진'
-                className='absolute left-1/2 top-1/2 ml-[-45px] mt-3 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-cover shadow-md 
+              <div>
+                <img
+                  src={bgImgSrc}
+                  alt='배경이미지'
+                  className='absolute left-1/2  h-full w-full -translate-x-1/2 -translate-y-1/2 overflow-hidden border-b-2 border-secondary object-cover shadow-md'
+                />
+              </div>
+              <div>
+                <img
+                  src={avatarSrc}
+                  alt='프로필사진'
+                  className='absolute left-1/2 top-1/2 ml-[-45px] mt-3 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-cover shadow-md 
           md:ml-[-50px] md:mt-[28px] md:max-h-[100px] md:max-w-[100px] lg:ml-[-60px] lg:mt-[15px] lg:max-h-[120px] lg:max-w-[120px]'
-              />
+                />
+              </div>
             </button>
             <h2 className='sr-only'></h2>
           </section>

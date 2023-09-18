@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
@@ -6,6 +8,21 @@ import Input from '@/components/Input';
 import MyCircleProfile from '@/components/MyCircleProfile';
 
 function MyInfoPage() {
+  const navigate = useNavigate();
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [password, setPassword] = useState('');
+  const handleInfoChange = () => {
+    navigate('myinfochange');
+  };
+
+  useEffect(() => {
+    if (password.length >= 6) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
+  }, [password]);
+
   return (
     <>
       <Helmet>
@@ -27,16 +44,22 @@ function MyInfoPage() {
             </p>
           </div>
           <Input
-            type='text'
+            type='password'
             id='password'
             placeholder='비밀번호'
             className='mt-10 h-11 w-72 border-b-[1px] border-neutral-200 sm:w-80'
             label='비밀번호'
             labelClass='sr-only'
+            onChange={(e) => setPassword(e.target.value)}
           ></Input>
           <Button
+            onClick={handleInfoChange}
             type='submit'
-            className='mt-10 h-11 w-72 rounded-xl border-[1px] border-secondary text-secondary sm:w-80 md:h-14'
+            className={`mt-10 h-11 w-72 rounded-xl border-[1px] border-secondary text-secondary sm:w-80 md:h-14 ${
+              isFormValid ? 'bg-primary font-bold text-white ' : 'text-primary outline-primary'
+            }`}
+            disabled={!isFormValid}
+            s
           >
             정보 변경
           </Button>

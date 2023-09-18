@@ -4,21 +4,30 @@ import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getPbImageURL } from '@/utils/getPbImageURL';
+import { toast, Toaster } from 'react-hot-toast';
 import PocketBase from 'pocketbase';
 import Header from '@/components/Header';
 import MyCircleProfile from '@/components/MyCircleProfile';
 import MyList from '@/components/MyList';
 import Spinner from '@/components/Spinner';
+import useAuthStore from '../store/useAuthStore';
 
 function MyReviewPage() {
-  const { id } = useParams();
-
+  const isAuth = useAuthStore((state) => state.isAuth);
+  const user = useAuthStore((state) => state.user);
   const { getIdData: getUser } = usePocketData('users');
+  const id = user?.id;
   const { data: userData, isLoading } = useQuery(['users', id], () =>
-    getUser(id, { expand: 'review, hotel' }),
+    getUser(id, { expand: 'review' }),
   );
 
   const reviewData = userData?.expand?.review;
+
+  if (!reviewData || reviewData.length === 0) {
+    toast('❌ 작성된 QnA가 없습니다.');
+  } else {
+    toast.success('QnA 데이터 로드 성공');
+  }
 
   if (isLoading) {
     return <Spinner />;
@@ -38,7 +47,7 @@ function MyReviewPage() {
       <section className='flex justify-center'>
         <ul className='box-border h-auto w-2/3 rounded-2xl bg-lightPurple px-3 pb-1 pt-4 text-sm'>
           <li className=' flex flex-row items-center justify-between  text-primary'>
-            <div className='font-semibold'>나의 후기</div>
+            <div className='font-semibold'>나의 후기 ({reviewData?.length || '0'})</div>
           </li>
           {reviewData?.map((item) => {
             return (
@@ -56,6 +65,23 @@ function MyReviewPage() {
             );
           })}
         </ul>
+        <Toaster
+          toastOptions={{
+            duration: 1000,
+            success: {
+              style: {
+                background: '#5D6FFF',
+                color: 'white',
+              },
+            },
+            error: {
+              style: {
+                background: '#E03B69',
+                color: 'white',
+              },
+            },
+          }}
+        />
       </section>
     </>
   );
