@@ -37,13 +37,7 @@ function MainPage() {
     <>
       <Helmet>
         <title>야무지개놀자</title>
-        <meta property='og:title' content='야무지개놀자' />
-        <meta name='description' content='여행 사이트' />
-        <meta
-          property='og:image'
-          content='https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/d05639ac-151a-4654-83fd-58c1408c0573'
-        />
-        <meta property='og:url' content='https://1st-come-on-trip-app.vercel.app/' />
+        
       </Helmet>
       <Header logo='logo' search='search' cart='cart' />
       <section className=''>
