@@ -9,7 +9,11 @@ function AirlinePage() {
       </Helmet>
       <Header back='back' search='search' title='항공' className='text-xl font-semibold' />
       <section>
-        <h3></h3>
+        <div className='flex flex-col justify-center'>
+          <img src="/airplane.png" alt="비행기" className='w-[90px]' />
+          <span>설레는 여행의 즐거운 시작</span>
+          <h3>야무지개놀자 항공</h3>
+        </div>
       </section>
     </>
   );
