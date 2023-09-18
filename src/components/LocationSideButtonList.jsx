@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
 import Button from './Button'
 
-
-
-
-
 function LocationSideButtonList({category, data}) {
   let hotelCategory;
 
