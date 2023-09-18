@@ -272,9 +272,12 @@ function SignUpPage() {
                 type='checkbox'
                 label='전체 동의 (선택 포함)'
                 id='all'
-                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="-webkit-appearance:   checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer text-lg font-semibold '
                 onClick={handleAllAgree}
+                style={{
+                  WebkitAppearance: 'none',
+                }}
               />
             </li>
             <li>

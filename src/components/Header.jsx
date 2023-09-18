@@ -20,16 +20,12 @@ function Header({ back, logo, className, title, search, cart }) {
       <div className='flex gap-4'>
         {search && (
           <Link to='/search'>
-            <button type='button'>
               <img src='/search.svg' alt='검색' />
-            </button>
           </Link>
         )}
         {cart && (
           <Link to='/cart'>
-            <button type='button'>
               <img src='/cart.svg' alt='장바구니' />
-            </button>
           </Link>
         )}
       </div>

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { string } from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
-import Button from './Button';
 
 function WishList({ link, heart, hotel, leisure, cart }) {
   return (
@@ -29,9 +28,9 @@ function WishList({ link, heart, hotel, leisure, cart }) {
           to={`/${link}`}
           className='my-2 rounded border px-20 py-2  text-center text-gray2 hover:text-primary'
         >
-          {hotel && <Button type='Button'>숙소 보러가기</Button>}
-          {leisure && <Button type='Button'>레저 보러가기</Button>}
-          {cart && <Button type='Button'>홈으러 가기</Button>}
+          {hotel && <p>숙소 보러가기</p>}
+          {leisure && <p>레저 보러가기</p>}
+          {cart && <p>홈으러 가기</p>}
         </Link>
       </motion.section>
     </AnimatePresence>
