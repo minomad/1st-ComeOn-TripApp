@@ -17,7 +17,7 @@ function HotelPage() {
     data: hotelData,
     isLoading,
     isError,
-  } = useQuery(['hotel', { filter }], () => getListData({ filter }));
+  } = useQuery(['hotelPage', { filter }], () => getListData({ filter }));
 
   const [selectCategory, setSelectCategory] = useState({
     korea: '휴가에딱',
@@ -45,7 +45,7 @@ function HotelPage() {
   return (
     <>
       <Helmet>
-        <title>호텔/리조트</title>
+        <title>야무지개놀자 호텔/리조트</title>
       </Helmet>
       <Header
         search='search'

@@ -40,7 +40,7 @@ function SignInPage() {
   return (
     <>
       <Helmet>
-        <title>로그인 페이지</title>
+        <title>야무지개놀자 로그인</title>
       </Helmet>
       <Header
         search='search'

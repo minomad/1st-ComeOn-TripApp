@@ -20,7 +20,7 @@ function MainPage() {
     data: hotelData,
     isLoading: isHotelLoading,
     isError,
-  } = useQuery(['hotel', { filter }], () => getListData({ filter }));
+  } = useQuery(['hotelMain', { filter }], () => getListData({ filter }));
 
   const [selectCategory, setSelectCategory] = useState('강원');
   const category = ['강원', '제주', '부산', '광주'];
@@ -90,7 +90,7 @@ function MainPage() {
         </ul>
 
         <section className='mx-auto max-w-2xl px-4'>
-          <HotelList title='야!무지개놀자~!' subtitle='재밌게 꼭 놀자!'>
+          <HotelList title='야!무지개놀자~!' subtitle='재밌게'>
             <Category
               className='justify-center gap-2 py-3 max-[340px]:text-sm max-[340px]:leading-6 '
               category={category}
@@ -100,6 +100,104 @@ function MainPage() {
             <Hotel data={hotelData} selectCategory={selectCategory} />
           </HotelList>
         </section>
+      </section>
+      
+      <section className='mx-auto mb-10 max-w-2xl py-12'>
+        <Swiper
+          modules={[Navigation, A11y]}
+          spaceBetween={5}
+          navigation
+          loop={true}
+          a11y={true}
+          scrollbar={{ draggable: true }}
+          breakpoints={{
+            320: {
+              slidesPerView: 2,
+            },
+            480: {
+              slidesPerView: 3,
+            },
+            610: {
+              slidesPerView: 3,
+            },
+            611: {
+              slidesPerView: 4,
+            },
+          }}
+        >
+          <SwiperSlide>
+            <Link to='hotel/m4urk47aq525vh7'>
+              <img
+                src='/sale.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to='location/도쿄'>
+              <img
+                src='/sale2.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to='hotel/z52wykesuxft1mp'>
+              <img
+                src='/sale3.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to='leisurebrand/롯데월드'>
+              <img
+                src='/sale4.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to='leisurebrand/에버랜드'>
+              <img
+                src='/sale5.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to='location/싱가포르'>
+              <img
+                src='/sale6.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to='hotel/dzhawq266mfn76v'>
+              <img
+                src='/sale7.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link to='hotel/xikeqxqtyx1wp1c'>
+              <img
+                src='/sale8.png'
+                alt='광고'
+                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+              />
+            </Link>
+          </SwiperSlide>
+        </Swiper>
       </section>
       <footer className='textb mx-auto max-w-2xl bg-slate-50 p-4 pb-20 text-gray3'>
         <div className='flex items-center gap-1'>

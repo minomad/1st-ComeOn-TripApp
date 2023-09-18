@@ -10,6 +10,7 @@ function HotelReviewEdit({ isShow, reviewRef, handleSubmitReview, handleShowRevi
           </Button>
         )}
       </div>
+      
       {isShow && (
         <form onSubmit={handleSubmitReview} className='pb-10'>
           <textarea

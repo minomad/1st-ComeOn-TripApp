@@ -9,10 +9,11 @@ import { toast, Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
-import HotelInfoCategory from '@/components/HotelInfoCategory';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import WishList from '@/components/WishList';
+import Guest from '@/components/Guest';
+import HotelInfoCategory from '@/components/HotelInfoCategory';
 
 function WishPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -48,23 +49,7 @@ function WishPage() {
             handleChangeCategory={setSelectCategory}
             className='text-xl'
           />
-          {!isAuth && (
-            <div className='text-gray-600 flex flex-col items-center pt-20 font-semibold'>
-              <p>로그인 후 찜한 목록을 확인해주세요.</p>
-              <Link
-                to='/signin'
-                className='my-2 w-full max-w-sm rounded bg-primary py-2 text-center text-white'
-              >
-                로그인
-              </Link>
-              <Link
-                to='/signup'
-                className='my-2 w-full max-w-sm rounded border py-2 text-center text-black hover:text-primary'
-              >
-                회원가입
-              </Link>
-            </div>
-          )}
+          {!isAuth && <Guest />}
         </section>
       </>
     );
@@ -93,7 +78,7 @@ function WishPage() {
   return (
     <>
       <Helmet>
-        <title>찜한 목록</title>
+        <title>야무지개놀자 찜한 목록</title>
       </Helmet>
       <Header back='back' cart='cart' className='text-xl font-semibold' title='찜한 목록' />
       <HotelInfoCategory
@@ -154,7 +139,6 @@ function WishPage() {
             </AnimatePresence>
           </>
         )}
-        <AnimatePresence />
 
         {selectCategory === '레저' && isAuth && !wishLeisure && (
           <>
