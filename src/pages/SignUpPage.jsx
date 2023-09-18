@@ -272,12 +272,9 @@ function SignUpPage() {
                 type='checkbox'
                 label='전체 동의 (선택 포함)'
                 id='all'
-                className="-webkit-appearance:   checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer text-lg font-semibold '
                 onClick={handleAllAgree}
-                style={{
-                  WebkitAppearance: 'none',
-                }}
               />
             </li>
             <li>
@@ -286,7 +283,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='만 14세 이상 이용 동의'
                 id='agreeAge'
-                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
                 aria-required
               />
@@ -297,7 +294,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='개인정보 수집 및 이용 동의(선택)'
                 id='agreeInfo'
-                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
               />
             </li>
@@ -306,7 +303,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='특가, 쿠폰 등 마케팅 수신 동의(선택)'
                 id='agreeAd'
-                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
               />
             </li>
@@ -315,7 +312,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='위치 정보 이용 약관 동의(선택)'
                 id='agreeLocation'
-                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
               />
             </li>
@@ -324,7 +321,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='장기 미접속 시에도 계정 유지(선택)'
                 id='agreeGhost'
-                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox cursor-pointer appearance-none pr-4 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
               />
             </li>
