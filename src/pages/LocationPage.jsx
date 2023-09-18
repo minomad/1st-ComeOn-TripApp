@@ -1,11 +1,8 @@
 import { useState } from 'react';
-import { Children } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
-import { Kakao2 } from '../components/Kakao';
 import Button from '@/components/Button'
-import Category from '@/components/Category'
 import Header from '@/components/Header'
 import LocationChoice from '@/components/LocationChoice';
 import LocationMap from '@/components/LocationMap';
@@ -14,7 +11,7 @@ import Spinner from '@/components/Spinner';
 
 function LocationPage() {
   const [selectNav, setSelectNav] = useState('지역별');
-  const [selectCategory, setSelectCategory] = useState('');
+  // const [selectCategory, setSelectCategory] = useState('');
   // const category = ['강원', '제주', '부산', '광주'];
 
   
@@ -23,7 +20,7 @@ function LocationPage() {
   const { data: hotelData,
     isLoading: isHotelLoading,
     isError , 
-  } = useQuery(['hotel'], () => getListData({filter}));
+  } = useQuery(['hotelLocation'], () => getListData({filter}));
 
   
   const handleChangeNav = (nav) => {
