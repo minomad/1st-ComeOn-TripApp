@@ -1,18 +1,37 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async'
+import { useQuery } from '@tanstack/react-query';
+import { usePocketData } from '@/api/usePocketData';
 import Header from '@/components/Header';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import SearchHotel from '@/components/SearchHotel';
 import SearchLeisure from '@/components/SearchLeisure';
 import SearchTraffic from '@/components/SearchTraffic';
+import Spinner from '@/components/Spinner';
 
 function SearchPage() {
   const info = ['숙소', '레저/티켓', '교통/항공'];
   const [selectCategory, setSelectCategory] = useState('숙소');
+  const { getListData } = usePocketData('hotel');
+  const {
+    data: hotelData,
+    isLoading,
+    isError,
+  } = useQuery(['hotelSearch'], () => getListData());
+
 
   const handleChangeCategory = (category) => {
     setSelectCategory(category);
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <div className='text-accent'>서버 에러 발생</div>;
+  }
+
   return (
     <>
      <Helmet>
@@ -28,7 +47,7 @@ function SearchPage() {
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-        {selectCategory === '숙소' && <SearchHotel/>}
+        {selectCategory === '숙소' && <SearchHotel data={hotelData}/>}
         {selectCategory === '레저/티켓' && <SearchLeisure/>}
         {selectCategory === '교통/항공' && <SearchTraffic/>}
         
