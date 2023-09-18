@@ -1,7 +1,6 @@
 import { numberWithComma } from '@/utils/numberWithComma';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { Link } from 'react-router-dom';
-import Button from '@/components/Button';
 
 function HotelRoomPage({ data, title }) {
   if (!Array.isArray(data)) {

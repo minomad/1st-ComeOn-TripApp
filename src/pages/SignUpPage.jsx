@@ -2,13 +2,13 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
-import { Helmet } from 'react-helmet-async';
 import { toast, Toaster } from 'react-hot-toast';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Form from '@/components/Form';
 import regEx from '@/utils/regEx';
+import MetaTag from '@/components/MetaTag';
 
 function SignUpPage() {
   const { createData, getListData } = usePocketData('users');
@@ -170,9 +170,7 @@ function SignUpPage() {
 
   return (
     <>
-      <Helmet>
-        <title>야무지개놀자 회원가입</title>
-      </Helmet>
+      <MetaTag title='회원가입' description='야무지개놀자 회원가입' />
       <Header search='search' back='back' className='text-xl font-semibold' title='회원가입' />
       <section className='mx-2 pb-20 pt-10'>
         <h2 className='sr-only'>회원가입 페이지</h2>
@@ -272,7 +270,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='전체 동의 (선택 포함)'
                 id='all'
-                className="checkbox cursor-pointer appearance-none mx-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox mx-2 cursor-pointer appearance-none outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer text-lg font-semibold '
                 onClick={handleAllAgree}
               />
@@ -283,7 +281,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='만 14세 이상 이용 동의'
                 id='agreeAge'
-                className="checkbox cursor-pointer appearance-none mx-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox mx-2 cursor-pointer appearance-none outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
                 aria-required
               />
@@ -294,7 +292,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='개인정보 수집 및 이용 동의(선택)'
                 id='agreeInfo'
-                className="checkbox cursor-pointer appearance-none mx-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox mx-2 cursor-pointer appearance-none outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
               />
             </li>
@@ -303,7 +301,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='특가, 쿠폰 등 마케팅 수신 동의(선택)'
                 id='agreeAd'
-                className="checkbox cursor-pointer appearance-none mx-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox mx-2 cursor-pointer appearance-none outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
               />
             </li>
@@ -312,7 +310,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='위치 정보 이용 약관 동의(선택)'
                 id='agreeLocation'
-                className="checkbox cursor-pointer appearance-none mx-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox mx-2 cursor-pointer appearance-none outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
               />
             </li>
@@ -321,7 +319,7 @@ function SignUpPage() {
                 type='checkbox'
                 label='장기 미접속 시에도 계정 유지(선택)'
                 id='agreeGhost'
-                className="checkbox cursor-pointer appearance-none mx-2 outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
+                className="checkbox mx-2 cursor-pointer appearance-none outline-primary before:inline-block before:h-6 before:w-6 before:bg-[url('/signup-check.svg')] before:bg-no-repeat before:align-middle checked:before:bg-[url('/signup-agree.svg')]"
                 labelClass='cursor-pointer font-semibold'
               />
             </li>

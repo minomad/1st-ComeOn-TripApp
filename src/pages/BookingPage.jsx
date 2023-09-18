@@ -22,7 +22,7 @@ function BookingPage() {
 
   const handlePayment = () => {
     const userId = user.id;
- 
+
     toast((t) => (
       <div className='flex-col items-center gap-5'>
         <span className='text-lg'>결제 하시겠습니까?</span>
@@ -61,7 +61,7 @@ function BookingPage() {
   return (
     <>
       <Helmet>
-        <title>야무지개놀자 예약</title>
+        <title>예약</title>
       </Helmet>
       <Header back='back' className='mr-7 text-xl font-semibold' title='예약' />
       <section className='px-4 pb-20'>

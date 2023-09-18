@@ -10,10 +10,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, A11y } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
 import useAuthStore from '@/store/useAuthStore';
+import NumberOfPeople from '@/components/NumberOfPeople';
 import Header from '@/components/Header';
 import Spinner from '@/components/Spinner';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
+import MetaTag from '@/components/MetaTag';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -33,7 +35,9 @@ function HotelRoomDetailPage() {
   const navigation = useNavigate();
 
   const [isShowPayment, setIsShowPayment] = useState(false);
-
+  const [selectNumber, setSelectNumber] = useState(0);
+  const [selectList, setSelectList] = useState(false);
+  const number = [1, 2, 3, 4];
   const checkInRef = useRef(null);
   const checkOutRef = useRef(null);
 
@@ -79,6 +83,9 @@ function HotelRoomDetailPage() {
 
     if (checkIn == '' || checkOut == '') {
       return toast.error('체크인 / 아웃 날짜를 선택해주세요');
+    }
+    if (selectNumber === 0) {
+      return toast.error('인원수를 선택해주세요');
     }
 
     if (isAuth) {
@@ -144,6 +151,7 @@ function HotelRoomDetailPage() {
 
   return (
     <>
+    <MetaTag title={hotel} description="숙소 상세정보"/>
       <Header back='back' cart='cart' title={hotel} className='text-xl font-bold' />
       <section className=' mx-auto max-w-2xl px-4 pb-32'>
         <h3 className='sr-only'>{hotel}</h3>
@@ -201,10 +209,19 @@ function HotelRoomDetailPage() {
           <p className='mt-4 text-right text-lg font-bold text-primary'>
             {numberWithComma(roomData.price)}원
           </p>
-          <div className='flex justify-end'>
+          <div className='flex justify-between'>
+            <NumberOfPeople
+              number={number}
+              selectNumber={selectNumber}
+              setSelectNumber={setSelectNumber}
+              selectList={selectList}
+              setSelectList={setSelectList}
+              NumberBoxclassName='right-0 w-[4rem] text-center bg-white rounded-md shadow-md'
+              NumberListClassName='text-[0.9rem] py-[0.5rem]'
+            />
             <Button
               type='button'
-              className='mt-4 h-8 w-52 rounded bg-primary font-bold text-white max-[420px]:w-32'
+              className='mt-4 h-8 w-52 rounded bg-primary font-bold text-white max-[420px]:w-32 '
               onClick={() => handleBookingRoom()}
             >
               객실 예약하기
