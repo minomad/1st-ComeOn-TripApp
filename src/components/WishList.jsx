@@ -11,7 +11,7 @@ function WishList({
   cart,
   data,
   link,
-  handleWishDelete,
+  handleDelete,
   hotel,
   img,
   filterData,
@@ -50,11 +50,11 @@ function WishList({
             )}
             <div className='flex gap-3'>
               {img && (
-                <figure>
+                <figure className='h-[130px] w-[130px]'>
                   <img
                     src={getPbImageURL(item, img)}
                     alt={item.title}
-                    className='h-full w-[100px] min-[375px]:h-[120px] min-[375px]:w-[120px]'
+                    className='h-full w-full object-cover rounded-md'
                   />
                   <figcaption className='sr-only'>{item.title}</figcaption>
                 </figure>
@@ -84,7 +84,7 @@ function WishList({
             <Button
               type='button'
               className={`absolute right-5 h-6 w-6 cursor-pointer ${buttonClass}`}
-              onClick={() => handleWishDelete(item.id)}
+              onClick={() => handleDelete(item.id)}
             >
               {wish && <img src='/heartActive.svg' alt='찜' />}
               {cart && <img src='/close.svg' alt='닫기' className='h-5 w-5' />}
@@ -102,7 +102,7 @@ WishList.propTypes = {
   cart: PropTypes.bool,
   data: PropTypes.array,
   link: PropTypes.string,
-  handleWishDelete: PropTypes.func,
+  handleDelete: PropTypes.func,
   hotel: PropTypes.bool,
   img: PropTypes.string,
   filterData: PropTypes.array,

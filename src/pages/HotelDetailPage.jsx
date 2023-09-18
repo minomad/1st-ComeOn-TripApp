@@ -125,7 +125,7 @@ function HotelDetailPage() {
                   longitude={hotelData.longitude}
                   className='mb-2 h-[50vh] w-auto max-w-3xl'
                 />
-                <Button onClick={handleShowMap} className='pl-2'>
+                <Button type='button' onClick={handleShowMap} className='pl-2'>
                   <img src='/close.svg' alt='닫기' className='h-5 w-5' />
                 </Button>
               </div>
