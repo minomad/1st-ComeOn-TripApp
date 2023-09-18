@@ -38,7 +38,7 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
     }
     setIsShowReview((prev) => !prev);
   };
-
+  
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     const review = reviewRef.current.value;

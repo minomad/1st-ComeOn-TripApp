@@ -1,7 +1,6 @@
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, A11y } from 'swiper/modules';
@@ -10,6 +9,7 @@ import Header from '@/components/Header';
 import Hotel from '@/components/Hotel';
 import HotelList from '@/components/HotelList';
 import Spinner from '@/components/Spinner';
+import MetaTag from '@/components/MetaTag';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -35,17 +35,9 @@ function MainPage() {
 
   return (
     <>
-      <Helmet>
-        <title>야무지개놀자</title>
-        <meta property='og:title' content='야무지개놀자' />
-        <meta property='og:description' content='여행 사이트' />
-        <meta
-          property='og:image'
-          content='https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/d05639ac-151a-4654-83fd-58c1408c0573'
-        />
-      </Helmet>
+      <MetaTag title='야무지개놀자' description='메인페이지' />
       <Header logo='logo' search='search' cart='cart' />
-      <section className=''>
+      <section>
         <h2 className='sr-only'>메인페이지</h2>
         <div className='mb-4'>
           <Swiper
@@ -56,6 +48,7 @@ function MainPage() {
             loop={true}
             a11y={true}
             scrollbar={{ draggable: true }}
+            aria-label="광고 슬라이드"
           >
             <SwiperSlide>
               <img src='/ad.png' alt='광고' className='mx-auto h-auto max-h-[29rem]' />
@@ -116,6 +109,7 @@ function MainPage() {
           loop={true}
           a11y={true}
           scrollbar={{ draggable: true }}
+          aria-label="광고 슬라이드"
           breakpoints={{
             320: {
               slidesPerView: 2,
