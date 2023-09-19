@@ -10,6 +10,7 @@ import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
+import MetaTag from './../components/MetaTag';
 
 function BookingPage() {
   const { id, title, checkin, checkout } = useParams();
@@ -27,8 +28,9 @@ function BookingPage() {
       <div className='flex-col items-center gap-5'>
         <span className='text-lg'>결제 하시겠습니까?</span>
         <div className='flex gap-10 pt-2'>
-          <button
-            className='rounded-lg bg-primary px-4 py-2 text-white'
+          <Button
+            type='submit'
+            className='rounded-lg bg-primary px-5 py-2 text-white'
             onClick={() => {
               toast.dismiss(t.id);
               updateUser(userId, {
@@ -42,8 +44,9 @@ function BookingPage() {
             }}
           >
             예
-          </button>
+          </Button>
           <Button
+            type='button'
             className='rounded-lg bg-accent px-1 py-2 text-white'
             onClick={() => toast.dismiss(t.id)}
           >
@@ -60,9 +63,7 @@ function BookingPage() {
 
   return (
     <>
-      <Helmet>
-        <title>예약</title>
-      </Helmet>
+      <MetaTag title='예약' description='호텔/리조트 예약'/>
       <Header back='back' className='mr-7 text-xl font-semibold' title='예약' />
       <section className='px-4 pb-20'>
         <h2 className='mx-auto flex max-w-[39rem] justify-center border-b border-gray px-4 pt-2 text-xl font-bold'>

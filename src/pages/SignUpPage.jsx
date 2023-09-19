@@ -90,6 +90,7 @@ function SignUpPage() {
 
   const handleRegister = (e) => {
     e.preventDefault();
+
     const username = idRef.current.value;
     const email = emailRef.current.value;
     const nickName = nickNameRef.current.value;
@@ -105,44 +106,26 @@ function SignUpPage() {
       passwordConfirm,
     };
 
-    if (!regEx.id(username)) {
-      idRef.current.classList.add('border-b-accent');
-      toast.error('아이디는 영문,숫자만 입력이 가능합니다.');
-      return;
-    } else {
-      idRef.current.classList.remove('border-b-accent');
-    }
+    const checkField = (value, validation, error) => {
+      if (!validation(value)) {
+        toast.error(error);
+        return false;
+      }
+      return true;
+    };
 
-    if (!regEx.email(email)) {
-      emailRef.current.classList.add('border-b-accent');
-      toast.error('유효한 이메일을 입력해주세요.');
+    if (
+      !checkField(username, regEx.id, '아이디는 영문, 숫자만 입력이 가능합니다.') ||
+      !checkField(email, regEx.email, '유효한 이메일을 입력해주세요.') ||
+      !checkField(nickName, regEx.name, '닉네임은 12자리까지 입력이 가능합니다.') ||
+      !checkField(password, regEx.pw, '유효한 비밀번호를 입력해주세요.')
+    ) {
       return;
-    } else {
-      emailRef.current.classList.remove('border-b-accent');
-    }
-
-    if (!regEx.name(nickName)) {
-      nickNameRef.current.classList.add('border-b-accent');
-      toast.error('닉네임은 12자리까지 입력이 가능합니다.');
-      return;
-    } else {
-      nickNameRef.current.classList.remove('border-b-accent');
-    }
-
-    if (!regEx.pw(password)) {
-      passwordRef.current.classList.add('border-b-accent');
-      toast.error('유효한 비밀번호를 입력해주세요.');
-      return;
-    } else {
-      passwordRef.current.classList.remove('border-b-accent');
     }
 
     if (passwordConfirm !== password) {
-      passwordConfirmRef.current.classList.add('border-b-accent');
       toast.error('비밀번호가 일치하지 않습니다.');
       return;
-    } else {
-      passwordConfirmRef.current.classList.remove('border-b-accent');
     }
 
     if (!agree) {

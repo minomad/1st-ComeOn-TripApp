@@ -13,11 +13,10 @@ function HotelPage() {
   const { getListData } = usePocketData('hotel');
   const filter =
     'category = "휴가에딱" || category = "도심힐링" || category = "바다낭만" || category = "리조트"|| category = "도쿄" || category = "오사카" || category = "후쿠오카" || category = "교토"';
-  const {
-    data: hotelData,
-    isLoading,
-    isError,
-  } = useQuery(['hotelPage', { filter }], () => getListData({ filter }));
+
+  const { data: hotelData, isLoading } = useQuery(['hotelPage', { filter }], () =>
+    getListData({ filter }),
+  );
 
   const [selectCategory, setSelectCategory] = useState({
     korea: '휴가에딱',
@@ -36,10 +35,6 @@ function HotelPage() {
 
   if (isLoading) {
     return <Spinner />;
-  }
-
-  if (isError) {
-    return <div className='text-accent'>서버 에러 발생</div>;
   }
 
   return (

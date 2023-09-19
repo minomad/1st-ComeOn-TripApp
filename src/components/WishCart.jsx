@@ -10,7 +10,7 @@ function WishCart({ link, heart, hotel, leisure, cart }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 30 }}
         transition={{ duration: 0.5 }}
-        className='mt-20 flex flex-col items-center gap-2 font-semibold'
+        className='mt-14 flex flex-col items-center gap-1 font-semibold'
       >
         <figure>
           {heart && <img src='/heartActive.svg' alt='하트' className='w-14' />}
@@ -30,7 +30,7 @@ function WishCart({ link, heart, hotel, leisure, cart }) {
         >
           {hotel && <p>숙소 보러가기</p>}
           {leisure && <p>레저 보러가기</p>}
-          {cart && <p>홈으러 가기</p>}
+          {cart && <p>홈으로 가기</p>}
         </Link>
       </motion.section>
     </AnimatePresence>

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { numberWithComma } from '@/utils/numberWithComma';
 import { toast, Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -10,7 +9,6 @@ import useAuthStore from '@/store/useAuthStore';
 import Spinner from '@/components/Spinner';
 import WishCart from '@/components/WishCart';
 import Input from '@/components/Input';
-import Button from '@/components/Button';
 import Guest from '@/components/Guest';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import WishList from '@/components/WishList';
@@ -40,7 +38,6 @@ function CartPage() {
   );
 
   const { data: orderData } = useQuery(['userOrder'], () => getListData());
-
   const queryClient = useQueryClient();
 
   const cartRoom = data?.expand?.cartRoom;
@@ -188,7 +185,7 @@ function CartPage() {
           className='text-xl'
         />
         <div className='mx-auto flex max-w-[39rem] justify-between gap-2 border-b border-gray p-5 font-semibold'>
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-2 max-[412px]:px-2'>
             <Input
               type='checkbox'
               id='all'
@@ -205,7 +202,11 @@ function CartPage() {
         {selectCategory === '숙소' && isAuth && cartRoom && (
           <>
             {cartRoom?.map((item) => {
-              const filterData = orderData?.filter((orderItem) => orderItem.orderid === item.id);
+              const order = orderData?.filter((orderItem) => orderItem.orderid === item.id);
+              const filterData = order?.filter(
+                (orderItem, index, i) =>
+                  i.findIndex((item) => item.orderid === orderItem.orderid) === index,
+              );
               return (
                 <WishList
                   key={item.id}
@@ -216,24 +217,11 @@ function CartPage() {
                   filterData={filterData}
                   cartHotel={true}
                   handleCheckbox={() => handleCheckbox(item.id)}
+                  totalCartPrice={totalCartPrice}
+                  handleBooked={handleBooked}
                 />
               );
             })}
-
-            <div className='fixed bottom-0 z-[100] flex w-full max-w-3xl flex-col gap-1 border-t-2 border-[#919191] bg-white px-5 py-4 font-bold'>
-              <span className='text-end text-[12px] text-[#919191]'>결제 예상금액</span>
-              <div className='flex items-center justify-between pb-2'>
-                <span className='pl-1'>총</span>
-                <span className='text-lg text-primary'>{numberWithComma(totalCartPrice)}원</span>
-              </div>
-              <Button
-                type='submit'
-                className='w-full rounded-[4px] border bg-primary px-4 py-2 text-white'
-                onClick={handleBooked}
-              >
-                바로 결제하기
-              </Button>
-            </div>
           </>
         )}
 
@@ -242,36 +230,19 @@ function CartPage() {
         {selectCategory === '레저' && isAuth && cartLeisure && (
           <>
             {cartLeisure?.map((item) => {
-              const filterData = orderData?.filter((orderItem) => orderItem.orderid === item.id);
               return (
                 <WishList
                   key={item.id}
                   cart={true}
                   data={[item]}
                   handleDelete={() => handleDeleteCart(item.id)}
-                  filterData={filterData}
                   cartHotel={true}
                   handleCheckbox={() => handleCheckbox(item.id)}
+                  totalCartPrice={totalCartPrice}
+                  handleBooked={handleBooked}
                 />
               );
             })}
-
-            <div className='fixed bottom-0 z-[100] flex w-full max-w-3xl flex-col gap-1 border-t-2 border-[#919191] bg-white px-5 py-4 font-bold'>
-              <div className='flex items-center justify-between'>
-                <span className='pl-1'>총</span>
-                <span className='text-lg text-primary'>{numberWithComma(totalCartPrice)}원</span>
-              </div>
-              <span className='text-end text-[12px] text-[#919191]'>
-                결제 단계에서 쿠폰 적용시 추가 할인 가능
-              </span>
-              <Button
-                type='submit'
-                className='w-full rounded-[4px] border bg-primary px-4 py-2 text-white'
-                onClick={handleBooked}
-              >
-                바로 결제하기
-              </Button>
-            </div>
           </>
         )}
 
@@ -292,9 +263,6 @@ function CartPage() {
                 color: 'white',
               },
             },
-          }}
-          containerStyle={{
-            top: 420,
           }}
         />
       </section>

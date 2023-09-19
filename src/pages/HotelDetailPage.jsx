@@ -79,18 +79,18 @@ function HotelDetailPage() {
                 alt={hotelData.title}
                 className='w-full max-w-[39rem]'
               />
+              <figcaption className='sr-only'>{hotelData.title}</figcaption>
             </figure>
             <div className='border-b-8 border-thirdary p-4'>
               <span className='text-sm font-semibold text-gray3'>{hotelData.grade}</span>
               <div className='flex justify-between'>
                 <h3 className='text-2xl font-semibold max-[500px]:text-xl'>{hotelData.title}</h3>
                 {isAuth && (
-                  <Button>
+                  <Button type='button' onClick={handleWish}>
                     <img
                       src={isActive ? '/heartActive.svg' : '/hotel-heartBlack.svg'}
                       alt='찜'
-                      className='h-7 w-7 cursor-pointer'
-                      onClick={handleWish}
+                      className='h-7 w-7'
                     />
                   </Button>
                 )}

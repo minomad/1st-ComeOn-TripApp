@@ -9,19 +9,18 @@ import Guest from '@/components/Guest';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import WishList from '@/components/WishList';
 import MetaTag from '@/components/MetaTag';
-import Spinner from '@/components/Spinner';
 
 function WishPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
   const { getIdData, updateData: updateUser } = usePocketData('users');
   const [selectCategory, setSelectCategory] = useState('숙소');
-  const tag = ['숙소', '레저'];
+  const info = ['숙소', '레저'];
 
   const queryClient = useQueryClient();
   const userId = user?.id;
 
-  const { data, isLoading } = useQuery(
+  const { data } = useQuery(
     ['userWish', userId],
     () => getIdData(userId, { expand: 'wishHotel, wishLeisure' }),
     {
@@ -37,7 +36,7 @@ function WishPage() {
         <section className='px-4'>
           <h3 className='sr-only'>찜한목록</h3>
           <HotelInfoCategory
-            info={tag}
+            info={info}
             selectCategory={selectCategory}
             handleChangeCategory={setSelectCategory}
             className='text-xl'
@@ -48,10 +47,6 @@ function WishPage() {
     );
   }
 
-  // if (isLoading) {
-  //   return <Spinner />
-  // }
-
   const wishHotel = data?.expand?.wishHotel;
   const wishLeisure = data?.expand?.wishLeisure;
 
@@ -61,6 +56,7 @@ function WishPage() {
     await updateUser(userId, {
       [`wish${category}-`]: itemId,
     });
+    
     toast.error('찜 목록에서 해제하였습니다.');
     queryClient.invalidateQueries(['userWish']);
   };
@@ -70,13 +66,12 @@ function WishPage() {
       <MetaTag title='찜한목록' description='야무지개놀자 회원이 찜한 목록' />
       <Header back='back' cart='cart' className='text-xl font-semibold ' title='찜한 목록' />
       <HotelInfoCategory
-        info={tag}
+        info={info}
         selectCategory={selectCategory}
         handleChangeCategory={setSelectCategory}
         className='text-xl'
       />
-      <section className=' pb-20'>
-        
+      <section className='pb-20'>
         {selectCategory === '숙소' && isAuth && !wishHotel && (
           <WishCart heart={true} hotel={true} link='hotel' />
         )}
@@ -89,7 +84,6 @@ function WishPage() {
             handleDelete={handleDeleteWish}
             hotel={true}
             img='img'
-            buttonClass='top-5'
           />
         )}
 
@@ -101,10 +95,10 @@ function WishPage() {
           <WishList
             wish={true}
             data={wishLeisure}
-            link='leisure'
+            link='leisureDetail'
             handleDelete={handleDeleteWish}
             img='thumbnail'
-            buttonClass='bottom-11'
+            buttonClass='absolute max-[375px]:bottom-8 bottom-12 right-4'
           />
         )}
 

@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { toast, Toaster } from 'react-hot-toast';
+import { useMutation } from '@tanstack/react-query';
 import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
@@ -14,6 +15,9 @@ function SignInPage() {
   const navigate = useNavigate();
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const { mutate: userLogin } = useMutation(async (loginInfo) => {
+    await signIn(loginInfo);
+  });
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -26,14 +30,20 @@ function SignInPage() {
     };
 
     try {
-      await signIn(loginInfo);
-      toast.success('로그인 되었습니다.');
-      setTimeout(() => {
-        toast.dismiss();
-        navigate('/');
-      }, 1000);
+      userLogin(loginInfo, {
+        onSuccess: () => {
+          toast.success('로그인 되었습니다.');
+          setTimeout(() => {
+            toast.dismiss();
+            navigate('/');
+          }, 1000);
+        },
+        onError: () => {
+          toast.error('입력하신 내용을 확인해주세요.');
+        },
+      });
     } catch (error) {
-      toast.error('입력하신 내용을 확인해주세요.');
+      toast.error('서버 오류');
     }
   };
 
