@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import { useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { usePocketData } from '@/api/usePocketData';
-import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { usePocketData } from '@/api/usePocketData';
+import AroundList, { AroundLeisureList } from '@/components/AroundList';
 import Input from '@/components/Input';
-import Category from '@/components/Category';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
+import MetaTag from '@/components/MetaTag';
+import Category from '@/components/Category';
 import AroundMap from '@/components/AroundMap';
-import AroundList, { AroundLeisureList } from '@/components/AroundList';
 
 function AroundPage() {
   const [selectCategory, setSelectCategory] = useState('숙소');
@@ -30,8 +30,6 @@ function AroundPage() {
   } = useQuery(['hotelAround'], () => getListData({filter}));
   const {latitude, longitude } = useParams();
   
-
-
   if (isHotelLoading) {
     return <Spinner />;
   }
@@ -42,9 +40,7 @@ function AroundPage() {
 
   return (
     <>
-      <Helmet>
-        <title>내주변</title>
-      </Helmet>
+      <MetaTag title='내주변' description='내 주변의 호텔,레저 리스트' />
       <h1 className='sr-only'>내주변 페이지</h1>
       <header className='fixed top-0 left-0 right-0 z-20 mx-auto bg-white flex text text-center max-w-3xl justify-between px-5 m:px-[5rem] pt-4 gap-5'>
         <form action="" method="get" className='w-[100%]'>
@@ -62,7 +58,6 @@ function AroundPage() {
             category={category}
             selectCategory={selectCategory}
             setSelectCategory={setSelectCategory}
-            // icon={icon}
           />
       </nav>
       {
@@ -75,14 +70,13 @@ function AroundPage() {
       ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory}  /> 
       : (!isCheck && selectCategory==='레저/티켓' ? <AroundMap data={leisureData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
 
-
-          <Button aria-label='지도와 정보리스트 토글 버튼' type='button' className={`fixed bottom-[5.2rem] inset-x-0 z-10 mx-auto flex rounded-full w-[5.5rem] h-[2.5rem] bg-primary  font-semibold  text-[1rem] shadow-md py-2 px-4 gap-2 ${isCheck ?'bg-white text-primary border-primary border-[0.12rem] bottom-[4.9rem]':'text-white bottom-[4.9rem] ' } `} 
-          onClick={() => {setCheck((e) => !e) 
-                }}
-            >
-            {isCheck ?<img src='/around-map.svg' alt='지도로 보기' className='py-2 translate-y-[-0.25rem]' />:<img src='/around-list.svg' alt='정보 리스트로 보기' className='py-2 translate-y-[-0.15rem]' />}  {isCheck ? "지도" : "목록"}
-          </Button>
-        </>
+      <Button aria-label='지도와 정보리스트 토글 버튼' type='button' className={`fixed bottom-[5.2rem] inset-x-0 z-10 mx-auto flex rounded-full w-[5.5rem] h-[2.5rem] bg-primary  font-semibold  text-[1rem] shadow-md py-2 px-4 gap-2 ${isCheck ?'bg-white text-primary border-primary border-[0.12rem] bottom-[4.9rem]':'text-white bottom-[4.9rem]'}`} 
+        onClick={() => {setCheck((e) => !e) 
+            }}
+        >
+        {isCheck ?<img src='/around-map.svg' alt='지도로 보기' className='py-2 translate-y-[-0.25rem]' />:<img src='/around-list.svg' alt='정보 리스트로 보기' className='py-2 translate-y-[-0.15rem]' />}  {isCheck ? "지도" : "목록"}
+      </Button>
+    </>
   );
 }
 export default AroundPage;

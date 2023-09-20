@@ -1,14 +1,13 @@
-import { getPbImageURL } from '@/utils/getPbImageURL';
-import { numberWithComma } from '@/utils/numberWithComma';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getPbImageURL } from '@/utils/getPbImageURL';
+import { numberWithComma } from '@/utils/numberWithComma';
 import Button from './Button'
 
 
 function AroundList({data, selectCategory}) {
   let filterData;
   const [selectList, setselectList] = useState('추천순')
-  
   const [selectOrder, setSelectOrder] = useState(false);
 
   switch (selectList) {
@@ -69,7 +68,7 @@ function AroundList({data, selectCategory}) {
               <span className='block text-[0.9rem] mr-3 text-gray2'>숙박: 15:00~</span>
               <span className='block text-[1.2rem] font-extrabold mr-2'>{numberWithComma(item.price)}원</span>
             </div>
-            <Link to={`hotel/${item.id}`} className='absolute z-0 right-4 text-right rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
+            <Link to={`hotel/${item.id}`} className='absolute z-0 right-4 text-right rounded-full  bg-primary hover:bg-[#1E51EE] text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
                {'숙소 예약하기'}
             </Link>
           </div>
@@ -155,7 +154,7 @@ export function AroundLeisureList({data, selectCategory}) {
               </span>
                 <span className='block text-[1.2rem] font-extrabold '>{numberWithComma(item.price)}원</span>
             </div>
-            <Link to={`LeisureDetail/${item.id}`} className='absolute z-0 right-4 text-right rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
+            <Link to={`LeisureDetail/${item.id}`} className='absolute z-0 right-4 text-right rounded-full bg-primary hover:bg-[#1E51EE] text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
                {'상품 선택하기'}
             </Link>
           </div>

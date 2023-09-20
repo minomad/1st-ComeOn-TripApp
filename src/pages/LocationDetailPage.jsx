@@ -1,13 +1,14 @@
-import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
-import { usePocketData } from '@/api/usePocketData';
-import { useQuery } from '@tanstack/react-query';
-import { numberWithComma } from '@/utils/numberWithComma';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { usePocketData } from '@/api/usePocketData';
 import { getPbImageURL } from '@/utils/getPbImageURL';
+import { numberWithComma } from '@/utils/numberWithComma';
 import { Link } from 'react-router-dom';
-import Spinner from '@/components/Spinner';
 import Header from '@/components/Header'
+import Spinner from '@/components/Spinner';
+import MetaTag from '@/components/MetaTag';
+
 
 function LocationDetailPage() {
   let hotelCategoryData;
@@ -40,13 +41,9 @@ function LocationDetailPage() {
     
   }
   
-
-
   return (
     <>
-    <Helmet>
-      <title>지역-리스트</title>
-    </Helmet>
+    <MetaTag title='지역 리스트' description='지역별 호텔리스트' />
     <Header back='back' search='search' title='' />
     <section className=''>
       <h1 className='fixed bg-white rounded-b-3xl w-full font-bold text-[1.4rem] max-w-3xl z-10 md:text-[1.7rem] px-[2.5rem] pb-2 '>
@@ -63,7 +60,7 @@ function LocationDetailPage() {
               className=' h-[130%] w-[120%]  cover object-cover' />
             <figcaption className='sr-only'>{item.title} </figcaption>
           </figure>
-          {/* 호텔명, 별점, 가격 설명박스 */}
+          
           <div role="group" className='px-6 pt-3  '>
             <h2 className='font-bold text-lg'>{item.title}</h2>
             <img src='/star.svg' alt='별점' className='inline-block mb-[0.3rem] mr-[0.3rem] '/>
@@ -80,8 +77,8 @@ function LocationDetailPage() {
             </div>
             
             <div className='flex  justify-end'>
-              <Link to={`hotel/${item.id}`} className='flex rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
-                 {'숙소 예약하기'}
+              <Link to={`hotel/${item.id}`} className='flex rounded-full  bg-primary hover:bg-[#1E51EE] text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
+                {'숙소 예약하기'}
               </Link>
               
             </div>
