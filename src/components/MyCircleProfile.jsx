@@ -20,19 +20,19 @@ function MyCircleProfile({ towhere, imgalt = '내 프로필 사진' }) {
 
   return (
     <section className='mb-10 flex items-center justify-center'>
-      <Link to={towhere} tabIndex='-1'>
-        <Button
-          type='button'
-          className='relative mt-12 h-full overflow-hidden rounded-full border-2 border-secondary bg-gray shadow-md'
-          style={{ width: '120px', height: '120px' }} // adjust this as needed
-        >
+      <Button
+        type='button'
+        className='relative mt-12 h-full overflow-hidden rounded-full border-2 border-secondary bg-gray shadow-md'
+        style={{ width: '120px', height: '120px' }} // adjust this as needed
+      >
+        <Link to={towhere}>
           <img
             src={avatarSrc}
             alt={imgalt}
             className='absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 transform object-cover'
           />
-        </Button>
-      </Link>
+        </Link>
+      </Button>
     </section>
   );
 }

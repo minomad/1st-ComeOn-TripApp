@@ -8,7 +8,6 @@ import { getPbImageURL } from '@/utils/getPbImageURL';
 import { Link } from 'react-router-dom';
 import Spinner from '@/components/Spinner';
 import Header from '@/components/Header'
-import Button from '@/components/Button';
 
 function LocationDetailPage() {
   const { category } = useParams(); // category 파라미터를 가져옵니다.
@@ -17,15 +16,10 @@ function LocationDetailPage() {
   const { getListData:getLeisureData } = usePocketData('leisure');
   const { data: leisureData,
     isLoading,
-    isError ,
   } = useQuery(['leisure'], () => getLeisureData());
 
   if (isLoading) {
     return <Spinner />;
-  }
-
-  if (isError) {
-    return <div>서버 에러 발생</div>;
   }
   let leisureCategoryData = leisureData.filter((leisure) => leisure.category === selectCategory);
     
@@ -40,22 +34,22 @@ function LocationDetailPage() {
     </Helmet>
     <Header back='back' search='search' title='' />
     <section>
-      <h2 className='fixed bg-white rounded-b-3xl w-full font-bold text-[1.4rem] max-w-3xl z-10 md:text-[1.7rem] px-[2.5rem] pb-2 '>
-        <img src='/locationActive.svg' alt='위치' className='inline-block h-6 md:h-7 mb-0.5 mr-[0.1rem] '/>
+      <h1 className='fixed bg-white rounded-b-3xl w-full font-bold text-[1.4rem] max-w-3xl z-10 md:text-[1.7rem] px-[2.5rem] pb-2 '>
+        <img src='/locationActive.svg' alt='선택 위치' className='inline-block h-6 md:h-7 mb-0.5 mr-[0.1rem] '/>
         { category === '도심힐링' ? '서울' : category }
-      </h2>
-      <div className='pt-[3.1rem] pb-[5rem]'>
+      </h1>
+      <div role="group" className='pt-[3.1rem] pb-[5rem]'>
       {leisureCategoryData?.map((item) => (
-        <article key={item.id} className='h-[30rem] lg:h-[33rem] py-1.2   shadow-md  bg-white '>
+        <article key={item.id} className='relative h-[30rem] lg:h-[33rem] py-1.2   shadow-md  bg-white '>
           <figure className='w-[100%] h-[57%] lg:h-[65%]  overflow-hidden mr-4 '>
             <img
               src={getPbImageURL(item, 'main')}
-              alt={item.title}
+              alt=''
               className=' h-[120%] w-[110%]  cover object-cover' />
             <figcaption className='sr-only'>{item.title} </figcaption>
           </figure>
           {/* 호텔명, 별점, 가격 설명박스 */}
-          <div className='px-6 pt-3  '>
+          <div role='group' className='px-6 pt-3  '>
             <h2 className='font-bold text-lg'>{item.title}</h2>
             <div className=' flex justify-between py-2  '>
               <span className='block '>
@@ -70,10 +64,8 @@ function LocationDetailPage() {
               </span>
                 <span className='block text-[1.2rem] font-extrabold '>{numberWithComma(item.price)}원</span>
             </div>
-            <Link to={`/LeisureDetail/${item.id}`}>
-              <Button type='button' className='ml-auto mr-0 mb-2 mt-auto flex rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '
-              > {'상품 선택하기'}
-              </Button>
+            <Link to={`/LeisureDetail/${item.id}`} className='absolute right-4 text-right rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
+               {'상품 선택하기'}
             </Link>
           </div>
         </article>

@@ -83,10 +83,10 @@ function MyQnaPage() {
       {isAuth && (
         <>
           <Helmet>
-            <title>야무지개놀자</title>
+            <title>1:1문의 내역</title>
           </Helmet>
-          <Header search='search' back='back' cart='cart' title='마이 페이지'>
-            메인페이지
+          <Header search='search' back='back' cart='cart' title='1:1문의 내역'>
+            1:1문의 내역
           </Header>
 
           {/* 마이페이로 돌아갈 수 있는 버튼 기능의 이미지 */}

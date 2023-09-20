@@ -92,10 +92,10 @@ function MyNewQnaPage() {
       {isAuth && (
         <>
           <Helmet>
-            <title>야무지개놀자</title>
+            <title>1:1문의</title>
           </Helmet>
           <Header search='search' back='back' cart='cart' title='1:1문의'>
-            1:1문의
+            1:1문의 작성
           </Header>
 
           <section className='absolute left-1/2 top-1/2 flex h-[73%] w-[90%] -translate-x-1/2 -translate-y-1/2 transform rounded-3xl bg-lightPurple p-3 shadow-lg sm:max-w-[500px] sm:p-5'>

@@ -6,6 +6,7 @@ function LocationSideButton({ locationSideButton, selectLocationSide, setSelectL
   const handleChangeLocationSide = (nav) => {
     {selectLocationSide}(nav);
   };
+
   return (
     <>
       <ul className={`flex  flex-col   ${className}`}>
@@ -16,7 +17,6 @@ function LocationSideButton({ locationSideButton, selectLocationSide, setSelectL
             <li
               key={item}
               aria-label={item}
-              tabIndex='0'
               className={``}
             onClick={() => {
               setSelectLocationSide(item);
@@ -28,7 +28,7 @@ function LocationSideButton({ locationSideButton, selectLocationSide, setSelectL
               }`}
               onClick={() => {
                 setSelectLocationSide(item);
-              }}
+              }} 
               >{item}</Button>
             </li>
           );
