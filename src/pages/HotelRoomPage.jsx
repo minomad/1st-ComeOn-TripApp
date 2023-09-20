@@ -1,9 +1,8 @@
 import { numberWithComma } from '@/utils/numberWithComma';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { Link } from 'react-router-dom';
-import Button from '@/components/Button';
 
-function HotelRoomPage({ data, title }) {
+function HotelRoomPage({ data, hotelId, title }) {
   if (!Array.isArray(data)) {
     return null;
   }
@@ -27,10 +26,11 @@ function HotelRoomPage({ data, title }) {
             <p className='text-lg text-primary'>{numberWithComma(item.price)}원</p>
           </div>
           <div className='flex justify-end'>
-            <Link to={`/rooms/${item.id}/${title}`}>
-              <Button className='mt-5 h-8 w-52 rounded bg-primary text-white max-[420px]:w-32'>
-                객실 선택하기
-              </Button>
+            <Link
+              to={`/rooms/${item.id}/${hotelId}/${title}`}
+              className='mt-5 w-52 rounded bg-primary p-1 text-center text-white max-[420px]:w-32'
+            >
+              객실 선택하기
             </Link>
           </div>
         </div>

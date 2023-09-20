@@ -10,17 +10,19 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, A11y } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
 import useAuthStore from '@/store/useAuthStore';
+import NumberOfPeople from '@/components/NumberOfPeople';
 import Header from '@/components/Header';
 import Spinner from '@/components/Spinner';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
+import MetaTag from '@/components/MetaTag';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 function HotelRoomDetailPage() {
-  const { id, hotel } = useParams();
+  const { id, hotel, title } = useParams();
   const { getIdData: getRoom } = usePocketData('room');
-  const { createData } = usePocketData('order');
+  const { createData: createCart } = usePocketData('cart');
   const { updateData: updateUser } = usePocketData('users');
   const { data: roomData, isLoading: roomLoading } = useQuery(['room', id], () => getRoom(id));
 
@@ -33,6 +35,10 @@ function HotelRoomDetailPage() {
   const navigation = useNavigate();
 
   const [isShowPayment, setIsShowPayment] = useState(false);
+  const [selectNumber, setSelectNumber] = useState(0);
+  const [selectList, setSelectList] = useState(false);
+
+  const number = [1, 2, 3, 4];
 
   const checkInRef = useRef(null);
   const checkOutRef = useRef(null);
@@ -46,7 +52,7 @@ function HotelRoomDetailPage() {
             <div className='text-lg text-primary'>로그인 하시겠습니까?</div>
             <div className='flex justify-between py-2'>
               <Button
-                className='rounded-lg bg-primary px-4 py-2 text-white'
+                className='rounded-lg bg-primary px-5 py-2 text-white'
                 onClick={() => {
                   toast.dismiss(t.id);
                   setTimeout(() => {
@@ -57,7 +63,7 @@ function HotelRoomDetailPage() {
                 예
               </Button>
               <Button
-                className='rounded-lg bg-accent px-1 py-2 text-white'
+                className='rounded-lg bg-accent px-2 py-2 text-white'
                 onClick={() => {
                   toast.dismiss();
                 }}
@@ -68,7 +74,7 @@ function HotelRoomDetailPage() {
           </div>
         ),
         {
-          duration: 2500,
+          duration: 2300,
         },
       );
       return;
@@ -80,6 +86,9 @@ function HotelRoomDetailPage() {
     if (checkIn == '' || checkOut == '') {
       return toast.error('체크인 / 아웃 날짜를 선택해주세요');
     }
+    if (selectNumber === 0) {
+      return toast.error('인원수를 선택해주세요');
+    }
 
     if (isAuth) {
       setIsShowPayment(true);
@@ -89,49 +98,31 @@ function HotelRoomDetailPage() {
   const handlePayment = () => {
     const checkIn = checkInRef.current.value;
     const checkOut = checkOutRef.current.value;
-    navigation(`/booking/${roomData.id}/${hotel}/${checkIn}/${checkOut}`);
+
+    navigation(`/booking/${roomData.id}/${hotel}/${title}/${checkIn}/${checkOut}`);
   };
 
   const handleCart = async () => {
-    const username = user.username;
     const checkin = checkInRef.current.value;
     const checkout = checkOutRef.current.value;
-    const orderData = {
-      username,
-      title: hotel,
-      orderid: id,
+
+    const cartData = {
+      nickName: user.nickName,
+      title,
+      hotelId: hotel,
+      roomId: id,
       checkin,
       checkout,
+      price: roomData.price,
     };
 
-    await createData(orderData);
+    const cart = await createCart(cartData);
     await updateUser(userId, {
-      'cartRoom+': id,
+      'cartRoom+': cart.id,
     });
 
+    toast.success('장바구니에 담겼습니다.');
     queryClient.invalidateQueries(['users']);
-
-    toast(
-      (c) => (
-        <div className='flex gap-1 font-semibold'>
-          <div className='text-primary'>장바구니에 담겼습니다.</div>
-          <Button
-            className='text-accent'
-            onClick={() => {
-              toast.dismiss(c.id);
-              setTimeout(() => {
-                navigation('/cart');
-              }, 1000);
-            }}
-          >
-            장바구니 보기
-          </Button>
-        </div>
-      ),
-      {
-        duration: 1000,
-      },
-    );
   };
 
   const handleClosePayment = () => {
@@ -144,9 +135,10 @@ function HotelRoomDetailPage() {
 
   return (
     <>
-      <Header back='back' cart='cart' title={hotel} className='text-xl font-bold' />
+      <MetaTag title={title} description='숙소 상세정보' />
+      <Header back='back' cart='cart' title={title} className='text-xl font-bold' />
       <section className=' mx-auto max-w-2xl px-4 pb-32'>
-        <h3 className='sr-only'>{hotel}</h3>
+        <h3 className='sr-only'>{title}</h3>
         <Swiper
           modules={[Navigation, A11y]}
           spaceBetween={50}
@@ -172,7 +164,6 @@ function HotelRoomDetailPage() {
             {roomData.info}
           </span>
         </div>
-        <div className='flex'></div>
         <div className='mt-2 flex justify-around py-2 font-bold shadow-md'>
           <div className='flex flex-col items-center'>
             <span className='text-primary'>체크인</span>
@@ -201,10 +192,19 @@ function HotelRoomDetailPage() {
           <p className='mt-4 text-right text-lg font-bold text-primary'>
             {numberWithComma(roomData.price)}원
           </p>
-          <div className='flex justify-end'>
+          <div className='flex justify-between'>
+            <NumberOfPeople
+              number={number}
+              selectNumber={selectNumber}
+              setSelectNumber={setSelectNumber}
+              selectList={selectList}
+              setSelectList={setSelectList}
+              NumberBoxclassName='right-0 w-[4rem] text-center bg-white rounded-md shadow-md'
+              NumberListClassName='text-[0.9rem] py-[0.5rem]'
+            />
             <Button
               type='button'
-              className='mt-4 h-8 w-52 rounded bg-primary font-bold text-white max-[420px]:w-32'
+              className='mt-4 h-8 w-52 rounded bg-primary font-bold text-white max-[420px]:w-32 '
               onClick={() => handleBookingRoom()}
             >
               객실 예약하기
@@ -262,6 +262,7 @@ function HotelRoomDetailPage() {
       </AnimatePresence>
       <Toaster
         toastOptions={{
+          duration: 900,
           success: {
             style: {
               background: '#5D6FFF',
@@ -274,6 +275,9 @@ function HotelRoomDetailPage() {
               color: 'white',
             },
           },
+        }}
+        containerStyle={{
+          top: 300,
         }}
       />
     </>

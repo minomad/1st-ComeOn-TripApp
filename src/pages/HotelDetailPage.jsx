@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { toast, Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,6 +15,7 @@ import HotelService from '@/components/HotelService';
 import HotelReviewPage from '@/pages/HotelReviewPage';
 import useAuthStore from '@/store/useAuthStore';
 import Button from '@/components/Button';
+import MetaTag from '@/components/MetaTag';
 
 function HotelDetailPage() {
   const { id } = useParams();
@@ -67,9 +67,7 @@ function HotelDetailPage() {
 
   return (
     <>
-      <Helmet>
-        <title>아무지개놀자 {hotelData.title}</title>
-      </Helmet>
+      <MetaTag title={hotelData.title} description='호텔 상세 설명 페이지' />
       <Header back='back' cart='cart' title={hotelData.title} className='text-xl font-bold' />
       <section className='relative'>
         <h2 className='sr-only'>호텔 상세 페이지</h2>
@@ -81,18 +79,18 @@ function HotelDetailPage() {
                 alt={hotelData.title}
                 className='w-full max-w-[39rem]'
               />
+              <figcaption className='sr-only'>{hotelData.title}</figcaption>
             </figure>
             <div className='border-b-8 border-thirdary p-4'>
               <span className='text-sm font-semibold text-gray3'>{hotelData.grade}</span>
               <div className='flex justify-between'>
                 <h3 className='text-2xl font-semibold max-[500px]:text-xl'>{hotelData.title}</h3>
                 {isAuth && (
-                  <Button>
+                  <Button type='button' onClick={handleWish}>
                     <img
                       src={isActive ? '/heartActive.svg' : '/hotel-heartBlack.svg'}
                       alt='찜'
-                      className='h-7 w-7 cursor-pointer'
-                      onClick={handleWish}
+                      className='h-7 w-7'
                     />
                   </Button>
                 )}
@@ -127,7 +125,7 @@ function HotelDetailPage() {
                   longitude={hotelData.longitude}
                   className='mb-2 h-[50vh] w-auto max-w-3xl'
                 />
-                <Button onClick={handleShowMap} className='pl-2'>
+                <Button type='button' onClick={handleShowMap} className='pl-2'>
                   <img src='/close.svg' alt='닫기' className='h-5 w-5' />
                 </Button>
               </div>
@@ -140,7 +138,9 @@ function HotelDetailPage() {
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-        {selectCategory === '객실선택' && <HotelRoomPage data={roomData} title={hotelData.title} />}
+        {selectCategory === '객실선택' && (
+          <HotelRoomPage data={roomData} hotelId={id} title={hotelData.title} />
+        )}
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}
         {selectCategory === '시설/서비스' && <HotelService />}
         {selectCategory === '후기' && (

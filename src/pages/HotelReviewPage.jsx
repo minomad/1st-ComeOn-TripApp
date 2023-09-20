@@ -66,7 +66,7 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
       setIsShowReview(false);
       queryClient.invalidateQueries(['hotel']);
     } catch (error) {
-      toast.error('서버 요청 에러');
+      toast.error('서버 오류');
     }
   };
 
@@ -76,11 +76,13 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
 
   const handleUpdateReview = async (itemId) => {
     const review = reviewUpdateRef.current.value;
+
     const data = {
       title: hotel,
       review,
       nickName: user.nickName,
     };
+
     await updateReview(itemId, data);
 
     queryClient.invalidateQueries(['hotel']);
@@ -90,7 +92,7 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
 
   const handleDeleteReview = async (itemId) => {
     await deleteReview(itemId);
-    
+
     queryClient.invalidateQueries(['hotel']);
     toast.error('리뷰가 삭제되었습니다.');
   };
