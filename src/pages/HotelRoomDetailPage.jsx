@@ -22,7 +22,7 @@ import 'swiper/css/navigation';
 function HotelRoomDetailPage() {
   const { id, hotel, title } = useParams();
   const { getIdData: getRoom } = usePocketData('room');
-  const { createData: createCart } = usePocketData('cart');
+  const { createData: createCart } = usePocketData('order');
   const { updateData: updateUser } = usePocketData('users');
   const { data: roomData, isLoading: roomLoading } = useQuery(['room', id], () => getRoom(id));
 
@@ -47,7 +47,7 @@ function HotelRoomDetailPage() {
     if (!isAuth) {
       toast(
         (t) => (
-          <div className='tlex-col items-center gap-5 font-semibold'>
+          <div className='flex-col items-center gap-5 font-semibold'>
             <div className='text-center text-sm text-accent'>로그인이 필요합니다.</div>
             <div className='text-lg text-primary'>로그인 하시겠습니까?</div>
             <div className='flex justify-between py-2'>
@@ -107,8 +107,8 @@ function HotelRoomDetailPage() {
     const checkout = checkOutRef.current.value;
 
     const cartData = {
-      nickName: user.nickName,
-      title,
+      username: user.username,
+      hotelTitle: title,
       hotelId: hotel,
       roomId: id,
       checkin,
@@ -117,8 +117,9 @@ function HotelRoomDetailPage() {
     };
 
     const cart = await createCart(cartData);
+
     await updateUser(userId, {
-      'cartRoom+': cart.id,
+      'cartHotel+': cart.id,
     });
 
     toast.success('장바구니에 담겼습니다.');
