@@ -2,7 +2,6 @@ import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { toast, Toaster } from 'react-hot-toast';
@@ -10,19 +9,28 @@ import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
-import MetaTag from './../components/MetaTag';
+import MetaTag from '@/components/MetaTag';
 
 function BookingPage() {
-  const { id, title, checkin, checkout } = useParams();
+  const { id, hotel, title, checkin, checkout } = useParams();
   const { getIdData } = usePocketData('room');
-  const { updateData: updateUser } = usePocketData('users');
+  const { createData: createOrder } = usePocketData('order');
   const { data: roomData, isLoading } = useQuery(['room', id], () => getIdData(id));
 
   const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
 
   const handlePayment = () => {
-    const userId = user.id;
+    
+    const orderData = {
+      nickName: user.nickName,
+      hotelTitle: title,
+      hotelId: hotel,
+      roomId: id,
+      checkin,
+      checkout,
+      price: roomData.price,
+    };
 
     toast((t) => (
       <div className='flex-col items-center gap-5'>
@@ -33,9 +41,7 @@ function BookingPage() {
             className='rounded-lg bg-primary px-5 py-2 text-white'
             onClick={() => {
               toast.dismiss(t.id);
-              updateUser(userId, {
-                'bookedRoom+': id,
-              });
+              createOrder(orderData);
               toast.success('결제가 완료되었습니다.');
               setTimeout(() => {
                 toast.dismiss();
@@ -63,7 +69,7 @@ function BookingPage() {
 
   return (
     <>
-      <MetaTag title='예약' description='호텔/리조트 예약'/>
+      <MetaTag title='예약' description='호텔/리조트 예약' />
       <Header back='back' className='mr-7 text-xl font-semibold' title='예약' />
       <section className='px-4 pb-20'>
         <h2 className='mx-auto flex max-w-[39rem] justify-center border-b border-gray px-4 pt-2 text-xl font-bold'>
@@ -116,7 +122,7 @@ function BookingPage() {
             },
           }}
           containerStyle={{
-            top: 420,
+            top: 300,
           }}
         />
       </section>

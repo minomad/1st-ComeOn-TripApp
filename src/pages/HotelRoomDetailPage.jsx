@@ -20,9 +20,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 function HotelRoomDetailPage() {
-  const { id, hotel } = useParams();
+  const { id, hotel, title } = useParams();
   const { getIdData: getRoom } = usePocketData('room');
-  const { createData: createOrder } = usePocketData('order');
+  const { createData: createCart } = usePocketData('cart');
   const { updateData: updateUser } = usePocketData('users');
   const { data: roomData, isLoading: roomLoading } = useQuery(['room', id], () => getRoom(id));
 
@@ -98,28 +98,30 @@ function HotelRoomDetailPage() {
   const handlePayment = () => {
     const checkIn = checkInRef.current.value;
     const checkOut = checkOutRef.current.value;
-    navigation(`/booking/${roomData.id}/${hotel}/${checkIn}/${checkOut}`);
+
+    navigation(`/booking/${roomData.id}/${hotel}/${title}/${checkIn}/${checkOut}`);
   };
 
   const handleCart = async () => {
-    const username = user.username;
     const checkin = checkInRef.current.value;
     const checkout = checkOutRef.current.value;
 
-    const orderData = {
-      username,
-      title: hotel,
+    const cartData = {
+      nickName: user.nickName,
+      title,
+      hotelId: hotel,
+      roomId: id,
       checkin,
       checkout,
-      orderid: id,
+      price: roomData.price,
     };
 
-    toast.success('장바구니에 담겼습니다.');
-    await createOrder(orderData);
+    const cart = await createCart(cartData);
     await updateUser(userId, {
-      'cartRoom+': id,
+      'cartRoom+': cart.id,
     });
 
+    toast.success('장바구니에 담겼습니다.');
     queryClient.invalidateQueries(['users']);
   };
 
@@ -133,10 +135,10 @@ function HotelRoomDetailPage() {
 
   return (
     <>
-      <MetaTag title={hotel} description='숙소 상세정보' />
-      <Header back='back' cart='cart' title={hotel} className='text-xl font-bold' />
+      <MetaTag title={title} description='숙소 상세정보' />
+      <Header back='back' cart='cart' title={title} className='text-xl font-bold' />
       <section className=' mx-auto max-w-2xl px-4 pb-32'>
-        <h3 className='sr-only'>{hotel}</h3>
+        <h3 className='sr-only'>{title}</h3>
         <Swiper
           modules={[Navigation, A11y]}
           spaceBetween={50}
@@ -260,6 +262,7 @@ function HotelRoomDetailPage() {
       </AnimatePresence>
       <Toaster
         toastOptions={{
+          duration: 900,
           success: {
             style: {
               background: '#5D6FFF',
@@ -272,6 +275,9 @@ function HotelRoomDetailPage() {
               color: 'white',
             },
           },
+        }}
+        containerStyle={{
+          top: 300,
         }}
       />
     </>

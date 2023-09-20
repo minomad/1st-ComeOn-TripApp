@@ -2,7 +2,7 @@ import { numberWithComma } from '@/utils/numberWithComma';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { Link } from 'react-router-dom';
 
-function HotelRoomPage({ data, title }) {
+function HotelRoomPage({ data, hotelId, title }) {
   if (!Array.isArray(data)) {
     return null;
   }
@@ -27,7 +27,7 @@ function HotelRoomPage({ data, title }) {
           </div>
           <div className='flex justify-end'>
             <Link
-              to={`/rooms/${item.id}/${title}`}
+              to={`/rooms/${item.id}/${hotelId}/${title}`}
               className='mt-5 w-52 rounded bg-primary p-1 text-center text-white max-[420px]:w-32'
             >
               객실 선택하기

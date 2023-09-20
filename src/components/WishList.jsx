@@ -14,8 +14,6 @@ function WishList({
   handleDelete,
   hotel,
   img,
-  filterData,
-  cartHotel,
   handleCheckbox,
   buttonClass,
   totalCartPrice,
@@ -35,7 +33,7 @@ function WishList({
                 key={item.id}
                 className='relative mx-auto mt-3 flex w-full max-w-[39rem] flex-col rounded-lg bg-lightPurple p-5 max-[375px]:p-3'
               >
-                {cartHotel && (
+                {cart && (
                   <div className='flex items-center gap-2 pb-3'>
                     <Input
                       type='checkbox'
@@ -45,11 +43,6 @@ function WishList({
                       labelClass='sr-only'
                       onClick={() => handleCheckbox(item.id)}
                     />
-                    {filterData?.map((orderItem) => (
-                      <h3 key={orderItem.id} className='text-lg font-bold'>
-                        {orderItem.title}
-                      </h3>
-                    ))}
                   </div>
                 )}
                 <div className='flex gap-3'>
@@ -64,7 +57,6 @@ function WishList({
                     </figure>
                   )}
                   <div className='flex flex-col gap-1 font-semibold  min-[375px]:pb-2'>
-                    {cart && <span>{item.title}</span>}
                     {!cart && (
                       <Link to={`/${link}/${item.id}`} className='font-bold min-[375px]:text-lg'>
                         {item.title}
@@ -76,13 +68,6 @@ function WishList({
                         <span>{item.star}</span>
                       </div>
                     )}
-                    {cartHotel &&
-                      filterData?.map((orderItem) => (
-                        <div key={orderItem.id} className='flex flex-col text-sm text-gray3'>
-                          <span>체크인: {orderItem.checkin.slice(0, 10)}</span>
-                          <span>체크아웃: {orderItem.checkout.slice(0, 10)}</span>
-                        </div>
-                      ))}
                     <div className='pt-8 text-primary min-[375px]:text-[1.2rem]'>
                       <p className='absolute bottom-4 right-5 max-[375px]:bottom-2 max-[375px]:right-3'>
                         {numberWithComma(item.price)}원

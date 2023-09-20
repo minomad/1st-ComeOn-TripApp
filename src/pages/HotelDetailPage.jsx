@@ -67,7 +67,7 @@ function HotelDetailPage() {
 
   return (
     <>
-      <MetaTag title={hotelData.title} />
+      <MetaTag title={hotelData.title} description='호텔 상세 설명 페이지' />
       <Header back='back' cart='cart' title={hotelData.title} className='text-xl font-bold' />
       <section className='relative'>
         <h2 className='sr-only'>호텔 상세 페이지</h2>
@@ -138,7 +138,9 @@ function HotelDetailPage() {
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-        {selectCategory === '객실선택' && <HotelRoomPage data={roomData} title={hotelData.title} />}
+        {selectCategory === '객실선택' && (
+          <HotelRoomPage data={roomData} hotelId={id} title={hotelData.title} />
+        )}
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}
         {selectCategory === '시설/서비스' && <HotelService />}
         {selectCategory === '후기' && (

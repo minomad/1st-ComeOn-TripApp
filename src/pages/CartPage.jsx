@@ -18,7 +18,7 @@ function CartPage() {
   const user = useAuthStore((state) => state.user);
 
   const { getIdData, updateData: updateUser } = usePocketData('users');
-  const { getListData, deleteData: deleteOrder } = usePocketData('order');
+  const { createData: createOrder } = usePocketData('order');
 
   const [selectCartItem, setSelectCartItem] = useState([]);
   const [selectCategory, setSelectCategory] = useState('숙소');
@@ -37,12 +37,12 @@ function CartPage() {
     },
   );
 
-  const { data: orderData } = useQuery(['userOrder'], () => getListData());
   const queryClient = useQueryClient();
 
   const cartRoom = data?.expand?.cartRoom;
   const cartLeisure = data?.expand?.cartLeisure;
-
+  console.log(cartRoom);
+  
   if (!isAuth) {
     return (
       <>
@@ -67,13 +67,6 @@ function CartPage() {
     await updateUser(userId, {
       [`cart${category}-`]: itemId,
     });
-
-    const filterData = orderData?.filter((orderItem) => orderItem.orderid === itemId);
-    if (filterData) {
-      for (const orderItem of filterData) {
-        await deleteOrder(orderItem.id);
-      }
-    }
 
     toast.error('장바구니에서 삭제하였습니다.');
     queryClient.invalidateQueries(['userCart']);
@@ -141,23 +134,13 @@ function CartPage() {
 
     const category = selectCategory === '숙소' ? 'Room' : 'Leisure';
 
-    await updateUser(userId, {
-      [`booked${category}+`]: selectCartItem,
-    });
-
     for (const itemId of selectCartItem) {
       await updateUser(userId, {
         [`cart${category}-`]: itemId,
       });
-
-      const filterData = orderData?.filter((orderItem) => orderItem.orderid === itemId);
-      if (filterData) {
-        for (const orderItem of filterData) {
-          deleteOrder(orderItem.id);
-        }
-      }
     }
 
+    createOrder();
     toast.success('결제가 완료되었습니다.');
     queryClient.invalidateQueries(['userCart']);
     setTimeout(() => {
@@ -202,11 +185,6 @@ function CartPage() {
         {selectCategory === '숙소' && isAuth && cartRoom && (
           <>
             {cartRoom?.map((item) => {
-              const order = orderData?.filter((orderItem) => orderItem.orderid === item.id);
-              const filterData = order?.filter(
-                (orderItem, index, i) =>
-                  i.findIndex((item) => item.orderid === orderItem.orderid) === index,
-              );
               return (
                 <WishList
                   key={item.id}
@@ -214,7 +192,6 @@ function CartPage() {
                   data={[item]}
                   handleDelete={() => handleDeleteCart(item.id)}
                   img='img'
-                  filterData={filterData}
                   cartHotel={true}
                   handleCheckbox={() => handleCheckbox(item.id)}
                   totalCartPrice={totalCartPrice}
