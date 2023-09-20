@@ -51,7 +51,7 @@ function MainPage() {
           aria-label='광고 슬라이드'
         >
           <SwiperSlide>
-            <img src='/ad.png' alt='광고' className='mx-auto' />
+            <img src='/ad.png' alt='광고' width='656' height='464' className='mx-auto' />
           </SwiperSlide>
           <SwiperSlide>
             <img src='/ad2.png' alt='광고' className='mx-auto' />
@@ -129,7 +129,9 @@ function MainPage() {
               <img
                 src='/sale.png'
                 alt='광고'
-                className='mx-auto rounded-sm w-auto h-auto'
+                width='151'
+                height='202'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
@@ -138,7 +140,9 @@ function MainPage() {
               <img
                 src='/sale2.png'
                 alt='광고'
-                className='mx-auto rounded-sm w-auto h-auto'
+                width='151'
+                height='202'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
@@ -147,7 +151,9 @@ function MainPage() {
               <img
                 src='/sale3.png'
                 alt='광고'
-                className='mx-auto rounded-sm w-auto h-auto'
+                width='151'
+                height='202'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
@@ -156,7 +162,9 @@ function MainPage() {
               <img
                 src='/sale4.png'
                 alt='광고'
-                className='mx-auto rounded-sm w-auto h-auto'
+                width='151'
+                height='202'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
@@ -165,7 +173,9 @@ function MainPage() {
               <img
                 src='/sale5.png'
                 alt='광고'
-                className='mx-auto rounded-sm w-auto h-auto'
+                width='151'
+                height='202'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
@@ -174,7 +184,9 @@ function MainPage() {
               <img
                 src='/sale6.png'
                 alt='광고'
-                className='mx-auto rounded-sm w-auto h-auto'
+                width='151'
+                height='202'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
@@ -183,7 +195,9 @@ function MainPage() {
               <img
                 src='/sale7.png'
                 alt='광고'
-                className='mx-auto rounded-sm w-auto h-auto'
+                width='151'
+                height='202'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
@@ -192,7 +206,9 @@ function MainPage() {
               <img
                 src='/sale8.png'
                 alt='광고'
-                className='mx-auto rounded-sm w-auto h-auto'
+                width='151'
+                height='202'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
