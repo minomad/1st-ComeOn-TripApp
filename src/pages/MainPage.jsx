@@ -54,34 +54,34 @@ function MainPage() {
             <img src='/ad.png' alt='광고' width='656' height='464' className='mx-auto' />
           </SwiperSlide>
           <SwiperSlide>
-            <img src='/ad2.png' alt='광고' className='mx-auto' />
+            <img src='/ad2.png' alt='광고' width='656' height='464' className='mx-auto' />
           </SwiperSlide>
           <SwiperSlide>
-            <img src='/ad3.png' alt='광고' className='mx-auto' />
+            <img src='/ad3.png' alt='광고' width='656' height='464' className='mx-auto' />
           </SwiperSlide>
         </Swiper>
         <ul className='mx-auto mt-4 flex w-full max-w-lg items-center justify-between px-4 py-5 text-center'>
           <li>
             <Link to='/hotel' className='flex flex-col items-center gap-2'>
-              <img src='/hotel.svg' alt='호텔 리조트' />
+              <img src='/hotel.svg' alt='호텔 리조트' width='40' height='38' />
               호텔/리조트
             </Link>
           </li>
           <li>
             <Link to='/airline' className='flex flex-col items-center gap-2'>
-              <img src='/plane.svg' alt='항공' />
+              <img src='/plane.svg' alt='항공' width='40' height='38' />
               항공
             </Link>
           </li>
           <li>
             <Link to='/traffic' className='flex flex-col items-center gap-2'>
-              <img src='/bus.svg' alt='교통' />
+              <img src='/bus.svg' alt='교통' width='40' height='38' />
               교통
             </Link>
           </li>
           <li>
             <Link to='/leisure' className='flex flex-col items-center gap-2'>
-              <img src='/ticket.svg' alt='레저 티켓' />
+              <img src='/ticket.svg' alt='레저 티켓' width='40' height='38' />
               레저/티켓
             </Link>
           </li>
@@ -127,7 +127,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/m4urk47aq525vh7'>
               <img
-                src='/sale.png'
+                src='/sale.webp'
                 alt='광고'
                 width='151'
                 height='202'
@@ -138,7 +138,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='location/도쿄'>
               <img
-                src='/sale2.png'
+                src='/sale2.webp'
                 alt='광고'
                 width='151'
                 height='202'
@@ -149,7 +149,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/z52wykesuxft1mp'>
               <img
-                src='/sale3.png'
+                src='/sale3.webp'
                 alt='광고'
                 width='151'
                 height='202'
@@ -160,7 +160,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='leisurebrand/롯데월드'>
               <img
-                src='/sale4.png'
+                src='/sale4.webp'
                 alt='광고'
                 width='151'
                 height='202'
@@ -171,7 +171,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='leisurebrand/에버랜드'>
               <img
-                src='/sale5.png'
+                src='/sale5.webp'
                 alt='광고'
                 width='151'
                 height='202'
@@ -182,7 +182,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='location/싱가포르'>
               <img
-                src='/sale6.png'
+                src='/sale6.webp'
                 alt='광고'
                 width='151'
                 height='202'
@@ -193,7 +193,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/dzhawq266mfn76v'>
               <img
-                src='/sale7.png'
+                src='/sale7.webp'
                 alt='광고'
                 width='151'
                 height='202'
@@ -204,7 +204,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/xikeqxqtyx1wp1c'>
               <img
-                src='/sale8.png'
+                src='/sale8.webp'
                 alt='광고'
                 width='151'
                 height='202'
