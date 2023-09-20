@@ -11,8 +11,6 @@ import Spinner from '@/components/Spinner';
 
 function LocationPage() {
   const [selectNav, setSelectNav] = useState('지역별');
-  // const [selectCategory, setSelectCategory] = useState('');
-  // const category = ['강원', '제주', '부산', '광주'];
 
   
   const { getListData } = usePocketData('hotel');
@@ -32,10 +30,8 @@ function LocationPage() {
   }
   
   if (isError) {
-    return <div>서버 에러 발생</div>;
+    return <div className='text-accent'>서버 에러 발생</div>;
   }
-
-
 
 
   return (
@@ -43,7 +39,7 @@ function LocationPage() {
     <Helmet>
       <title>지역</title>
     </Helmet>
-    <h2 className='sr-only'>지역 페이지</h2>
+    <h1 className='sr-only'>지역 페이지</h1>
     <Header className= 'text-xl font-semibold' search='search' title='지역' back />
     <nav className='fixed bg-white pt-14 top-0 left-0 right-0 z-20'>
       <ul className='text-center mx-auto flex max-w-3xl justify-evenly border-b-[0.1rem] border-[#E1E1E1] mx-15'>
@@ -56,8 +52,6 @@ function LocationPage() {
               ? 'font-bold text-black'
               : 'text-gray2'
             } `}>{'지역별'}</Button></li>
-      
-        {/* <div className='border-left bg-gray w-[0.1rem] h-7'></div> */}
         <li className='w-[100%] '>
           <Button onClick={() => {
               handleChangeNav('지도검색');
@@ -67,13 +61,6 @@ function LocationPage() {
               : 'text-gray2'
             } `}>{'지도검색'}</Button></li>
       </ul>
-    {/*   <Category
-          className='justify-center max-w-3xl mx-auto gap-4 py-2 border-b-[0.1rem] border-[#E1E1E1]'
-          category={category}
-          selectCategory={selectCategory}
-          setSelectCategory={setSelectCategory}
-          // icon={icon}
-        /> */}
     </nav>
     
     {selectNav === '지역별' && <LocationChoice data={hotelData} /> }
