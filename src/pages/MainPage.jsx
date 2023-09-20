@@ -51,13 +51,13 @@ function MainPage() {
           aria-label='광고 슬라이드'
         >
           <SwiperSlide>
-            <img src='/ad.webp' alt='광고' className='mx-auto' />
+            <img src='/ad.png' alt='광고' className='mx-auto' />
           </SwiperSlide>
           <SwiperSlide>
-            <img src='/ad2.webp' alt='광고' className='mx-auto' />
+            <img src='/ad2.png' alt='광고' className='mx-auto' />
           </SwiperSlide>
           <SwiperSlide>
-            <img src='/ad3.webp' alt='광고' className='mx-auto' />
+            <img src='/ad3.png' alt='광고' className='mx-auto' />
           </SwiperSlide>
         </Swiper>
         <ul className='mx-auto mt-4 flex w-full max-w-lg items-center justify-between px-4 py-5 text-center'>
@@ -127,7 +127,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/m4urk47aq525vh7'>
               <img
-                src='/sale.webp'
+                src='/sale.png'
                 alt='광고'
                 className='mx-auto rounded-sm'
               />
@@ -136,7 +136,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='location/도쿄'>
               <img
-                src='/sale2.webp'
+                src='/sale2.png'
                 alt='광고'
                 className='mx-auto rounded-sm'
               />
@@ -145,7 +145,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/z52wykesuxft1mp'>
               <img
-                src='/sale3.webp'
+                src='/sale3.png'
                 alt='광고'
                 className='mx-auto rounded-sm'
               />
@@ -154,7 +154,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='leisurebrand/롯데월드'>
               <img
-                src='/sale4.webp'
+                src='/sale4.png'
                 alt='광고'
                 className='mx-auto rounded-sm'
               />
@@ -163,7 +163,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='leisurebrand/에버랜드'>
               <img
-                src='/sale5.webp'
+                src='/sale5.png'
                 alt='광고'
                 className='mx-auto rounded-sm'
               />
@@ -172,7 +172,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='location/싱가포르'>
               <img
-                src='/sale6.webp'
+                src='/sale6.png'
                 alt='광고'
                 className='mx-auto rounded-sm'
               />
@@ -181,7 +181,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/dzhawq266mfn76v'>
               <img
-                src='/sale7.webp'
+                src='/sale7.png'
                 alt='광고'
                 className='mx-auto rounded-sm'
               />
@@ -190,7 +190,7 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/xikeqxqtyx1wp1c'>
               <img
-                src='/sale8.webp'
+                src='/sale8.png'
                 alt='광고'
                 className='mx-auto rounded-sm'
               />

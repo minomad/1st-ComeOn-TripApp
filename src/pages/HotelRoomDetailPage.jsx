@@ -110,7 +110,6 @@ function HotelRoomDetailPage() {
       username: user.username,
       hotelTitle: title,
       hotelId: hotel,
-      room: roomData.title,
       roomId: id,
       checkin,
       checkout,
