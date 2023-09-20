@@ -42,7 +42,7 @@ function MyList({
             <img src={src} alt={alt} className=' aspect-square h-full w-full' />
           </div>
           <ul
-            className={`box-border flex flex-col gap-0 overflow-hidden text-ellipsis sm:pt-3 ${className0}`}
+            className={`box-border flex flex-col gap-0 overflow-hidden text-ellipsis sm:py-3 ${className0}`}
           >
             <li
               className={` text-md box-border overflow-hidden text-ellipsis whitespace-nowrap font-bold sm:text-lg  ${className1}`}

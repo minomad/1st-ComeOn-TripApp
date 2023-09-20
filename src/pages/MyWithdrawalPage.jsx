@@ -20,6 +20,13 @@ function MyWithdrawalPage() {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
 
+  const [toastMessage, setToastMessage] = useState('');
+
+  // 메시지 변경 함수
+  const updateMessage = (newMessage) => {
+    setToastMessage(newMessage);
+  };
+
   useEffect(() => {
     if (usageDuration && quality && reasons.length > 0 && passwordConfirm.length >= 6) {
       setIsFormValid(true);
@@ -66,10 +73,10 @@ function MyWithdrawalPage() {
   return (
     <>
       <Helmet>
-        <title>야무지개놀자</title>
+        <title>탈퇴페이지</title>
       </Helmet>
-      <Header search='search' back='back' cart='cart' title='마이 페이지'>
-        메인페이지
+      <Header search='search' back='back' cart='cart' title='탈퇴페이지'>
+        탈퇴페이지
       </Header>
       <section
         className='mx-auto mb-20 mt-0 w-[90%]
@@ -86,156 +93,165 @@ function MyWithdrawalPage() {
           className='flex w-full  flex-shrink flex-grow flex-col items-center'
           onSubmit={handleSubmit}
         >
-          <ul className='flex w-full max-w-md flex-col gap-2'>
-            <div className='pt-2'>이용 기간을 알려주세요.</div>
-            <li>
-              <Input
-                type='radio'
-                name='usageDuration'
-                label='1년 이상'
-                id='oneYearOrMore'
-                onChange={handleRadioChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+          <div className='flex w-full max-w-md flex-col gap-2'>
+            <ul role='group' className='flex w-full max-w-md flex-col gap-2' aria-required='true'>
+              <div className='pt-2'>이용 기간을 알려주세요.</div>
+              <li>
+                <Input
+                  type='radio'
+                  name='usageDuration'
+                  label='1년 이상'
+                  id='oneYearOrMore'
+                  onChange={handleRadioChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
-            <li>
-              <Input
-                type='radio'
-                name='usageDuration'
-                label='6개월 이상'
-                id='sixMonthsOrMore'
-                onChange={handleRadioChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+              <li>
+                <Input
+                  type='radio'
+                  name='usageDuration'
+                  label='6개월 이상'
+                  id='sixMonthsOrMore'
+                  onChange={handleRadioChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
-            <li>
-              <Input
-                type='radio'
-                name='usageDuration'
-                label='6개월 미만'
-                id='lessThanSixMonths'
-                onChange={handleRadioChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+              <li>
+                <Input
+                  type='radio'
+                  name='usageDuration'
+                  label='6개월 미만'
+                  id='lessThanSixMonths'
+                  onChange={handleRadioChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+            </ul>
 
-            <div className='border-t-[1px] border-slate-300 pt-2'>서비스품질은 어땠나요?</div>
-            <li>
-              <Input
-                type='radio'
-                name='quality'
-                label='매우 만족'
-                id='high'
-                onChange={handleRadioChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+            <ul role='group' className='flex w-full max-w-md flex-col gap-2' aria-required='true'>
+              <div className='border-t-[1px] border-slate-300 pt-2'>서비스품질은 어땠나요?</div>
+              <li>
+                <Input
+                  type='radio'
+                  name='quality'
+                  label='매우 만족'
+                  id='high'
+                  onChange={handleRadioChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
-            <li>
-              <Input
-                type='radio'
-                name='quality'
-                label='만족'
-                id='lessHigh'
-                onChange={handleRadioChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+              <li>
+                <Input
+                  type='radio'
+                  name='quality'
+                  label='만족'
+                  id='lessHigh'
+                  onChange={handleRadioChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
-            <li>
-              <Input
-                type='radio'
-                name='quality'
-                label='매우 불만족'
-                id='bad'
-                onChange={handleRadioChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+              <li>
+                <Input
+                  type='radio'
+                  name='quality'
+                  label='매우 불만족'
+                  id='bad'
+                  onChange={handleRadioChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
-            <li>
-              <Input
-                type='radio'
-                name='quality'
-                label='불만족'
-                id='lessBad'
-                onChange={handleRadioChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+              <li>
+                <Input
+                  type='radio'
+                  name='quality'
+                  label='불만족'
+                  id='lessBad'
+                  onChange={handleRadioChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
-            <div className='border-t-[1px] border-slate-300 pt-2 '>탈퇴사유를 알려주세요</div>
-            <li>
-              <Input
-                type='checkbox'
-                label='UI/UX(불편한 사용경험)'
-                id='UX'
-                onChange={handleCheckboxChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+            </ul>
+            <ul role='group' className='flex w-full max-w-md flex-col gap-2' aria-required='true'>
+              <div className='border-t-[1px] border-slate-300 pt-2 '>탈퇴사유를 알려주세요</div>
+              <li>
+                <Input
+                  type='checkbox'
+                  name='reasons'
+                  label='UI/UX(불편한 사용경험)'
+                  id='UX'
+                  onChange={handleCheckboxChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
-            <li>
-              <Input
-                type='checkbox'
-                label='다른 서비스(어플) 사용 예정'
-                id='service'
-                onChange={handleCheckboxChange}
-                className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+              <li>
+                <Input
+                  type='checkbox'
+                  label='다른 서비스(어플) 사용 예정'
+                  id='service'
+                  name='reasons'
+                  onChange={handleCheckboxChange}
+                  className="checkbox cursor-pointer appearance-none pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover before:bg-no-repeat 
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]"
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
 
-            <li>
-              <Input
-                type='checkbox'
-                label='기타(상담 연락 불편, 품질 등)'
-                id='all'
-                onChange={handleCheckboxChange}
-                className="checkbox cursor-pointer appearance-none pb-2 pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover 
+              <li>
+                <Input
+                  type='checkbox'
+                  label='기타(상담 연락 불편, 품질 등)'
+                  id='all'
+                  name='reasons'
+                  onChange={handleCheckboxChange}
+                  className="checkbox cursor-pointer appearance-none pb-2 pr-2 outline-primary before:inline-block before:h-4 before:w-4 before:bg-[url('/signup-check.svg')] before:bg-cover 
                 before:bg-no-repeat
                 before:align-middle
                 checked:before:bg-[url('/signup-agree.svg')]
                 "
-                labelClass='cursor-pointer'
-                // onClick={handleAllAgree}
-              />
-            </li>
-          </ul>
+                  labelClass='cursor-pointer'
+                  // onClick={handleAllAgree}
+                />
+              </li>
+            </ul>
+          </div>
           <div className='w-full border-t-[1px] border-slate-300 pt-3 '>
             😘 마지막 단계 - 비밀번호 검증
           </div>
-          <div className='flex w-full max-w-md justify-center'>
+          <div className='flex w-full max-w-md justify-center' aria-required='true'>
             <Input
               inputRef={passwordRef}
               type='password'
@@ -253,12 +269,16 @@ function MyWithdrawalPage() {
             className={`mb-18 w-full max-w-md rounded-lg border py-2 text-center font-light text-primary outline-primary ${
               isFormValid ? 'bg-primary font-bold text-white ' : 'text-primary outline-primary'
             }`}
+            onClick={() => updateMessage('탈퇴가 완료되었습니다.')}
             disabled={!isFormValid}
           >
             <div className='flex items-end justify-center'>
               <p className='text-xs font-light text-slate-400'>안녕..</p>탈퇴하기
             </div>
           </Button>
+          <div role='alert' aria-live='assertive' aria-atomic='true' className='sr-only'>
+            {toastMessage}
+          </div>
         </Form>
         <Toaster
           toastOptions={{

@@ -18,17 +18,17 @@ function Guest() {
             </div>
           </div>
           <div className='flex gap-x-2'>
-            <Link to='/signin' className=''>
-              <Button
-                type='submit'
-                className='mt-10 h-[8vh] w-[23vh] rounded-xl border-[1px] border-secondary text-xs text-secondary hover:bg-primary hover:text-white sm:w-[25vh] md:text-lg'
-              >
-                로그인하러 가기
-              </Button>
+            <Link
+              to='/signin'
+              className='mt-10 flex h-[8vh] w-[23vh] items-center justify-center rounded-xl border-[1px] border-secondary text-xs text-secondary hover:bg-primary hover:text-white sm:w-[25vh] md:text-lg'
+            >
+              로그인하러 가기
             </Link>
-            <Link to='/signup' className='mt-10 h-[8vh] w-[23vh] rounded-xl border-[1px] border-secondary text-xs text-secondary hover:bg-primary hover:text-white sm:w-[25vh] md:text-lg'>
-             
-                회원가입하러 가기
+            <Link
+              to='/signup'
+              className='mt-10 flex h-[8vh] w-[23vh] items-center justify-center rounded-xl border-[1px] border-secondary text-xs text-secondary hover:bg-primary hover:text-white sm:w-[25vh] md:text-lg'
+            >
+              회원가입하러 가기
             </Link>
           </div>
         </article>

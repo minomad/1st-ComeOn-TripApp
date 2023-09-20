@@ -179,10 +179,10 @@ function MyInfoChangePage() {
   return (
     <>
       <Helmet>
-        <title>야무지개놀자</title>
+        <title>정보 변경 페이지</title>
       </Helmet>
-      <Header search='search' back='back' cart='cart' title='마이 페이지'>
-        메인페이지
+      <Header search='search' back='back' cart='cart' title='정보 변경 페이지'>
+        정보 변경 페이지
       </Header>
       <section
         className='mx-auto mb-20 mt-0 w-[90%]
@@ -193,7 +193,7 @@ function MyInfoChangePage() {
         </h1>
 
         <Form
-          className='flex w-full  flex-shrink flex-grow flex-col items-center'
+          className='flex w-full flex-shrink  flex-grow flex-col items-center overflow-hidden'
           onSubmit={handleSubmit}
           inputRef={formRef}
         >
@@ -206,19 +206,21 @@ function MyInfoChangePage() {
             </li>
             <li>
               <div className=' flex w-full border-b-[1px] border-slate-300 pb-[4px] text-sm sm:py-3 sm:text-base '>
-                <p className='mr-4 font-semibold'>이메일</p>
+                <p className='mr-4 flex-shrink-0 flex-grow-0 font-semibold'>이메일</p>
                 <p className='font-thin'>{user.email}</p>
               </div>
             </li>
             <li>
               <div className='flex w-full border-b-[1px] border-slate-300 pb-[4px] text-sm sm:py-3 sm:text-base '>
-                <p className='mr-4 font-semibold'>별명</p>
+                <p className='mr-4 flex-shrink-0 flex-grow-0 font-semibold'>별명</p>
                 <Input
                   type='text'
                   id='nickName'
                   value={nickName}
                   onClick={() => setNickName('')}
                   name='nickName'
+                  label='별명입력'
+                  labelClass='sr-only'
                   inputRef={nickNameRef}
                   onChange={(e) => setNickName(e.target.value)}
                   className='font-thin sm:w-72'
@@ -227,9 +229,13 @@ function MyInfoChangePage() {
             </li>
             <li>
               <div className='flex w-full border-b-[1px] border-slate-300 pb-[4px] text-sm sm:py-3 sm:text-base '>
-                <p className='mr-4 font-semibold'>비밀번호</p>
+                <p className='mr-4 flex-shrink-0 flex-grow-0 font-semibold'>비밀번호</p>
                 <Input
                   type='password'
+                  id='password'
+                  name='password'
+                  label='비밀번호'
+                  labelClass='sr-only'
                   inputRef={passwordRef}
                   placeholder='비밀번호'
                   className={`font-thin sm:w-72 `}
@@ -238,9 +244,13 @@ function MyInfoChangePage() {
             </li>
             <li>
               <div className='flex w-full border-b-[1px] border-slate-300 pb-[4px] text-sm sm:py-3 sm:text-base '>
-                <p className='mr-4 font-semibold'>비밀번호 확인</p>
+                <p className='mr-4 flex-shrink-0  flex-grow-0 font-semibold'>비밀번호 확인</p>
                 <Input
                   type='password'
+                  id='passwordCheck'
+                  name='passwordCheck'
+                  label='비밀번호 확인'
+                  labelClass='sr-only'
                   inputRef={passwordConfirmRef}
                   placeholder='비밀번호확인'
                   className={`font-thin sm:w-72 `}
@@ -249,7 +259,7 @@ function MyInfoChangePage() {
             </li>
             <li className='border-b-[1px] border-slate-300 pb-[15px] sm:pb-8'>
               <div className='flex w-full  pb-[4px]  text-sm sm:py-3 sm:text-base '>
-                <p className='mr-4 font-semibold'>배경 이미지</p>
+                <p className='mr-4 flex-shrink-0 flex-grow-0 font-semibold'>배경 이미지</p>
                 <p className='w-24 flex-shrink-0 overflow-hidden overflow-ellipsis whitespace-nowrap font-thin sm:w-32 md:w-72'>
                   {fileName || user.bgimg}
                 </p>
@@ -258,24 +268,30 @@ function MyInfoChangePage() {
                 배경사진
               </label>
               <div className='relative table h-[150px] w-full bg-slate-200  text-center text-sm sm:h-[250px] sm:py-3 sm:text-base '>
-                <input
+                <Input
                   type='file'
                   accept='*.jpg,*.png,*.jpeg,*.webp,*.avif'
                   id='bgimg'
                   name='bgimg'
                   ref={bgImgRef}
                   onChange={handleUpload}
+                  label='배경이미지'
+                  labelClass='sr-only'
                   // onChange={handleUpload}
                   className={`absolute z-10 h-full w-full cursor-pointer opacity-0`}
                 />
                 <div className='flex h-full w-full content-center items-center  justify-center gap-2 overflow-x-auto bg-slate-100 p-2 text-center align-middle dark:rounded dark:bg-black dark:outline-double dark:outline-[1px] dark:outline-zinc-100/40'>
-                  <img src={bgImgSrc} className='max-h-[150px]  sm:max-h-[250px]' />
+                  <img
+                    src={bgImgSrc}
+                    alt='배경 이미지'
+                    className='max-h-[150px]  sm:max-h-[250px]'
+                  />
                 </div>
               </div>
             </li>
             <li className='border-b-[1px] border-slate-300 pb-[15px] sm:pb-8'>
               <div className='flex w-full  pb-[4px]  text-sm sm:py-3 sm:text-base '>
-                <p className='mr-4 font-semibold'>프로필 이미지</p>
+                <p className='mr-4 flex-shrink-0 flex-grow-0 font-semibold'>프로필 이미지</p>
                 <p className='w-24 flex-shrink-0 overflow-hidden overflow-ellipsis whitespace-nowrap font-thin sm:w-32 md:w-72'>
                   {fileName || user.bgimg}
                 </p>
@@ -284,18 +300,24 @@ function MyInfoChangePage() {
                 프로필사진
               </label>
               <div className='relative min-h-[150px] w-full  bg-slate-200 text-sm sm:min-h-[250px] sm:py-3 sm:text-base '>
-                <input
+                <Input
                   type='file'
                   accept='*.jpg,*.png,*.jpeg,*.webp,*.avif'
                   id='avatar'
                   name='avatar'
                   ref={avatarRef}
+                  label='프로필사진'
+                  labelClass='sr-only'
                   onChange={handleUpload}
                   // onChange={handleUpload}
                   className={`absolute z-10 h-full w-full cursor-pointer opacity-0`}
                 />
                 <div className='flex h-full w-full content-center items-center  justify-center gap-2 overflow-x-auto bg-slate-100 p-2 text-center align-middle dark:rounded dark:bg-black dark:outline-double dark:outline-[1px] dark:outline-zinc-100/40'>
-                  <img src={avatarSrc} className='max-h-[150px]  sm:max-h-[250px]' />
+                  <img
+                    src={avatarSrc}
+                    alt='프로필 이미지'
+                    className='max-h-[150px]  sm:max-h-[250px]'
+                  />
                 </div>
               </div>
             </li>

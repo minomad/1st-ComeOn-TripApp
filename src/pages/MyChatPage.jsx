@@ -1,55 +1,107 @@
 import { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { usePocketData } from '../api/usePocketData';
+import { getPbImageURL } from '@/utils/getPbImageURL';
+import { toast, Toaster } from 'react-hot-toast';
+import useAuthStore from '@/store/useAuthStore';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import MyChatMessage from '@/components/MyChatMessage';
+import pb from '../api/pocketbase';
 
 function MyChatPage() {
   const [messages, setMessages] = useState([]);
+  const user = useAuthStore((state) => state.user);
   const inputRef = useRef();
   const chatRef = useRef();
-  const fileInputRef = useRef();
+  const fileInputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState('');
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isFileButtonClicked, setIsFileButtonClicked] = useState(false);
+  const [isSending, setIsSending] = useState(false); // 메시지 전송 상태 추적을 위한 새로운 state
+  const [isUploading, setIsUploading] = useState(false); // 이미지 업로드 상태 추적을 위한 새로운 state
 
-  const handleImageClick = (imageUrl) => {
+  //! 메시지보내기
+
+  useEffect(() => {
+    async function realtimeChat() {
+      await pb.collection('chats').subscribe('*', async ({ action, record }) => {
+        if (action === 'create') {
+          try {
+            const user = await pb.collection('users').getOne(record.user);
+            record.expand = user;
+            setMessages((prev) => [...prev, record]);
+          } catch (error) {
+            console.error('Failed to get user data:', error);
+          }
+        }
+      });
+    }
+
+    realtimeChat();
+
+    return () => {
+      pb.collection('chats').unsubscribe('*');
+    };
+  }, []);
+
+  // !
+
+  const handleImageClick = (message) => {
+    const imageUrl = getPbImageURL(message, 'img');
     setModalImageUrl(imageUrl);
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) {
       return;
     }
 
+    setIsUploading(true); // 파일 업로드 시작
+
     const reader = new FileReader();
     reader.onloadend = () => {
-      // 읽기가 완료되면 결과를 previewUrl 상태에 저장
       setPreviewUrl(reader.result);
+      setIsUploading(false); // 파일 업로드 완료
     };
 
-    // 파일 읽기 시작
     reader.readAsDataURL(file);
   };
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    // 이미지 또는 텍스트 메시지가 있는 경우에만 메시지를 전송
+
     if (inputRef.current.value !== '' || previewUrl) {
-      // 메시지에 이미지 URL 추가
-      setMessages([...messages, { text: inputRef.current.value, imageUrl: previewUrl }]);
-      inputRef.current.value = '';
-      // 미리보기 초기화
-      setPreviewUrl(null);
+      try {
+        setIsSending(true); // 메시지 전송 시작
+        await pb.collection('chats').create({
+          text: inputRef.current.value,
+          img: fileInputRef.current.files[0],
+          user: user.id,
+        });
+
+        inputRef.current.value = '';
+        setPreviewUrl(null);
+        fileInputRef.current.value = '';
+      } catch (error) {
+        console.error('Failed to send message:', error);
+      } finally {
+        setIsSending(false); // 메시지 전송 완료
+      }
     }
   };
 
   useEffect(() => {
+    if (isSending) {
+      toast.error('입력 시간이 너무 빠릅니다. 기다려 주세요.');
+    }
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
@@ -58,7 +110,7 @@ function MyChatPage() {
   return (
     <>
       <Helmet>
-        <title>야무지개놀자</title>
+        <title>상담원채팅</title>
       </Helmet>
       <Header search='search' back='back' cart='cart' title='상담원 채팅'>
         상담원 채팅
@@ -75,46 +127,53 @@ function MyChatPage() {
                 >
                   {messages.map((message, index) => (
                     <div key={index}>
-                      <MyChatMessage message={message.text}>
+                      <MyChatMessage message={message.text} date={message.created.slice(0, 10)}>
                         {/* 이미지가 있는 경우만 렌더링 */}
-                        {message.imageUrl && (
-                          <div className='m-2 flex h-12 w-12 items-center justify-center align-middle'>
+                        {message.img && (
+                          <div className='m-2 flex h-12 w-12 items-center align-middle'>
                             <img
-                              src={message.imageUrl}
+                              src={getPbImageURL(message, 'img')}
                               alt=''
                               className='h-full w-full cursor-pointer object-cover'
-                              onClick={() => handleImageClick(message.imageUrl)}
+                              onClick={() => handleImageClick(message)}
                             />
                           </div>
                         )}
                       </MyChatMessage>
                     </div>
                   ))}
-
-                  {isModalOpen && (
-                    <div
-                      className='fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-10 align-middle'
-                      onClick={closeModal}
-                    >
-                      <img
-                        src={modalImageUrl}
-                        alt=''
-                        className='max-h-[80%] max-w-[80%] object-contain'
-                      />
-                    </div>
-                  )}
                 </li>
+                {isModalOpen && (
+                  <div
+                    className='absolute left-1/2 top-1/2 z-50 flex h-full w-full -translate-x-1/2 -translate-y-1/2 transform items-center justify-center bg-black bg-opacity-10 align-middle'
+                    onClick={closeModal}
+                  >
+                    <img
+                      src={modalImageUrl}
+                      alt=''
+                      className='max-h-[80%] max-w-[80%] object-contain'
+                    />
+                  </div>
+                )}
                 <li>
                   {/* 인풋 컨테이너 */}
                   <div className='absolute bottom-0 left-0 w-full bg-white'>
                     <div className='flex'>
                       <button
-                        className=' fill-secondary hover:fill-primary'
                         type='file'
-                        onClick={() => fileInputRef.current.click()}
+                        onClick={async () => {
+                          setIsFileButtonClicked(true);
+                          await fileInputRef.current.click();
+                          setIsFileButtonClicked(false);
+                        }}
+                        className={`${isFileButtonClicked ? 'active' : ''}`}
                       >
                         <img
-                          src='/my-plus.svg'
+                          src={
+                            (isModalOpen && previewUrl) || isInputFocused || isFileButtonClicked
+                              ? '/my-plusactive.svg'
+                              : '/my-plus.svg'
+                          }
                           alt='파일추가'
                           className={`w-4 fill-secondary hover:fill-primary`}
                         />
@@ -150,15 +209,30 @@ function MyChatPage() {
                             placeholder=''
                             label='채팅입력'
                             labelClass='sr-only'
-                            className={
-                              'min-h-[25px] w-full rounded-xl border-[1px] border-primary bg-lightPurple pl-2 pr-8 shadow-md sm:h-[30px] sm:rounded-2xl'
-                            }
+                            onFocus={() => setIsInputFocused(true)}
+                            onBlur={() => setIsInputFocused(false)}
+                            className={`${
+                              (previewUrl && 'border-secondary') || (previewUrl && 'border-primary')
+                            } min-h-[25px] w-full rounded-xl border-[1px] border-secondary bg-lightPurple pl-2 pr-8 shadow-md sm:h-[30px] sm:rounded-2xl`}
                           ></Input>
                           <button
-                            className=':text-primary absolute right-[10px] top-[5px] sm:top-[7px]'
+                            disabled={isSending || isUploading}
+                            className={`${
+                              isModalOpen || isInputFocused
+                                ? 'text-primary-active'
+                                : ':text-primary'
+                            } absolute right-[10px] top-[5px] sm:top-[7px]`}
                             type='submit'
                           >
-                            <img src='/my-paperplane.svg' alt='채팅보내기' className={`w-4`} />
+                            <img
+                              src={
+                                isModalOpen || isInputFocused
+                                  ? '/my-paperplaneactive.svg'
+                                  : '/my-paperplane.svg'
+                              }
+                              alt='채팅보내기'
+                              className={`w-4`}
+                            />
                           </button>
                         </form>
                       </div>
@@ -169,6 +243,23 @@ function MyChatPage() {
             </div>
           </div>
         </article>
+        <Toaster
+          toastOptions={{
+            duration: 1000,
+            success: {
+              style: {
+                background: '#5D6FFF',
+                color: 'white',
+              },
+            },
+            error: {
+              style: {
+                background: '#E03B69',
+                color: 'white',
+              },
+            },
+          }}
+        />
       </section>
     </>
   );
