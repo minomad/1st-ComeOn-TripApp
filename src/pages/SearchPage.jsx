@@ -12,12 +12,18 @@ import Spinner from '@/components/Spinner';
 function SearchPage() {
   const info = ['숙소', '레저/티켓', '교통/항공'];
   const [selectCategory, setSelectCategory] = useState('숙소');
+
   const { getListData } = usePocketData('hotel');
   const {
     data: hotelData,
     isLoading,
     isError,
   } = useQuery(['hotelSearch'], () => getListData());
+
+  const { getListData: getLeisureListData } = usePocketData('leisure');
+  const {
+    data: leisureData,
+  } = useQuery(['LeisurSearch'], () => getLeisureListData());
 
 
   const handleChangeCategory = (category) => {
@@ -39,7 +45,7 @@ function SearchPage() {
       </Helmet>
       <Header className='text-xl font-semibold' back='back' cart='cart' title='검색'/>
       <section className='px-4 pb-0'>
-        <h2 className='sr-only'>검색페이지</h2>
+        <h1 className='sr-only'>검색페이지</h1>
       </section>
       <HotelInfoCategory
           info={info}
@@ -48,7 +54,7 @@ function SearchPage() {
           handleChangeCategory={handleChangeCategory}
         />
         {selectCategory === '숙소' && <SearchHotel data={hotelData}/>}
-        {selectCategory === '레저/티켓' && <SearchLeisure/>}
+        {selectCategory === '레저/티켓' && <SearchLeisure data={leisureData}/>}
         {selectCategory === '교통/항공' && <SearchTraffic/>}
         
     </>

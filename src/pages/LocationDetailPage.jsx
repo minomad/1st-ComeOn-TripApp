@@ -8,7 +8,6 @@ import { getPbImageURL } from '@/utils/getPbImageURL';
 import { Link } from 'react-router-dom';
 import Spinner from '@/components/Spinner';
 import Header from '@/components/Header'
-import Button from '@/components/Button';
 
 function LocationDetailPage() {
   let hotelCategoryData;
@@ -18,16 +17,11 @@ function LocationDetailPage() {
 
   const { getListData } = usePocketData('hotel');
   const { data: hotelData,
-    isLoading: isHotelLoading,
-    isError , 
+    isLoading: isHotelLoading, 
   } = useQuery(['hotel'], () => getListData());
 
   if (isHotelLoading) {
     return <Spinner />;
-  }
-
-  if (isError) {
-    return <div>서버 에러 발생</div>;
   }
 
   switch (selectCategory) {
@@ -54,43 +48,43 @@ function LocationDetailPage() {
       <title>지역-리스트</title>
     </Helmet>
     <Header back='back' search='search' title='' />
-    <section>
-      <h2 className='fixed bg-white rounded-b-3xl w-full font-bold text-[1.4rem] max-w-3xl z-10 md:text-[1.7rem] px-[2.5rem] pb-2 '>
-        <img src='/locationActive.svg' alt='위치' className='inline-block h-6 md:h-7 mb-0.5 mr-[0.1rem] '/>
+    <section className=''>
+      <h1 className='fixed bg-white rounded-b-3xl w-full font-bold text-[1.4rem] max-w-3xl z-10 md:text-[1.7rem] px-[2.5rem] pb-2 '>
+        <img src='/locationActive.svg' alt='선택 위치' className='inline-block h-6 md:h-7 mb-0.5 mr-[0.1rem] '/>
         { category === '도심힐링' ? '서울' : category }
-      </h2>
-      <div className='pt-[3.1rem] pb-[5rem]'>
+      </h1>
+      <div role='group' className='pt-[3.1rem] pb-[5rem]  '>
       {hotelCategoryData?.map((item) => (
-        <article key={item.id} className='h-[30rem] lg:h-[33rem] py-1.2   shadow-md  bg-white '>
+        <article key={item.id} className='pb-10  py-1.2   shadow-md  bg-white '>
           <figure className='w-[100%] h-[57%] lg:h-[65%]  overflow-hidden mr-4 '>
             <img
               src={getPbImageURL(item, 'img')}
-              alt={item.title}
-              className=' h-[120%] w-[110%]  cover object-cover' />
+              alt=''
+              className=' h-[130%] w-[120%]  cover object-cover' />
             <figcaption className='sr-only'>{item.title} </figcaption>
           </figure>
           {/* 호텔명, 별점, 가격 설명박스 */}
-          <div className='px-6 pt-3  '>
+          <div role="group" className='px-6 pt-3  '>
             <h2 className='font-bold text-lg'>{item.title}</h2>
             <img src='/star.svg' alt='별점' className='inline-block mb-[0.3rem] mr-[0.3rem] '/>
             <span className='font-extrabold text-[0.9rem]'>{item.star} </span>
             <span className='font-bold text-gray2 text-[0.9rem]'>&#183; {item.grade} </span>
             <div className=' bg-lightPurple inline-block ml-1 pr-3 pl-2 pb-1 rounded-full'>
-              <img src='/locationActive.svg' alt='위치' className='inline-block h-4  mr-[0.2rem] '/>
+              <img src='/locationActive.svg' alt='주소' className='inline-block h-4  mr-[0.2rem] '/>
               <span className='font-medium text-primary text-[0.8rem] mb-[1rem]'>{item.location} </span>
             </div>
-            <div className=' flex justify-between py-4  '>
+            <div className=' flex justify-between pt-3 pb-3  '>
               <span className='block text-[0.9rem] mr-3 text-gray2'>숙박: 15:00~
               </span>
                 <span className='block text-[1.2rem] font-extrabold mr-2 '>{numberWithComma(item.price)}원</span>
             </div>
             
-            <Link to={`hotel/${item.id}`}>
-              <Button type='button' className='ml-auto mr-0 mb-2 mt-auto flex rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '
-              > {'숙소 예약하기'}
-              </Button>
-            </Link>
-            
+            <div className='flex  justify-end'>
+              <Link to={`hotel/${item.id}`} className='flex rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
+                 {'숙소 예약하기'}
+              </Link>
+              
+            </div>
           </div>
         </article>
         ))}
