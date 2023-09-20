@@ -39,29 +39,28 @@ function MainPage() {
       <Header logo='logo' search='search' cart='cart' />
       <section>
         <h2 className='sr-only'>메인페이지</h2>
-        <div className='mb-4'>
-          <Swiper
-            modules={[Navigation, A11y]}
-            spaceBetween={50}
-            slidesPerView={1}
-            navigation
-            loop={true}
-            a11y={true}
-            scrollbar={{ draggable: true }}
-            aria-label="광고 슬라이드"
-          >
-            <SwiperSlide>
-              <img src='/ad.png' alt='광고' className='mx-auto h-auto max-h-[29rem]' />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src='/ad2.png' alt='광고' className='mx-auto h-auto max-h-[29rem]' />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src='/ad3.png' alt='광고' className='mx-auto h-auto max-h-[29rem]' />
-            </SwiperSlide>
-          </Swiper>
-        </div>
-        <ul className='flex items-center justify-center gap-10 py-5 text-center max-[362px]:gap-6'>
+        <Swiper
+          className='max-h-[29rem]'
+          modules={[Navigation, A11y]}
+          spaceBetween={50}
+          slidesPerView={1}
+          navigation
+          loop={true}
+          a11y={true}
+          scrollbar={{ draggable: true }}
+          aria-label='광고 슬라이드'
+        >
+          <SwiperSlide>
+            <img src='/ad.webp' alt='광고' className='mx-auto' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src='/ad2.webp' alt='광고' className='mx-auto' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src='/ad3.webp' alt='광고' className='mx-auto' />
+          </SwiperSlide>
+        </Swiper>
+        <ul className='mx-auto mt-4 flex w-full max-w-lg items-center justify-between px-4 py-5 text-center'>
           <li>
             <Link to='/hotel' className='flex flex-col items-center gap-2'>
               <img src='/hotel.svg' alt='호텔 리조트' />
@@ -88,7 +87,7 @@ function MainPage() {
           </li>
         </ul>
 
-        <section className='mx-auto max-w-2xl px-4'>
+        <section className='mx-auto mt-3 max-w-2xl px-4'>
           <HotelList title='야!무지개놀자~!' subtitle='재밌게'>
             <Category
               className='justify-center gap-2 py-3 max-[340px]:text-sm max-[340px]:leading-6 '
@@ -109,7 +108,7 @@ function MainPage() {
           loop={true}
           a11y={true}
           scrollbar={{ draggable: true }}
-          aria-label="광고 슬라이드"
+          aria-label='광고 슬라이드'
           breakpoints={{
             320: {
               slidesPerView: 2,
@@ -128,72 +127,72 @@ function MainPage() {
           <SwiperSlide>
             <Link to='hotel/m4urk47aq525vh7'>
               <img
-                src='/sale.png'
+                src='/sale.webp'
                 alt='광고'
-                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
           <SwiperSlide>
             <Link to='location/도쿄'>
               <img
-                src='/sale2.png'
+                src='/sale2.webp'
                 alt='광고'
-                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
           <SwiperSlide>
             <Link to='hotel/z52wykesuxft1mp'>
               <img
-                src='/sale3.png'
+                src='/sale3.webp'
                 alt='광고'
-                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
           <SwiperSlide>
             <Link to='leisurebrand/롯데월드'>
               <img
-                src='/sale4.png'
+                src='/sale4.webp'
                 alt='광고'
-                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
           <SwiperSlide>
             <Link to='leisurebrand/에버랜드'>
               <img
-                src='/sale5.png'
+                src='/sale5.webp'
                 alt='광고'
-                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
           <SwiperSlide>
             <Link to='location/싱가포르'>
               <img
-                src='/sale6.png'
+                src='/sale6.webp'
                 alt='광고'
-                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
           <SwiperSlide>
             <Link to='hotel/dzhawq266mfn76v'>
               <img
-                src='/sale7.png'
+                src='/sale7.webp'
                 alt='광고'
-                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
           <SwiperSlide>
             <Link to='hotel/xikeqxqtyx1wp1c'>
               <img
-                src='/sale8.png'
+                src='/sale8.webp'
                 alt='광고'
-                className='mx-auto h-auto max-h-72 w-auto max-w-[158px] rounded-sm'
+                className='mx-auto rounded-sm'
               />
             </Link>
           </SwiperSlide>
