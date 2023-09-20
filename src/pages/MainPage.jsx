@@ -129,7 +129,7 @@ function MainPage() {
               <img
                 src='/sale.png'
                 alt='광고'
-                className='mx-auto rounded-sm'
+                className='mx-auto rounded-sm w-auto h-auto'
               />
             </Link>
           </SwiperSlide>
@@ -138,7 +138,7 @@ function MainPage() {
               <img
                 src='/sale2.png'
                 alt='광고'
-                className='mx-auto rounded-sm'
+                className='mx-auto rounded-sm w-auto h-auto'
               />
             </Link>
           </SwiperSlide>
@@ -147,7 +147,7 @@ function MainPage() {
               <img
                 src='/sale3.png'
                 alt='광고'
-                className='mx-auto rounded-sm'
+                className='mx-auto rounded-sm w-auto h-auto'
               />
             </Link>
           </SwiperSlide>
@@ -156,7 +156,7 @@ function MainPage() {
               <img
                 src='/sale4.png'
                 alt='광고'
-                className='mx-auto rounded-sm'
+                className='mx-auto rounded-sm w-auto h-auto'
               />
             </Link>
           </SwiperSlide>
@@ -165,7 +165,7 @@ function MainPage() {
               <img
                 src='/sale5.png'
                 alt='광고'
-                className='mx-auto rounded-sm'
+                className='mx-auto rounded-sm w-auto h-auto'
               />
             </Link>
           </SwiperSlide>
@@ -174,7 +174,7 @@ function MainPage() {
               <img
                 src='/sale6.png'
                 alt='광고'
-                className='mx-auto rounded-sm'
+                className='mx-auto rounded-sm w-auto h-auto'
               />
             </Link>
           </SwiperSlide>
@@ -183,7 +183,7 @@ function MainPage() {
               <img
                 src='/sale7.png'
                 alt='광고'
-                className='mx-auto rounded-sm'
+                className='mx-auto rounded-sm w-auto h-auto'
               />
             </Link>
           </SwiperSlide>
@@ -192,7 +192,7 @@ function MainPage() {
               <img
                 src='/sale8.png'
                 alt='광고'
-                className='mx-auto rounded-sm'
+                className='mx-auto rounded-sm w-auto h-auto'
               />
             </Link>
           </SwiperSlide>
