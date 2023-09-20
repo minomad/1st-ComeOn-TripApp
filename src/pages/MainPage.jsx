@@ -216,7 +216,7 @@ function MainPage() {
       </section>
       <footer className='textb mx-auto max-w-2xl bg-slate-50 p-4 pb-20 text-gray3'>
         <div className='flex items-center gap-1'>
-          <img src='/logo.svg' alt='로고' />
+          <img src='/logo.svg' alt='로고' width='28' height='28' />
           <p>(주)야무지개놀자</p>
         </div>
         <div className='flex flex-col'>
