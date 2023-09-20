@@ -88,10 +88,10 @@ function MyPage() {
   return (
     <>
       <Helmet>
-        <title>야무지개놀자</title>
+        <title>마이 페이지</title>
       </Helmet>
       <Header search='search' back='back' cart='cart' title='마이 페이지'>
-        메인페이지
+        마이 페이지
       </Header>
       {!isAuth && <Guest></Guest>}
       {isAuth && (

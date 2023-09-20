@@ -9,6 +9,7 @@ import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import CartController from '../components/CartController';
 
 function ExhibitionDetailPage() {
   let { id } = useParams();
@@ -20,15 +21,7 @@ function ExhibitionDetailPage() {
   console.log(productData);
 
   const [selectCategory, setSelectCategory] = useState('상품선택');
-  // const [count, setCount] = useState(0);
-  // console.log(count);
-  // const handleCountUp = () => {
-  //   setCount(count + 1);
-  // };
 
-  // const handleCountDown = () => {
-  //   setCount(count - 1);
-  // };
 
   const handleChangeCategory = (category) => {
     setSelectCategory(category);
@@ -92,6 +85,7 @@ function ExhibitionDetailPage() {
 
         {selectCategory === '상품선택' && <LeisureProduct data={data} productData={productData} />}
         {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
+        <CartController />
       </section>
     </>
   );

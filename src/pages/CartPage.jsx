@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { numberWithComma } from '@/utils/numberWithComma';
 import { toast, Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -10,7 +9,6 @@ import useAuthStore from '@/store/useAuthStore';
 import Spinner from '@/components/Spinner';
 import WishCart from '@/components/WishCart';
 import Input from '@/components/Input';
-import Button from '@/components/Button';
 import Guest from '@/components/Guest';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import WishList from '@/components/WishList';
@@ -20,7 +18,7 @@ function CartPage() {
   const user = useAuthStore((state) => state.user);
 
   const { getIdData, updateData: updateUser } = usePocketData('users');
-  const { getListData, deleteData: deleteOrder } = usePocketData('order');
+  const { createData: createOrder } = usePocketData('order');
 
   const [selectCartItem, setSelectCartItem] = useState([]);
   const [selectCategory, setSelectCategory] = useState('숙소');
@@ -39,13 +37,12 @@ function CartPage() {
     },
   );
 
-  const { data: orderData } = useQuery(['userOrder'], () => getListData());
-
   const queryClient = useQueryClient();
 
   const cartRoom = data?.expand?.cartRoom;
   const cartLeisure = data?.expand?.cartLeisure;
-
+  console.log(cartRoom);
+  
   if (!isAuth) {
     return (
       <>
@@ -64,26 +61,13 @@ function CartPage() {
     );
   }
 
-  const handleDeleteRoom = async (itemId) => {
+  const handleDeleteCart = async (itemId) => {
+    const category = selectCategory === '숙소' ? 'Room' : 'Leisure';
+
     await updateUser(userId, {
-      'cartRoom-': itemId,
+      [`cart${category}-`]: itemId,
     });
 
-    const filterData = orderData?.filter((orderItem) => orderItem.orderid === itemId);
-    if (filterData) {
-      for (const orderItem of filterData) {
-        await deleteOrder(orderItem.id);
-      }
-    }
-
-    toast.error('장바구니에서 삭제하였습니다.');
-    queryClient.invalidateQueries(['userCart']);
-  };
-
-  const handleDeleteLeisure = async (itemId) => {
-    await updateUser(userId, {
-      'cartLeisure-': itemId,
-    });
     toast.error('장바구니에서 삭제하였습니다.');
     queryClient.invalidateQueries(['userCart']);
   };
@@ -143,67 +127,26 @@ function CartPage() {
 
   const totalCartPrice = cartTotalPrice();
 
-  const handleBookedRoom = async () => {
+  const handleBooked = async () => {
     if (selectCartItem.length === 0) {
-      return toast.error('숙소를 선택해 주세요');
+      return toast.error('항목을 선택해 주세요');
     }
 
-    toast((t) => (
-      <div className='flex-col items-center gap-5'>
-        <span className='text-lg'>결제 하시겠습니까?</span>
-        <div className='flex gap-10 pt-2'>
-          <button
-            className='rounded-lg bg-primary px-4 py-2 text-white'
-            onClick={() => {
-              toast.dismiss(t.id);
-              updateUser(userId, {
-                'bookedRoom+': selectCartItem,
-              });
-              for (const itemId of selectCartItem) {
-                updateUser(userId, {
-                  'cartRoom-': itemId,
-                });
+    const category = selectCategory === '숙소' ? 'Room' : 'Leisure';
 
-                const filterData = orderData?.filter((orderItem) => orderItem.orderid === itemId);
-                if (filterData) {
-                  for (const orderItem of filterData) {
-                    deleteOrder(orderItem.id);
-                  }
-                }
-              }
+    for (const itemId of selectCartItem) {
+      await updateUser(userId, {
+        [`cart${category}-`]: itemId,
+      });
+    }
 
-              queryClient.invalidateQueries(['userCart']);
-              toast.success('결제가 완료되었습니다.');
-              setTimeout(() => {
-                toast.dismiss();
-                navigate('/');
-              }, 1000);
-            }}
-          >
-            예
-          </button>
-          <Button
-            className='rounded-lg bg-accent px-1 py-2 text-white'
-            onClick={() => toast.dismiss(t.id)}
-          >
-            아니오
-          </Button>
-        </div>
-      </div>
-    ));
-  };
-
-  const handleBookedLeisure = async () => {
+    createOrder();
     toast.success('결제가 완료되었습니다.');
-    await updateUser(userId, {
-      'bookedLeisure+': selectCartItem,
-    });
-    await updateUser(userId, {
-      'cartLeisure-': selectCartItem,
-    });
     queryClient.invalidateQueries(['userCart']);
-    toast.dismiss();
-    navigate('/');
+    setTimeout(() => {
+      toast.dismiss();
+      navigate('/');
+    }, 1500);
   };
 
   if (isLoading) {
@@ -225,7 +168,7 @@ function CartPage() {
           className='text-xl'
         />
         <div className='mx-auto flex max-w-[39rem] justify-between gap-2 border-b border-gray p-5 font-semibold'>
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-2 max-[412px]:px-2'>
             <Input
               type='checkbox'
               id='all'
@@ -242,34 +185,20 @@ function CartPage() {
         {selectCategory === '숙소' && isAuth && cartRoom && (
           <>
             {cartRoom?.map((item) => {
-              const filterData = orderData?.filter((orderItem) => orderItem.orderid === item.id);
               return (
                 <WishList
                   key={item.id}
                   cart={true}
                   data={[item]}
-                  handleWishDelete={() => handleDeleteRoom(item.id)}
+                  handleDelete={() => handleDeleteCart(item.id)}
                   img='img'
-                  filterData={filterData}
                   cartHotel={true}
                   handleCheckbox={() => handleCheckbox(item.id)}
+                  totalCartPrice={totalCartPrice}
+                  handleBooked={handleBooked}
                 />
               );
             })}
-
-            <div className='fixed bottom-0 z-[100] flex w-full max-w-3xl flex-col gap-1 border-t-2 border-[#919191] bg-white px-5 py-4 font-bold'>
-              <span className='text-end text-[12px] text-[#919191]'>결제 예상금액</span>
-              <div className='flex items-center justify-between pb-2'>
-                <span className='pl-1'>총</span>
-                <span className='text-lg text-primary'>{numberWithComma(totalCartPrice)}원</span>
-              </div>
-              <Button
-                className='w-full rounded-[4px] border bg-primary px-4 py-2 text-white'
-                onClick={handleBookedRoom}
-              >
-                바로 결제하기
-              </Button>
-            </div>
           </>
         )}
 
@@ -278,35 +207,19 @@ function CartPage() {
         {selectCategory === '레저' && isAuth && cartLeisure && (
           <>
             {cartLeisure?.map((item) => {
-              const filterData = orderData?.filter((orderItem) => orderItem.orderid === item.id);
               return (
                 <WishList
                   key={item.id}
                   cart={true}
                   data={[item]}
-                  handleWishDelete={() => handleDeleteLeisure(item.id)}
-                  filterData={filterData}
+                  handleDelete={() => handleDeleteCart(item.id)}
                   cartHotel={true}
                   handleCheckbox={() => handleCheckbox(item.id)}
+                  totalCartPrice={totalCartPrice}
+                  handleBooked={handleBooked}
                 />
               );
             })}
-
-            <div className='fixed bottom-0 z-[100] flex w-full max-w-3xl flex-col gap-1 border-t-2 border-[#919191] bg-white px-5 py-4 font-bold'>
-              <div className='flex items-center justify-between'>
-                <span className='pl-1'>총</span>
-                <span className='text-lg text-primary'>{numberWithComma(totalCartPrice)}원</span>
-              </div>
-              <span className='text-end text-[12px] text-[#919191]'>
-                결제 단계에서 쿠폰 적용시 추가 할인 가능
-              </span>
-              <Button
-                className='w-full rounded-[4px] border bg-primary px-4 py-2 text-white'
-                onClick={handleBookedLeisure}
-              >
-                바로 결제하기
-              </Button>
-            </div>
           </>
         )}
 
@@ -314,7 +227,7 @@ function CartPage() {
 
         <Toaster
           toastOptions={{
-            duration: 1000,
+            duration: 900,
             success: {
               style: {
                 background: '#5D6FFF',
@@ -327,9 +240,6 @@ function CartPage() {
                 color: 'white',
               },
             },
-          }}
-          containerStyle={{
-            top: 420,
           }}
         />
       </section>

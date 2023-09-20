@@ -1,20 +1,33 @@
-import { useParams } from 'react-router-dom';
 import { usePocketData } from '@/api/usePocketData';
-import { useQuery } from '@tanstack/react-query';
-import  Spinner  from '@/components/Spinner';
-import  Header  from '@/components/Header';
+import Header from '@/components/Header';
+import LeisureInfoCategory from '@/components/LeisureInfoCategory';
+import Spinner from '@/components/Spinner';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import LeisureProduct from '@/components/LeisureProduct';
+import CartController from '../components/CartController';
+import LeisureProductInfo from '@/components/LeisureProductInfo';
 function TrafficCarDetailPage() {
   let { id } = useParams();
 
   const { getIdData } = usePocketData('traffic');
   const { data, isLoading } = useQuery(['traffic', id], () => getIdData(id, { expand: 'product' }));
   console.log(data);
+  const productData = data?.expand?.product;
+  console.log(productData);
+  const [selectCategory, setSelectCategory] = useState('상품선택');
 
   if (isLoading) {
     return <Spinner />;
   }
+
+  const handleChangeCategory = (category) => {
+    setSelectCategory(category);
+  };
+
   const { title, discount, price, brand } = data;
   const discountPrice = price * (100 - discount) * 0.01;
 
@@ -55,18 +68,29 @@ function TrafficCarDetailPage() {
             <div className='flex gap-2 text-[12px]'>
               <img src='/leisure-calendar.png' alt='' />
               <span className='font-bold'>유효기간</span>
-              <span className='text-[#616161]'>~ 2024.02.09</span>
+              <span className='text-[#616161]'>구매 후 1개월 이내, 미사용시 자동 환불</span>
             </div>
           </div>
-          <img src={getPbImageURL(data, 'detail')} alt='' className='border-none rounded-[4px] w-full' />
+          <img
+            src={getPbImageURL(data, 'detail')}
+            alt=''
+            className='w-full rounded-[4px] border-none'
+          />
         </div>
 
         <div className='h-2 w-full bg-slate-300'></div>
 
+        <LeisureInfoCategory
+          selectCategory={selectCategory}
+          handleChangeCategory={handleChangeCategory}
+        />
+
+        {selectCategory === '상품선택' && <LeisureProduct data={data} productData={productData} />}
+        {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
+        <CartController />
       </section>
     </>
   );
-
 }
 
-export default TrafficCarDetailPage
+export default TrafficCarDetailPage;

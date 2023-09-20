@@ -9,7 +9,7 @@ function Hotel({ data, selectCategory }) {
   });
 
   return (
-    <div role='ListWrapper' className='flex justify-center'>
+    <div className='flex justify-center'>
       <ul className='grid grid-cols-4 gap-4 max-[610px]:grid-cols-2'>
         {filterData?.map((item) => (
           <li key={item.id} className='py-1 hover:scale-105 max-[610px]:px-2 max-[360px]:px-0'>
