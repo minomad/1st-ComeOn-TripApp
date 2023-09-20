@@ -82,7 +82,12 @@ function BookingPage() {
         <article key={roomData.id} className='flex justify-center pt-3'>
           <div>
             <figure>
-              <img src={getPbImageURL(roomData, 'img')} alt={roomData.title} className='max-h-96' />
+              <img
+                src={getPbImageURL(roomData, 'img')}
+                alt={roomData.title}
+                width='640'
+                height='400'
+              />
               <figcaption className='sr-only'>{roomData.title}</figcaption>
             </figure>
             <h3 className=' pb-4 pt-1 text-xl font-bold'>{roomData.title}</h3>

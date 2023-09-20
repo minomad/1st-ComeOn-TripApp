@@ -13,7 +13,7 @@ function HotelRoomPage({ data, hotelId, title }) {
       {data.map((item) => (
         <div key={item.id} className='py-5 font-bold'>
           <div>
-            <img src={getPbImageURL(item, 'img')} alt={item.title} />
+            <img src={getPbImageURL(item, 'img')} alt={item.title} width='640' height='400' />
           </div>
           <p className='py-2 text-lg' key={item.id}>
             {item.title}

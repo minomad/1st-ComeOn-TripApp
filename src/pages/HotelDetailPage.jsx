@@ -77,6 +77,8 @@ function HotelDetailPage() {
               <img
                 src={getPbImageURL(hotelData, 'img')}
                 alt={hotelData.title}
+                width='640'
+                height='400'
               />
               <figcaption className='sr-only'>{hotelData.title}</figcaption>
             </figure>

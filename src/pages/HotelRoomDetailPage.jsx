@@ -150,10 +150,22 @@ function HotelRoomDetailPage() {
           scrollbar={{ draggable: true }}
         >
           <SwiperSlide>
-            <img src={getPbImageURL(roomData, 'img')} alt={roomData.title} className='mx-auto' />
+            <img
+              src={getPbImageURL(roomData, 'img')}
+              alt={roomData.title}
+              className='mx-auto'
+              width='640'
+              height='400'
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <img src={getPbImageURL(roomData, 'img02')} alt={roomData.title} className='mx-auto' />
+            <img
+              src={getPbImageURL(roomData, 'img02')}
+              alt={roomData.title}
+              className='mx-auto'
+              width='640'
+              height='400'
+            />
           </SwiperSlide>
         </Swiper>
 
