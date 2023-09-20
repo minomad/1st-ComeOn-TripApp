@@ -13,17 +13,17 @@ function MyBookingPage() {
   return (
     <>
       <Helmet>
-        <title>야무지개놀자</title>
+        <title>나의 예약</title>
       </Helmet>
-      <Header search='search' back='back' cart='cart' title='마이 페이지'>
-        메인페이지
+      <Header search='search' back='back' cart='cart' title='나의 예약'>
+        나의 예약
       </Header>
       {/* 마이페이로 돌아갈 수 있는 버튼 기능의 이미지 */}
       <MyCircleProfile towhere='/mypage' imgpath='/ad.png' imgalt='프로필사진'></MyCircleProfile>
 
       <section className='flex justify-center pb-20'>
-        <ul className='box-border h-auto w-2/3 rounded-2xl bg-lightPurple px-3 pb-1 pt-4 text-sm'>
-          <li className=' flex flex-row items-center justify-between  text-primary'>
+        <ul className='box-border h-auto w-2/3 rounded-2xl bg-lightPurple px-3 pt-4 text-sm'>
+          <li className=' flex flex-row items-center justify-between pb-3   text-primary'>
             <div className='font-semibold'>예약 내역</div>
           </li>
           <MyList
