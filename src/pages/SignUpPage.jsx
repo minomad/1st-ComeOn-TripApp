@@ -218,7 +218,7 @@ function SignUpPage() {
               label='비밀번호'
               type={isShowPassword.password ? 'text' : 'password'}
               id='password'
-              placeholder='비밀번호'
+              placeholder='비밀번호 8자리 이상'
               className='mb-8 h-9 w-full border-b border-gray p-2 outline-primary'
               labelClass='sr-only'
             />
