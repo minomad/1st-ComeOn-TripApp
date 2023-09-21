@@ -7,6 +7,7 @@ const LocationPage = lazy(() => import('./pages/LocationPage'));
 const LocationDetailPage = lazy(() => import('./pages/LocationDetailPage'));
 const AroundPage = lazy(() => import('./pages/AroundPage'));
 const WishPage = lazy(() => import('./pages/WishPage'));
+
 const MyPage = lazy(() => import('./pages/MyPage'));
 const MyBookingPage = lazy(() => import('./pages/MyBookingPage'));
 const MyReviewPage = lazy(() => import('./pages/MyReviewPage'));
@@ -17,23 +18,28 @@ const MyWithdrawalPage = lazy(() => import('./pages/MyWithdrawalPage'));
 const MyNewQnaPage = lazy(() => import('./pages/MyNewQnaPage'));
 const MyQnaDetailPage = lazy(() => import('./pages/MyQnaDetailPage'));
 const MyInfoChangePage = lazy(() => import('./pages/MyInfoChangePage'));
+
 const HotelPage = lazy(() => import('./pages/HotelPage'));
 const HotelDetailPage = lazy(() => import('./pages/HotelDetailPage'));
 const HotelRoomDetailPage = lazy(() => import('./pages/HotelRoomDetailPage'));
+
 const AirlinePage = lazy(() => import('./pages/AirlinePage'));
 const TrafficPage = lazy(() => import('./pages/TrafficPage'));
 const TrafficTrainPage = lazy(() => import('./pages/TrafficTrainPage'));
 const TrafficCarPage = lazy(() => import('./pages/TrafficCarPage'));
 const TrafficCarDetailPage = lazy(() => import('./pages/TrafficCarDetailPage'));
 const AppInstallPage = lazy(() => import('./pages/AppInstallPage'));
+
 const LeisurePage = lazy(() => import('./pages/LeisurePage'));
 const LeisureThemePage = lazy(() => import('./pages/LeisureThemePage'));
 const LeisureBrandPage = lazy(() => import('./pages/LeisureBrandPage'));
 const LeisureListPage = lazy(() => import('./pages/LeisureListPage'));
 const LeisureDetailPage = lazy(() => import('./pages/LeisureDetailPage'));
 const ExhibitionDetailPage = lazy(() => import('./pages/ExhibitionDetailPage'));
+
 const SearchPage = lazy(() => import('./pages/SearchPage'));
 const SearchDetailPage = lazy(() => import('./pages/SearchDetailPage'));
+
 const CartPage = lazy(() => import('./pages/CartPage'));
 const BookingPage = lazy(() => import('./pages/BookingPage'));
 const SignInPage = lazy(() => import('./pages/SignInPage'));
