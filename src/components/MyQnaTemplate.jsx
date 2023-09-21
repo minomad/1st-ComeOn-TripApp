@@ -1,17 +1,20 @@
-function MyQnaTemplate({
-  formref,
-  onReset,
-  onSubmit,
-  username,
-  email,
-  titleRef,
-  textRef,
-  photoRef,
-  onChange,
-  fileName,
-  bluebutton,
-  redbutton,
-}) {
+import React from 'react';
+
+// eslint-disable-next-line react/display-name
+const MyQnaTemplate = React.forwardRef((props, formref) => {
+  const {
+    onReset,
+    onSubmit,
+    username,
+    email,
+    titleRef,
+    textRef,
+    photoRef,
+    onChange,
+    fileName,
+    bluebutton,
+    redbutton,
+  } = props;
   return (
     <form
       className='flex h-full w-full flex-col justify-between'
@@ -87,6 +90,6 @@ function MyQnaTemplate({
       </div>
     </form>
   );
-}
+});
 
 export default MyQnaTemplate;
