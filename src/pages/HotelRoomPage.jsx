@@ -9,11 +9,11 @@ function HotelRoomPage({ data, hotelId, title }) {
 
   return (
     <section className='flex flex-col items-center px-4 pb-32'>
-      <h2 className='sr-only'>객실 정보</h2>
+      <h2 className='sr-only'>숙소 정보</h2>
       {data.map((item) => (
         <div key={item.id} className='py-5 font-bold'>
           <div>
-            <img src={getPbImageURL(item, 'img')} alt={item.title} className='w-full max-w-xl' />
+            <img src={getPbImageURL(item, 'img')} alt={item.title} width='640' height='400' />
           </div>
           <p className='py-2 text-lg' key={item.id}>
             {item.title}
@@ -30,7 +30,7 @@ function HotelRoomPage({ data, hotelId, title }) {
               to={`/rooms/${item.id}/${hotelId}/${title}`}
               className='mt-5 w-52 rounded bg-primary p-1 text-center text-white max-[420px]:w-32'
             >
-              객실 선택하기
+              숙소 선택하기
             </Link>
           </div>
         </div>

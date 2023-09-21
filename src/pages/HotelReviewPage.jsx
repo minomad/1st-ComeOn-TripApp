@@ -77,6 +77,11 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
   const handleUpdateReview = async (itemId) => {
     const review = reviewUpdateRef.current.value;
 
+    if (!review || review.trim() === '') {
+      toast.error('리뷰를 작성해주세요');
+      return;
+    }
+
     const data = {
       title: hotel,
       review,

@@ -56,14 +56,14 @@ function HotelPage() {
               to='/location'
               className='flex h-[3.1rem] w-40 items-center gap-1 rounded border border-gray p-4 font-medium hover:text-primary'
             >
-              <img src='/locationActive.svg' alt='위치' className='w-5' />
+              <img src='/locationActive.svg' alt='위치' className='w-5' width='20' height='20'/>
               지역선택
             </Link>
             <Link
               to='/around'
               className='flex flex-col items-center rounded border border-gray p-1 font-medium hover:text-primary'
             >
-              <img src='/aroundActive.svg' alt='내주변' className='w-4' />
+              <img src='/aroundActive.svg' alt='내주변' className='w-4' width='16' height='16' />
               내주변
             </Link>
           </div>

@@ -22,7 +22,7 @@ import 'swiper/css/navigation';
 function HotelRoomDetailPage() {
   const { id, hotel, title } = useParams();
   const { getIdData: getRoom } = usePocketData('room');
-  const { createData: createCart } = usePocketData('cart');
+  const { createData: createCart } = usePocketData('order');
   const { updateData: updateUser } = usePocketData('users');
   const { data: roomData, isLoading: roomLoading } = useQuery(['room', id], () => getRoom(id));
 
@@ -35,7 +35,7 @@ function HotelRoomDetailPage() {
   const navigation = useNavigate();
 
   const [isShowPayment, setIsShowPayment] = useState(false);
-  const [selectNumber, setSelectNumber] = useState(0);
+  const [selectNumber, setSelectNumber] = useState(1);
   const [selectList, setSelectList] = useState(false);
 
   const number = [1, 2, 3, 4];
@@ -86,9 +86,6 @@ function HotelRoomDetailPage() {
     if (checkIn == '' || checkOut == '') {
       return toast.error('체크인 / 아웃 날짜를 선택해주세요');
     }
-    if (selectNumber === 0) {
-      return toast.error('인원수를 선택해주세요');
-    }
 
     if (isAuth) {
       setIsShowPayment(true);
@@ -107,8 +104,8 @@ function HotelRoomDetailPage() {
     const checkout = checkOutRef.current.value;
 
     const cartData = {
-      nickName: user.nickName,
-      title,
+      username: user.username,
+      hotelTitle: title,
       hotelId: hotel,
       roomId: id,
       checkin,
@@ -117,8 +114,9 @@ function HotelRoomDetailPage() {
     };
 
     const cart = await createCart(cartData);
+
     await updateUser(userId, {
-      'cartRoom+': cart.id,
+      'cartHotel+': cart.id,
     });
 
     toast.success('장바구니에 담겼습니다.');
@@ -149,10 +147,22 @@ function HotelRoomDetailPage() {
           scrollbar={{ draggable: true }}
         >
           <SwiperSlide>
-            <img src={getPbImageURL(roomData, 'img')} alt={roomData.title} className='mx-auto' />
+            <img
+              src={getPbImageURL(roomData, 'img')}
+              alt={roomData.title}
+              className='mx-auto'
+              width='640'
+              height='400'
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <img src={getPbImageURL(roomData, 'img02')} alt={roomData.title} className='mx-auto' />
+            <img
+              src={getPbImageURL(roomData, 'img02')}
+              alt={roomData.title}
+              className='mx-auto'
+              width='640'
+              height='400'
+            />
           </SwiperSlide>
         </Swiper>
 
@@ -207,7 +217,7 @@ function HotelRoomDetailPage() {
               className='mt-4 h-8 w-52 rounded bg-primary font-bold text-white max-[420px]:w-32 '
               onClick={() => handleBookingRoom()}
             >
-              객실 예약하기
+              숙소 예약하기
             </Button>
           </div>
         </div>

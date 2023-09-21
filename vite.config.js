@@ -11,7 +11,7 @@ import imageminWebp from 'imagemin-webp';
 export default defineConfig({
   plugins: [
     react(),
-    // splitVendorChunkPlugin(),
+    splitVendorChunkPlugin(),
     viteImagemin({
       plugins: {
         jpg: imageminMozjpeg(),

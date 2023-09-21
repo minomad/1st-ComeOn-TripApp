@@ -16,10 +16,11 @@ import HotelReviewPage from '@/pages/HotelReviewPage';
 import useAuthStore from '@/store/useAuthStore';
 import Button from '@/components/Button';
 import MetaTag from '@/components/MetaTag';
+import useStorage from '@/Hook/useStorage';
 
 function HotelDetailPage() {
   const { id } = useParams();
-  const [selectCategory, setSelectCategory] = useState('객실선택');
+  const [selectCategory, setSelectCategory] = useState('숙소선택');
   const { getIdData: getHotel } = usePocketData('hotel');
   const { updateData: updateUser } = usePocketData('users');
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -29,16 +30,17 @@ function HotelDetailPage() {
     getHotel(id, { expand: 'room, review' }),
   );
 
-  const info = ['객실선택', '소개', '시설/서비스', '후기'];
+  const [isShowMap, setIsShowMap] = useState(false);
+
+  const info = ['숙소선택', '소개', '시설/서비스', '후기'];
   const roomData = hotelData?.expand?.room;
   const reviewData = hotelData?.expand?.review;
 
-  const [isActive, setIsactive] = useState(false);
-  const [isShowMap, setIsShowMap] = useState(false);
+  const { storageData: isActive, update, remove } = useStorage(id, false);
 
   const handleWish = () => {
     const userId = user?.id;
-    setIsactive(!isActive);
+    update(!isActive);
 
     if (!isActive) {
       toast.success('찜 목록에 추가했습니다.');
@@ -50,6 +52,7 @@ function HotelDetailPage() {
       updateUser(userId, {
         'wishHotel-': id,
       });
+      remove(id);
     }
   };
 
@@ -77,7 +80,8 @@ function HotelDetailPage() {
               <img
                 src={getPbImageURL(hotelData, 'img')}
                 alt={hotelData.title}
-                className='w-full max-w-[39rem]'
+                width='640'
+                height='400'
               />
               <figcaption className='sr-only'>{hotelData.title}</figcaption>
             </figure>
@@ -138,7 +142,7 @@ function HotelDetailPage() {
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-        {selectCategory === '객실선택' && (
+        {selectCategory === '숙소선택' && (
           <HotelRoomPage data={roomData} hotelId={id} title={hotelData.title} />
         )}
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}

@@ -15,15 +15,16 @@ function BookingPage() {
   const { id, hotel, title, checkin, checkout } = useParams();
   const { getIdData } = usePocketData('room');
   const { createData: createOrder } = usePocketData('order');
+  const { updateData: updateUser } = usePocketData('users');
   const { data: roomData, isLoading } = useQuery(['room', id], () => getIdData(id));
 
   const user = useAuthStore((state) => state.user);
   const navigate = useNavigate();
+  const userId = user.id;
 
   const handlePayment = () => {
-    
     const orderData = {
-      nickName: user.nickName,
+      username: user.username,
       hotelTitle: title,
       hotelId: hotel,
       roomId: id,
@@ -39,9 +40,12 @@ function BookingPage() {
           <Button
             type='submit'
             className='rounded-lg bg-primary px-5 py-2 text-white'
-            onClick={() => {
+            onClick={async () => {
               toast.dismiss(t.id);
-              createOrder(orderData);
+              const order = await createOrder(orderData);
+              updateUser(userId, {
+                'orderHotel+': order.id,
+              });
               toast.success('결제가 완료되었습니다.');
               setTimeout(() => {
                 toast.dismiss();
@@ -78,7 +82,12 @@ function BookingPage() {
         <article key={roomData.id} className='flex justify-center pt-3'>
           <div>
             <figure>
-              <img src={getPbImageURL(roomData, 'img')} alt={roomData.title} className='max-h-96' />
+              <img
+                src={getPbImageURL(roomData, 'img')}
+                alt={roomData.title}
+                width='640'
+                height='400'
+              />
               <figcaption className='sr-only'>{roomData.title}</figcaption>
             </figure>
             <h3 className=' pb-4 pt-1 text-xl font-bold'>{roomData.title}</h3>
