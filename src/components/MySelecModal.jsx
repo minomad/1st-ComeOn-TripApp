@@ -39,15 +39,14 @@ function MySelecModal({
         ref={modalRef}
       >
         <div className='h-60 w-72 rounded-lg border-[1px] bg-white  bg-opacity-70 p-4 font-semibold shadow-md'>
-          <p className='p-6 text-center text-lg'>{children}</p>
+          <div className='p-6 text-center text-lg'>{children}</div>
           <div className='fixed bottom-4 right-4 flex gap-3 text-white'>
-            <Link to={MoveTo}>
-              <button
-                className='rounded bg-thirdary px-2 py-1 hover:bg-primary'
-                onClick={onOption1}
-              >
-                {option1}
-              </button>
+            <Link
+              to={MoveTo}
+              className='rounded bg-thirdary px-2 py-1 hover:bg-primary'
+              onClick={onOption1}
+            >
+              {option1}
             </Link>
 
             <Link to={MoveTo2}>

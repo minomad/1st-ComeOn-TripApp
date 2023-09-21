@@ -1,11 +1,11 @@
 import { useState, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 import { toast, Toaster } from 'react-hot-toast';
 import { usePocketData } from '@/api/usePocketData';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-
+import { useQueryClient } from '@tanstack/react-query';
+import Guest from '@/components/Guest';
 import Header from '@/components/Header';
+import MetaTag from '@/components/MetaTag';
 import useAuthStore from '@/store/useAuthStore';
 import MyQnaTemplate from '@/components/MyQnaTemplate';
 
@@ -34,11 +34,6 @@ function MyNewQnaPage() {
     const text = textRef.current.value;
     const img = photoRef.current.files;
 
-    // const qnaData = {
-    //   title,
-    //   text,
-    //   img,
-    // };
     const formData = new FormData();
 
     formData.append('title', titleRef.current.value);
@@ -89,15 +84,17 @@ function MyNewQnaPage() {
 
   return (
     <>
+      <MetaTag title='1:1문의' description='1:1문의' />
+      <Header
+        search='search'
+        back='back'
+        cart='cart'
+        title='1:1문의 작성'
+        className='ml-10 text-xl font-semibold'
+      ></Header>
+      {!isAuth && <Guest></Guest>}
       {isAuth && (
         <>
-          <Helmet>
-            <title>1:1문의</title>
-          </Helmet>
-          <Header search='search' back='back' cart='cart' title='1:1문의'>
-            1:1문의 작성
-          </Header>
-
           <section className='absolute left-1/2 top-1/2 flex h-[73%] w-[90%] -translate-x-1/2 -translate-y-1/2 transform rounded-3xl bg-lightPurple p-3 shadow-lg sm:max-w-[500px] sm:p-5'>
             <MyQnaTemplate
               formref={formRef}
