@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Guest from '@/components/Guest';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
-import MyInput from '@/components/myInput';
+import MyInput from '@/components/MyInput';
 import MetaTag from '@/components/MetaTag';
 import useAuthStore from '../store/useAuthStore';
 import MyCircleProfile from '@/components/MyCircleProfile';
