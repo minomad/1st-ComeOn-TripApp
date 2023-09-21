@@ -12,7 +12,7 @@ import MetaTag from '@/components/MetaTag';
 
 function LocationDetailPage() {
  
-  const { category } = useParams();  category 파라미터를 가져옵니다.
+  const { category } = useParams();
   
   const [selectCategory, setSelectCategory]= useState(category);
   
