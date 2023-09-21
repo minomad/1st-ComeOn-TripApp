@@ -1,7 +1,23 @@
+import { usePocketData } from '@/api/usePocketData';
 import useStore from '@/store/zustand';
 import { numberWithComma } from '@/utils/numberWithComma';
+import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
-function CartController() {
+function CartController({ userId,id }) {
+  const { updateData: updateUser } = usePocketData('users');
+  const queryClient = useQueryClient();
+
+  const handleCart = async () => {
+    await updateUser(userId, {
+      'cartLeisure+': carts.map((obj)=>obj.id),
+    });
+
+    toast.success('장바구니에 담겼습니다.');
+    queryClient.invalidateQueries(['users'],id);
+  };
+
+
   // 앱 상태 : carts
   const carts = useStore((state) => state.carts);
 
@@ -19,7 +35,7 @@ function CartController() {
       </div>
       <span className='text-[12px] text-[#919191] text-end'>결제 단계에서 쿠폰 적용시 추가 할인 가능</span>
       <div className='flex justify-between gap-2 font-bold'>
-        <button className='py-2 px-4 border w-[50%] border-primary rounded-[4px] text-primary'>장바구니 담기</button>
+        <button className='py-2 px-4 border w-[50%] border-primary rounded-[4px] text-primary' onClick={handleCart}>장바구니 담기</button>
         <button className='py-2 px-4 border w-[50%] bg-primary text-white rounded-[4px]'>바로 구매하기</button>
       </div>
     </div>

@@ -1,16 +1,11 @@
+import { Link } from 'react-router-dom';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Button from './Button'
 
-
-function AroundList({data, selectCategory}) {
+function AroundList({data, selectCategory, selectList, setselectList, selectOrder, setSelectOrder}) {
   let filterData;
-  const [selectList, setselectList] = useState('추천순')
   
-  const [selectOrder, setSelectOrder] = useState(false);
-
   switch (selectList) {
     case '추천순':
       filterData = data.filter((hotel) => hotel.category === '부산');
@@ -55,7 +50,6 @@ function AroundList({data, selectCategory}) {
               className=' h-[120%] w-[110%]  cover object-cover' />
             <figcaption className='sr-only'>{item.title} </figcaption>
           </figure>
-          {/* 호텔명, 별점, 가격 설명박스 */}
           <div role="group" className='px-6 pt-3 pb-5'>
             <h4 className='font-bold text-lg'>{item.title}</h4>
             <img src='/star.svg' alt='별점' className='inline-block mb-[0.3rem] mr-[0.3rem] '/>
@@ -69,7 +63,7 @@ function AroundList({data, selectCategory}) {
               <span className='block text-[0.9rem] mr-3 text-gray2'>숙박: 15:00~</span>
               <span className='block text-[1.2rem] font-extrabold mr-2'>{numberWithComma(item.price)}원</span>
             </div>
-            <Link to={`hotel/${item.id}`} className='absolute z-0 right-4 text-right rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
+            <Link to={`hotel/${item.id}`} className='absolute z-0 right-4 text-right rounded-full  bg-primary hover:bg-[#1E51EE] text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
                {'숙소 예약하기'}
             </Link>
           </div>
@@ -87,10 +81,8 @@ export default AroundList
 
 
 
-export function AroundLeisureList({data, selectCategory}) {
+export function AroundLeisureList({data, selectCategory, selectList, setselectList, selectOrder, setSelectOrder}) {
   let filterData;
-  const [selectList, setselectList] = useState('추천순')
-  const [selectOrder, setSelectOrder] = useState(false);
 
   switch (selectList) {
     case '추천순':
@@ -118,7 +110,6 @@ export function AroundLeisureList({data, selectCategory}) {
        >
         {selectList}   <img src='/back.svg' alt='뒤로가기' className='rotate-[270deg] w-5 pt-0.5'/>
        </Button>
-     
       <ul className={`absolute right-9 top-[8rem] w-[4rem] text-center  bg-white rounded-md shadow-md ${!selectOrder ? 'hidden' : ''}`}>
         <li className='hover:bg-lightPurple text-[0.9rem] py-[0.5rem] ' onClick={() => {
       setselectList('추천순')}}>추천순</li>
@@ -131,7 +122,7 @@ export function AroundLeisureList({data, selectCategory}) {
     </nav>
     <section className='my-[8rem] '>
       {filterData?.map((item) => (
-        <article key={item.id} className='h-[30rem] lg:h-[36rem] py-1.2   shadow-md  bg-white '>
+        <article key={item.id} className='h-[26rem] lg:h-[32rem] py-1.2   shadow-md  bg-white '>
           <figure className='w-[100%] h-[57%] lg:h-[65%]  overflow-hidden mr-4 '>
             <img
               src={getPbImageURL(item, 'main')}
@@ -139,7 +130,6 @@ export function AroundLeisureList({data, selectCategory}) {
               className=' h-[120%] w-[110%]  cover object-cover' />
             <figcaption className='sr-only'>{item.title} </figcaption>
           </figure>
-          {/* 호텔명, 별점, 가격 설명박스 */}
           <div role='group' className='px-6 pt-3  '>
             <h2 className='font-bold text-lg'>{item.title}</h2>
             <div className=' flex justify-between pt-2 pb-4 '>
@@ -155,7 +145,7 @@ export function AroundLeisureList({data, selectCategory}) {
               </span>
                 <span className='block text-[1.2rem] font-extrabold '>{numberWithComma(item.price)}원</span>
             </div>
-            <Link to={`LeisureDetail/${item.id}`} className='absolute z-0 right-4 text-right rounded-full  bg-primary text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
+            <Link to={`LeisureDetail/${item.id}`} className='absolute z-0 right-4 text-right rounded-full bg-primary hover:bg-[#1E51EE] text-white font-medium  text-[1rem] shadow-md py-2 px-6 gap-2 '>
                {'상품 선택하기'}
             </Link>
           </div>
