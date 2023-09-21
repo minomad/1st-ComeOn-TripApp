@@ -47,7 +47,7 @@ function HotelRoomDetailPage() {
     if (!isAuth) {
       toast(
         (t) => (
-          <div className='tlex-col items-center gap-5 font-semibold'>
+          <div className='flex-col items-center gap-5 font-semibold'>
             <div className='text-center text-sm text-accent'>로그인이 필요합니다.</div>
             <div className='text-lg text-primary'>로그인 하시겠습니까?</div>
             <div className='flex justify-between py-2'>

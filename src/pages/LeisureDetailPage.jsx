@@ -6,13 +6,15 @@ import LeisureProductInfo from '@/components/LeisureProductInfo';
 import Spinner from '@/components/Spinner';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CartController from '../components/CartController';
 import Button from '../components/Button';
-import useStorage from '../Hook/useStorage';
+
 import toast from 'react-hot-toast';
+import useStore from '@/store/zustand';
+import useAuthStore from '@/store/useAuthStore';
 
 function LeisureDetailPage() {
   const { id } = useParams();
@@ -23,8 +25,14 @@ function LeisureDetailPage() {
   const { getIdData } = usePocketData('leisure');
   const { data, isLoading } = useQuery(['leisure', id], () => getIdData(id, { expand: 'product' }));
   const { updateData: updateUser } = usePocketData('users');
-  const { storageData: authUser } = useStorage('pocketbase_auth');
+  
+  // const carts = useStore((state) => state.carts);
   const productData = data?.expand?.product;
+  console.log(productData);
+  const user = useAuthStore((state) => state.user);
+  const userId = user.id;
+
+  // const queryClient = useQueryClient();
 
   const handleChangeCategory = (category) => {
     setSelectCategory(category);
@@ -37,7 +45,6 @@ function LeisureDetailPage() {
   const discountPrice = price * (100 - discount) * 0.01;
 
   const handleWish = () => {
-    const userId = authUser?.model?.id;
     setIsactive(!isActive);
 
     if (!isActive) {
@@ -52,6 +59,20 @@ function LeisureDetailPage() {
       });
     }
   };
+
+  // const handleCart = async () => {
+  //   await updateUser(userId, {
+  //     'cartLeisure+': carts.map((obj)=>obj.id),
+  //   });
+
+  //   toast.success('장바구니에 담겼습니다.');
+  //   queryClient.invalidateQueries(['users']);
+  // };
+
+
+   
+
+ 
 
   return (
     <>
@@ -115,7 +136,7 @@ function LeisureDetailPage() {
 
         {selectCategory === '상품선택' && <LeisureProduct data={data} productData={productData} />}
         {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
-        <CartController />
+        <CartController userId={userId} id={id} />
       </section>
     </>
   );
