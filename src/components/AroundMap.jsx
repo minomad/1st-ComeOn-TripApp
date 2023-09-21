@@ -19,7 +19,6 @@ function AroundMap({data, selectCategory, latitude, longitude}) {
           <img src={selectCategory==='숙소'  ? getPbImageURL(selectMarker, 'img'): getPbImageURL(selectMarker, 'main') } alt='' className=' h-[110%] w-[100%]  cover object-cover' /> 
           <figcaption className='sr-only'>{selectMarker.title} </figcaption>
         </figure>
-        {/* 호텔명, 별점, 가격 설명박스 */}
         <div role="group">
           <Link to={selectCategory==='숙소'  ? `hotel/${selectMarker.id}`: `LeisureDetail/${selectMarker.id}` }>
           <h4 className='font-bold'>{selectMarker.title}</h4>

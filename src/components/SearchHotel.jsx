@@ -38,8 +38,17 @@ function SearchHotel({ data }) {
     setSearchedData(e);
   };
   const resetText = () => {
-    setUserInput('');
+    setUserInput('')
   };
+  const searchEnter = (e) => {
+    e.preventDefault();
+  
+    if (userInput !== '') {
+      const recentSearch = [...searchData, userInput];
+      update(recentSearch);
+      setSearchedData(true);
+    }
+  }
 
   switch (userInput) {
     case '서울':
@@ -59,24 +68,24 @@ function SearchHotel({ data }) {
           role='search'
           className=' mx-auto mt-3.5 h-[5.7rem] w-[90%]  rounded-2xl border-[0.1rem]  border-solid border-secondary pb-1 md:w-[80%]'
         >
-          <form action='' className='relative flex h-[50%]'>
+          <form className='relative flex h-[50%]' onSubmit={searchEnter}>
             <img src='/search-primary.svg' alt='' className='mx-4 mt-4 inline-block h-5' />
             <label htmlFor='searchHotel' className='sr-only'>
               검색
             </label>
             <input
-              type='search'
+              type='text'
               name='searchHotel'
               id='searchHotel'
               placeholder='지역, 숙소명 키워드로 찾아보세요'
-              className=' mr-3 mt-3 flex-grow   focus:outline-none'
+              className=' mr-3 mt-2 flex-grow   focus:outline-none'
               onChange={debounce(getValue, 1000)}
             />
 
             <button
               type='reset'
-              className='bottom-0.2 absolute  right-2 mt-3 bg-white px-4 py-2 '
-              aria-pressed='false'
+              aria-label='검색어 초기화 버튼'
+              className='bottom-0.2 absolute  right-2 mt-[0.55rem] bg-white px-4 py-2 '
               onClick={resetText}
             >
               <img src='/search-close.svg' alt='닫기' className='h-4 w-4' />
@@ -104,11 +113,11 @@ function SearchHotel({ data }) {
           />
         </div>
         
-        {userInput !== '' ? <SearchResult data={filterData} state={state} /> : ''}
+        {userInput ? <SearchResult data={filterData} state={state} /> : ''}
         
-        {userInput !== '' ? <SearchResult data={searched} state={state} /> : ''}
+        {userInput ? <SearchResult data={searched} state={state} /> : ''}
        
-        {userInput === '' ? (
+        {!userInput ? (
           <section className='pb-[8rem]'>
             <article className='mx-auto mt-7 w-[88%] md:w-[78%]'>
               <h2 className='inline-block text-lg font-bold' id='popularSearch'>

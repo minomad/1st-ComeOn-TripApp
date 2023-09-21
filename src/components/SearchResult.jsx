@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function SearchResult({data, state}) {   // 넘겨받은 객체 데이터중, id/name/email의 값만 받을것이다.
+function SearchResult({data, state}) {  
   return (
     <article>
       <ul className=' w-[90%]  md:w-[80%] mx-auto'>

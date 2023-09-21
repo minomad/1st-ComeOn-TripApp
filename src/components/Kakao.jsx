@@ -77,7 +77,7 @@ export function Kakao1({setselectAddress}) {
     const mapContainer = document.getElementById('map'), 
     mapOption = {
         center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 6 // 지도의 확대 레벨
+        level: 6
     };  
 
       

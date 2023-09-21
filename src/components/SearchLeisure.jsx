@@ -37,15 +37,18 @@ function SearchLeisure({data}) {
     setUserInput('');
   };
 
+  const searchEnter = (e) => {
+    e.preventDefault();
+  
+    if (userInput !== '') {
+      const recentSearch = [...searchData, userInput];
+      update(recentSearch);
+      setSearchedData(true);
+    }
+  }
 
 
   switch (userInput) {
-    case '놀이동산':
-      filterData = data.filter((leisure) => leisure.category === '놀이동산');
-      break;
-    case '서울':
-      filterData = data.filter((leisure) =>leisure.category === '도심힐링');
-      break;
     default:
       filterData = data.filter((leisure) => leisure.category === userInput);
       break;
@@ -57,14 +60,14 @@ function SearchLeisure({data}) {
   return (
     <section className='pb-[8rem]'>
       <h2 className='sr-only'>레저/티켓 검색</h2>
-      <form action="" className='flex relative mt-3.5 py-3 mx-auto w-[90%]  md:w-[80%]   border-solid border-secondary rounded-2xl border-[0.1rem]'>
+      <form onSubmit={searchEnter} className='flex relative mt-3.5 py-3 mx-auto w-[90%]  md:w-[80%]   border-solid border-secondary rounded-2xl border-[0.1rem]'>
         <img src='/search-primary.svg' alt='' className='inline-block mx-4 ' />
         <label htmlFor='SearchLeisure' className='sr-only'>검색</label>
         <input
               type='search'
               name='SearchLeisure'
               id='SearchLeisure'
-              placeholder='지역, 숙소명 키워드로 찾아보세요'
+              placeholder='지역, 레저명 키워드로 찾아보세요'
               className='mr-3 flex-grow  focus:outline-none'
               onChange={debounce(getValue, 1000)}
           />

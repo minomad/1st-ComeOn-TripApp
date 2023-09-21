@@ -42,7 +42,6 @@ function LocationDetailPage() {
               className=' h-[120%] w-[110%]  cover object-cover' />
             <figcaption className='sr-only'>{item.title}</figcaption>
           </figure>
-          {/* 호텔명, 별점, 가격 설명박스 */}
           <div role='group' className='px-6 pt-3'>
             <h2 className='font-bold text-lg'>{item.title}</h2>
             <div className=' flex justify-between py-2'>

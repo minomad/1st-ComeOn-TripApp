@@ -15,6 +15,8 @@ import AroundMap from '@/components/AroundMap';
 function AroundPage() {
   const [selectCategory, setSelectCategory] = useState('숙소');
   const [isCheck, setCheck] = useState(false);
+  const [selectList, setselectList] = useState('추천순')
+  const [selectOrder, setSelectOrder] = useState(false);
   const aroundSearch = useRef();
   const category = ['숙소', '레저/티켓'];
 
@@ -62,19 +64,19 @@ function AroundPage() {
       </nav>
       {
       isCheck && selectCategory==='숙소' 
-      ? <AroundList data={hotelData}  selectCategory={selectCategory}  /> 
-      : (!isCheck && selectCategory==='숙소' ? <AroundMap data={hotelData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
+      ? <AroundList data={hotelData}  selectCategory={selectCategory} selectList={selectList} setselectList={setselectList} selectOrder={selectOrder} setSelectOrder={setSelectOrder} /> 
+      : (!isCheck && selectCategory==='숙소' ? <AroundMap data={hotelData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}/> : '')}
 
       {
       isCheck && selectCategory==='레저/티켓' 
-      ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory}  /> 
-      : (!isCheck && selectCategory==='레저/티켓' ? <AroundMap data={leisureData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}    /> : '')}
+      ? <AroundLeisureList data={leisureData}  selectCategory={selectCategory} selectList={selectList} setselectList={setselectList} selectOrder={selectOrder} setSelectOrder={setSelectOrder}   /> 
+      : (!isCheck && selectCategory==='레저/티켓' ? <AroundMap data={leisureData} latitude={latitude} longitude={longitude} selectCategory={selectCategory}/> : '')}
 
-      <Button aria-label='지도와 정보리스트 토글 버튼' type='button' className={`fixed bottom-[5.2rem] inset-x-0 z-10 mx-auto flex rounded-full w-[5.5rem] h-[2.5rem] bg-primary  font-semibold  text-[1rem] shadow-md py-2 px-4 gap-2 ${isCheck ?'bg-white text-primary border-primary border-[0.12rem] bottom-[4.9rem]':'text-white bottom-[4.9rem]'}`} 
+      <Button aria-label='지도와 정보리스트 토글 버튼' type='button' className={`fixed bottom-[5.2rem] inset-x-0 z-10 mx-auto flex rounded-full w-[5.5rem] h-[2.5rem] bg-primary  font-semibold  text-[1rem] shadow-md  px-4 gap-2 ${isCheck ?'bg-white text-primary border-primary pb-2 pt-1.5 border-[0.12rem] bottom-[4.9rem]':'text-white py-2 bottom-[4.9rem]'}`} 
         onClick={() => {setCheck((e) => !e) 
             }}
         >
-        {isCheck ?<img src='/around-map.svg' alt='지도로 보기' className='py-2 translate-y-[-0.25rem]' />:<img src='/around-list.svg' alt='정보 리스트로 보기' className='py-2 translate-y-[-0.15rem]' />}  {isCheck ? "지도" : "목록"}
+        {isCheck ?<img src='/around-map.svg' alt='지도로 보기' className='py-[0.55rem] translate-y-[-0.25rem]' />:<img src='/around-list.svg' alt='정보 리스트로 보기' className='py-2 translate-y-[-0.15rem]' />}  {isCheck ? "지도" : "목록"}
       </Button>
     </>
   );

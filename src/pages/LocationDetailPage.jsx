@@ -11,35 +11,24 @@ import MetaTag from '@/components/MetaTag';
 
 
 function LocationDetailPage() {
-  let hotelCategoryData;
-  const { category } = useParams(); // category 파라미터를 가져옵니다.
-
+ 
+  const { category } = useParams();  category 파라미터를 가져옵니다.
+  
   const [selectCategory, setSelectCategory]= useState(category);
-
+  
   const { getListData } = usePocketData('hotel');
   const { data: hotelData,
     isLoading: isHotelLoading, 
   } = useQuery(['hotel'], () => getListData());
-
+  
+  
   if (isHotelLoading) {
     return <Spinner />;
   }
-
-  switch (selectCategory) {
-    case '도심힐링':
-      hotelCategoryData = hotelData.filter((hotel) => hotel.category === '도심힐링');
-      break;
-    case '강원':
-      hotelCategoryData = hotelData.filter((hotel) => hotel.category === '강원');
-      break;
-    case '광주':
-      hotelCategoryData = hotelData.filter((hotel) => hotel.category === '광주');
-      break;
-    default:
-      hotelCategoryData = hotelData.filter((hotel) => hotel.category === selectCategory);
-      break;
-    
-  }
+  
+  const hotelCategoryData = hotelData.filter((hotel) => {
+    return selectCategory === '' ? true : hotel.category === selectCategory;
+  });
   
   return (
     <>

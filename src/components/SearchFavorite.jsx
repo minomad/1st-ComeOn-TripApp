@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom'
 
-
 function SearchFavorite({category, state}) {
-  
   return (
     <ul>
       {category?.map((item, index)=> (
@@ -24,7 +22,6 @@ export default SearchFavorite
 
 
 export function SearchFavoriteSecond({category, state}) {
-  
   return (
     <ul>
       {category?.map((item, index)=> (

@@ -11,6 +11,10 @@ import LocationChoice from '@/components/LocationChoice';
 
 function LocationPage() {
   const [selectNav, setSelectNav] = useState('지역별');
+  const [selectAddress, setselectAddress] = useState({address: '원하는 장소를 클릭해주세요',
+    latitude: '',
+    longitude: ''
+  })
   const { getListData } = usePocketData('hotel');
   const filter = 'category = "도심힐링" || category = "강원" || category = "제주" || category = "부산" || category = "광주" || category = "도쿄"|| category = "후쿠오카" || category = "오사카" || category = "교토"|| category = "싱가포르"|| category = "베트남" || category = "태국"|| category = "스페인"|| category = "프랑스"|| category = "스위스"|| category = "이탈리아"';
   const { data: hotelData,
@@ -64,7 +68,7 @@ function LocationPage() {
     </nav>
     
     {selectNav === '지역별' && <LocationChoice data={hotelData} /> }
-    {selectNav === '지도검색' && <LocationMap/>}
+    {selectNav === '지도검색' && <LocationMap selectAddress={selectAddress} setselectAddress={setselectAddress}/>}
 
     
     </>
