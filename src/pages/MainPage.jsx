@@ -87,7 +87,7 @@ function MainPage() {
         </ul>
 
         <section className='mx-auto mt-3 max-w-2xl px-4'>
-          <HotelList title='야!무지개놀자~!' subtitle='요즘 왜 이렇게 핫해?'>
+          <HotelList title='야!무지개놀자~!' subtitle='요즘 왜 이렇게 핫해'>
             <Category
               className='justify-center gap-2 py-3 max-[340px]:text-sm max-[340px]:leading-6 '
               category={category}
