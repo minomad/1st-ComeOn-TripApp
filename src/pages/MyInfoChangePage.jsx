@@ -10,7 +10,7 @@ import Guest from '@/components/Guest';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import MyForm from '@/components/MyForm';
-import MyInput from '@/components/myInput';
+import MyInput from '@/components/MyInput';
 import MetaTag from '@/components/MetaTag';
 import useAuthStore from '@/store/useAuthStore';
 
