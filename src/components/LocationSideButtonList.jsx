@@ -12,12 +12,6 @@ function LocationSideButtonList({category, data}) {
           case '서울':
             hotelCategory = data.data.filter((hotel) => hotel.category === '도심힐링');
             break;
-          case '강원':
-            hotelCategory = data.data.filter((hotel) => hotel.category === '강원');
-            break;
-          case '광주':
-            hotelCategory = data.data.filter((hotel) => hotel.category === '광주');
-            break;
           default:
             hotelCategory = data.data.filter((hotel) => hotel.category === item);
             break;

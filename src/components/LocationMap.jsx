@@ -1,14 +1,9 @@
-import { useState } from 'react'
 import { Kakao1 } from './Kakao'
 import { Link } from 'react-router-dom';
 
 
-function LocationMap() {
-  const [selectAddress, setselectAddress] = useState({address: '원하는 장소를 클릭해주세요',
-    latitude: '',
-    longitude: ''
-})
-
+function LocationMap({selectAddress, setselectAddress }) {
+ 
   return (
     <section className='relative '>
       <h3 className='sr-only'>지도검색</h3>
@@ -16,7 +11,7 @@ function LocationMap() {
         {selectAddress.address}
       </div>
       <Kakao1 setselectAddress={setselectAddress}/>
-      <Link to={`/around/${selectAddress.latitude}/${selectAddress.longitude} `}  className=' fixed bottom-[5.2rem] inset-x-0  z-10 px-[1.1rem] py-[0.75rem] flex mx-auto bg-primary font-bold text-white w-[8rem] h-[3rem] rounded-full shadow-lg'>
+      <Link to={`/around/${selectAddress.latitude}/${selectAddress.longitude} `}  className=' fixed bottom-[5.2rem] inset-x-0  z-10 px-[1rem] py-[0.66rem] flex mx-auto bg-primary hover:bg-[#1E51EE] font-bold text-white w-[7.2rem] h-[2.6rem] text-[0.9rem] rounded-full shadow-lg'>
       위치 지정 완료
       </Link>
     </section>
