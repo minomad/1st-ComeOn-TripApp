@@ -217,7 +217,7 @@ function HotelRoomDetailPage() {
               className='mt-4 h-8 w-52 rounded bg-primary font-bold text-white max-[420px]:w-32 '
               onClick={() => handleBookingRoom()}
             >
-              객실 예약하기
+              숙소 예약하기
             </Button>
           </div>
         </div>

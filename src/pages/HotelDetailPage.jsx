@@ -20,7 +20,7 @@ import useStorage from '@/Hook/useStorage';
 
 function HotelDetailPage() {
   const { id } = useParams();
-  const [selectCategory, setSelectCategory] = useState('객실선택');
+  const [selectCategory, setSelectCategory] = useState('숙소선택');
   const { getIdData: getHotel } = usePocketData('hotel');
   const { updateData: updateUser } = usePocketData('users');
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -32,7 +32,7 @@ function HotelDetailPage() {
 
   const [isShowMap, setIsShowMap] = useState(false);
 
-  const info = ['객실선택', '소개', '시설/서비스', '후기'];
+  const info = ['숙소선택', '소개', '시설/서비스', '후기'];
   const roomData = hotelData?.expand?.room;
   const reviewData = hotelData?.expand?.review;
 
@@ -142,7 +142,7 @@ function HotelDetailPage() {
           selectCategory={selectCategory}
           handleChangeCategory={handleChangeCategory}
         />
-        {selectCategory === '객실선택' && (
+        {selectCategory === '숙소선택' && (
           <HotelRoomPage data={roomData} hotelId={id} title={hotelData.title} />
         )}
         {selectCategory === '소개' && <HotelIntro intro={hotelData.intro} />}
