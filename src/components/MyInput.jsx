@@ -2,11 +2,11 @@ import React from 'react';
 
 // eslint-disable-next-line react/display-name
 const MyInput = React.forwardRef(
-  ({ label, type, id, placeholder, className, labelClass, ...restProps }, ref) => {
+  ({ label, type, id, placeholder, className, labelClass, ...restProps }, inputRef) => {
     return (
       <>
         <input
-          ref={ref}
+          ref={inputRef}
           type={type}
           name={id}
           id={id}
