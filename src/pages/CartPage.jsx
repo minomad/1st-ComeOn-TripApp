@@ -18,11 +18,11 @@ function CartPage() {
   const user = useAuthStore((state) => state.user);
 
   const { getIdData, updateData: updateUser } = usePocketData('users');
-  const { createData: createOrder } = usePocketData('order');
+  const { deleteData: deleteCart } = usePocketData('order');
 
   const [selectCartItem, setSelectCartItem] = useState([]);
   const [selectCategory, setSelectCategory] = useState('숙소');
-  const tag = ['숙소', '레저', '교통'];
+  const tag = ['숙소', '레저'];
 
   const navigate = useNavigate();
 
@@ -30,19 +30,15 @@ function CartPage() {
 
   const { data, isLoading } = useQuery(
     ['userCart', userId],
-    () => getIdData(userId, { expand: 'cartRoom, cartLeisure' }),
-    {
-      refetchOnWindowFocus: false,
-      enabled: !!userId,
-    },
+    () => getIdData(userId, { expand: 'orderHotel, cartHotel, cartLeisure' }),
+    {},
   );
 
   const queryClient = useQueryClient();
 
-  const cartRoom = data?.expand?.cartRoom;
+  const cartHotel = data?.expand?.cartHotel;
   const cartLeisure = data?.expand?.cartLeisure;
-  console.log(cartRoom);
-  
+
   if (!isAuth) {
     return (
       <>
@@ -62,12 +58,12 @@ function CartPage() {
   }
 
   const handleDeleteCart = async (itemId) => {
-    const category = selectCategory === '숙소' ? 'Room' : 'Leisure';
+    const category = selectCategory === '숙소' ? 'Hotel' : 'Leisure';
 
     await updateUser(userId, {
       [`cart${category}-`]: itemId,
     });
-
+    await deleteCart(itemId);
     toast.error('장바구니에서 삭제하였습니다.');
     queryClient.invalidateQueries(['userCart']);
   };
@@ -104,11 +100,11 @@ function CartPage() {
   const cartTotalPrice = () => {
     let totalPrice = 0;
 
-    if (cartRoom) {
+    if (cartHotel) {
       for (const itemId of selectCartItem) {
-        const selectedRoom = cartRoom.find((item) => item.id === itemId);
-        if (selectedRoom) {
-          totalPrice += Number(selectedRoom.price);
+        const selectedHotel = cartHotel.find((item) => item.id === itemId);
+        if (selectedHotel) {
+          totalPrice += Number(selectedHotel.price);
         }
       }
     }
@@ -132,15 +128,17 @@ function CartPage() {
       return toast.error('항목을 선택해 주세요');
     }
 
-    const category = selectCategory === '숙소' ? 'Room' : 'Leisure';
+    const category = selectCategory === '숙소' ? 'Hotel' : 'Leisure';
 
     for (const itemId of selectCartItem) {
+      await updateUser(userId, {
+        'orderHotel+': itemId,
+      });
       await updateUser(userId, {
         [`cart${category}-`]: itemId,
       });
     }
 
-    createOrder();
     toast.success('결제가 완료되었습니다.');
     queryClient.invalidateQueries(['userCart']);
     setTimeout(() => {
@@ -180,18 +178,18 @@ function CartPage() {
           </div>
         </div>
 
-        {selectCategory === '숙소' && isAuth && !cartRoom && <WishCart cart={true} link='' />}
+        {selectCategory === '숙소' && isAuth && !cartHotel && <WishCart cart={true} link='' />}
 
-        {selectCategory === '숙소' && isAuth && cartRoom && (
+        {selectCategory === '숙소' && isAuth && cartHotel && (
           <>
-            {cartRoom?.map((item) => {
+            {cartHotel?.map((item) => {
               return (
                 <WishList
                   key={item.id}
                   cart={true}
                   data={[item]}
                   handleDelete={() => handleDeleteCart(item.id)}
-                  img='img'
+                  cartImg='img'
                   cartHotel={true}
                   handleCheckbox={() => handleCheckbox(item.id)}
                   totalCartPrice={totalCartPrice}
@@ -211,9 +209,9 @@ function CartPage() {
                 <WishList
                   key={item.id}
                   cart={true}
+                  leisure={true}
                   data={[item]}
                   handleDelete={() => handleDeleteCart(item.id)}
-                  cartHotel={true}
                   handleCheckbox={() => handleCheckbox(item.id)}
                   totalCartPrice={totalCartPrice}
                   handleBooked={handleBooked}
@@ -222,8 +220,6 @@ function CartPage() {
             })}
           </>
         )}
-
-        {selectCategory === '교통' && isAuth && !cartRoom && <WishCart cart={true} link='' />}
 
         <Toaster
           toastOptions={{
