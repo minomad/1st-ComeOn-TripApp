@@ -9,6 +9,7 @@ import Guest from '@/components/Guest';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import WishList from '@/components/WishList';
 import MetaTag from '@/components/MetaTag';
+import useStorage from '../Hook/useStorage';
 
 function WishPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -16,7 +17,6 @@ function WishPage() {
   const { getIdData, updateData: updateUser } = usePocketData('users');
   const [selectCategory, setSelectCategory] = useState('숙소');
   const info = ['숙소', '레저'];
-
   const queryClient = useQueryClient();
   const userId = user?.id;
 
@@ -52,11 +52,10 @@ function WishPage() {
 
   const handleDeleteWish = async (itemId) => {
     const category = selectCategory === '숙소' ? 'Hotel' : 'Leisure';
-
     await updateUser(userId, {
       [`wish${category}-`]: itemId,
     });
-    
+    localStorage.removeItem(itemId);
     toast.error('찜 목록에서 해제하였습니다.');
     queryClient.invalidateQueries(['userWish']);
   };

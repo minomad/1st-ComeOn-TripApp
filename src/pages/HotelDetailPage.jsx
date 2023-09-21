@@ -16,6 +16,7 @@ import HotelReviewPage from '@/pages/HotelReviewPage';
 import useAuthStore from '@/store/useAuthStore';
 import Button from '@/components/Button';
 import MetaTag from '@/components/MetaTag';
+import useStorage from '@/Hook/useStorage';
 
 function HotelDetailPage() {
   const { id } = useParams();
@@ -29,16 +30,17 @@ function HotelDetailPage() {
     getHotel(id, { expand: 'room, review' }),
   );
 
+  const [isShowMap, setIsShowMap] = useState(false);
+
   const info = ['객실선택', '소개', '시설/서비스', '후기'];
   const roomData = hotelData?.expand?.room;
   const reviewData = hotelData?.expand?.review;
 
-  const [isActive, setIsactive] = useState(false);
-  const [isShowMap, setIsShowMap] = useState(false);
+  const { storageData: isActive, update, remove } = useStorage(id, false);
 
   const handleWish = () => {
     const userId = user?.id;
-    setIsactive(!isActive);
+    update(!isActive);
 
     if (!isActive) {
       toast.success('찜 목록에 추가했습니다.');
@@ -50,6 +52,7 @@ function HotelDetailPage() {
       updateUser(userId, {
         'wishHotel-': id,
       });
+      remove(id);
     }
   };
 

@@ -4,13 +4,11 @@ import ScrollToTop from '@/utils/ScrollToTop';
 
 function RootLayout() {
   return (
-    <div className='mx-auto max-w-3xl font-suit'>
-      <main>
-        <ScrollToTop />
-        <Outlet />
-        <Navigation />
-      </main>
-    </div>
+    <main className='mx-auto max-w-3xl font-suit'>
+      <ScrollToTop />
+      <Outlet />
+      <Navigation />
+    </main>
   );
 }
 export default RootLayout;

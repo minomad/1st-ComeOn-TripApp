@@ -35,7 +35,7 @@ function HotelRoomDetailPage() {
   const navigation = useNavigate();
 
   const [isShowPayment, setIsShowPayment] = useState(false);
-  const [selectNumber, setSelectNumber] = useState(0);
+  const [selectNumber, setSelectNumber] = useState(1);
   const [selectList, setSelectList] = useState(false);
 
   const number = [1, 2, 3, 4];
@@ -85,9 +85,6 @@ function HotelRoomDetailPage() {
 
     if (checkIn == '' || checkOut == '') {
       return toast.error('체크인 / 아웃 날짜를 선택해주세요');
-    }
-    if (selectNumber === 0) {
-      return toast.error('인원수를 선택해주세요');
     }
 
     if (isAuth) {

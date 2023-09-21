@@ -44,6 +44,7 @@ const CartPage = lazy(() => import('./pages/CartPage'));
 const BookingPage = lazy(() => import('./pages/BookingPage'));
 const SignInPage = lazy(() => import('./pages/SignInPage'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
+const FindPage = lazy(() => import('./pages/FindPage'));
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,7 @@ const router = createBrowserRouter([
       { path: 'booking/:id/:hotel/:title/:checkin/:checkout', element: <BookingPage /> },
       { path: 'signin', element: <SignInPage /> },
       { path: 'signup', element: <SignUpPage /> },
+      { path: 'find', element: <FindPage /> },
     ],
   },
 ]);
