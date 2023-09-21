@@ -70,8 +70,8 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
     }
   };
 
-  const handleShowUpdateReview = () => {
-    setIsShowUpdata((prev) => !prev);
+  const handleShowUpdateReview = (itemId) => {
+    setIsShowUpdata((prev) => (prev === itemId ? !prev : itemId));
   };
 
   const handleUpdateReview = async (itemId) => {
@@ -141,8 +141,8 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
                     <p className='text-lg font-bold '>{item.nickName}</p>
                     <span className='text-sm text-gray'>{item.created.slice(0, 10)}</span>
                   </div>
-                  {!isShowUpdate && <p className='line-clamp-3 text-ellipsis'>{item.review}</p>}
-                  {isShowUpdate && (
+                  <p className='line-clamp-3 text-ellipsis'>{item.review}</p>
+                  {isShowUpdate === item.id && (
                     <>
                       <textarea
                         ref={reviewUpdateRef}
@@ -158,12 +158,12 @@ function HotelReviewPage({ star, hotel, hotelId, reviewData }) {
                       </div>
                     </>
                   )}
-                  {reviewData && reviewData.some((user) => user.nickName === userReview) && (
+                  {userReview == item.nickName && (
                     <div className='absolute right-4 top-3 font-bold'>
                       <Button
                         type='button'
                         className='border-r pr-1 hover:text-primary'
-                        onClick={handleShowUpdateReview}
+                        onClick={() => handleShowUpdateReview(item.id)}
                       >
                         수정
                       </Button>

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast, Toaster } from 'react-hot-toast';
@@ -12,6 +11,7 @@ import Input from '@/components/Input';
 import Guest from '@/components/Guest';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import WishList from '@/components/WishList';
+import MetaTag from '@/components/MetaTag';
 
 function CartPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -63,7 +63,11 @@ function CartPage() {
     await updateUser(userId, {
       [`cart${category}-`]: itemId,
     });
-    await deleteCart(itemId);
+
+    if (selectCategory === '숙소') {
+      await deleteCart(itemId);
+    }
+
     toast.error('장바구니에서 삭제하였습니다.');
     queryClient.invalidateQueries(['userCart']);
   };
@@ -132,8 +136,9 @@ function CartPage() {
 
     for (const itemId of selectCartItem) {
       await updateUser(userId, {
-        'orderHotel+': itemId,
+        [`order${category}+`]: itemId,
       });
+
       await updateUser(userId, {
         [`cart${category}-`]: itemId,
       });
@@ -153,9 +158,7 @@ function CartPage() {
 
   return (
     <>
-      <Helmet>
-        <title>장바구니</title>
-      </Helmet>
+      <MetaTag title='장바구니' description="호텔,레저 장바구니 페이지" />
       <Header back='back' search='search' title='장바구니' className='text-xl font-semibold' />
       <section className='mx-auto pb-40'>
         <h3 className='sr-only'>장바구니</h3>
@@ -200,7 +203,7 @@ function CartPage() {
           </>
         )}
 
-        {selectCategory === '레저' && isAuth && !cartLeisure && <WishCart cart={true} link='' />}
+        {selectCategory === '레저' && isAuth && !cartLeisure && <WishCart cart={true} />}
 
         {selectCategory === '레저' && isAuth && cartLeisure && (
           <>

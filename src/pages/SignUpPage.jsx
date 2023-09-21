@@ -139,7 +139,7 @@ function SignUpPage() {
           toast.success('회원가입이 완료되었습니다.');
           setTimeout(() => {
             toast.dismiss();
-            navigate('/');
+            navigate('/signin');
           }, 1000);
         },
         onError: () => {
