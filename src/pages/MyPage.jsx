@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { getPbImageURL } from '@/utils/getPbImageURL';
+import Guest from '@/components/Guest';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
+import MetaTag from '@/components/MetaTag';
+import useAuthStore from '@/store/useAuthStore';
 import MySelecModal from '@/components/MySelecModal';
 import MyBasicButton from '@/components/MyBasicButton';
-import useAuthStore from '@/store/useAuthStore';
-import Guest from '@/components/Guest';
 
 function MyPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -87,12 +87,14 @@ function MyPage() {
 
   return (
     <>
-      <Helmet>
-        <title>마이 페이지</title>
-      </Helmet>
-      <Header search='search' back='back' cart='cart' title='마이 페이지'>
-        마이 페이지
-      </Header>
+      <MetaTag title='마이 페이지' description='마이 페이지' />
+      <Header
+        search='search'
+        back='back'
+        cart='cart'
+        title='마이 페이지'
+        className='ml-10 text-xl font-semibold'
+      ></Header>
       {!isAuth && <Guest></Guest>}
       {isAuth && (
         <>
