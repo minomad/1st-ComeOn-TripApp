@@ -1,12 +1,13 @@
 import { numberWithComma } from '../utils/numberWithComma';
 
 import LeisureButton from './LeisureButton';
-import useStore from '@/store/zustand';
+// import useStore from '@/store/zustand';
 
-function LeisureProduct({ data, productData}) {
-  const carts = useStore((state) => state.carts);
-  console.log(carts.length);
-  console.log(carts);
+function LeisureProduct({ data, productData }) {
+  // const carts = useStore((state) => state.carts);
+  // console.log(carts.length);
+  // const test = carts.map(obj => obj.id);
+  // console.log(test);
   return (
     <section className='mx-5'>
       <div className='my-3 flex justify-center rounded-[4px] bg-[#fef8f2] py-2'>
@@ -33,25 +34,6 @@ function LeisureProduct({ data, productData}) {
             ))}
           </div>
           <div className='flex items-center justify-between'>
-            {/* <div>
-              <button
-                type='button'
-                className='w-[28px] rounded-[50%] border disabled:opacity-20'
-                onClick={handleCountDown}
-                disabled={count === 0}
-              >
-                -
-              </button>
-
-              <span className='mx-4'>{count}</span>
-              <button
-                type='button'
-                className='w-[28px] rounded-[50%] border'
-                onClick={handleCountUp}
-              >
-                +
-              </button>
-            </div> */}
             <LeisureButton item={item} />
             <div className='flex flex-col text-end'>
               <span className='text-[12px] font-bold text-accent'>

@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Button from './Button';
 import Input from './Input';
 import PropTypes from 'prop-types';
+import { usePocketData } from '@/api/usePocketData';
+import { useQuery } from '@tanstack/react-query';
 
 function WishList({
   wish,
@@ -13,17 +15,24 @@ function WishList({
   link,
   handleDelete,
   hotel,
+  leisure,
+  cartHotel,
   img,
+  cartImg,
   handleCheckbox,
   buttonClass,
   totalCartPrice,
   handleBooked,
 }) {
+  const { getListData } = usePocketData('room');
+  const { data: roomData } = useQuery(['cartHotel'], () => getListData());
+
   return (
     <>
       <div className='px-4'>
         <AnimatePresence>
           {data?.map((item) => {
+            const matchingRoom = roomData?.find((roomItem) => roomItem.id === item.roomId);
             return (
               <motion.article
                 initial={{ opacity: 0, x: 20 }}
@@ -43,9 +52,25 @@ function WishList({
                       labelClass='sr-only'
                       onClick={() => handleCheckbox(item.id)}
                     />
+                    {cartHotel && (
+                      <Link to={`/hotel/${item.hotelId}`} className='text-lg font-semibold'>
+                        {item.hotelTitle}
+                      </Link>
+                    )}
+                    {leisure && <div className='font-semibold'>{item.title}</div>}
                   </div>
                 )}
                 <div className='flex gap-3'>
+                  {cartImg && matchingRoom && (
+                    <figure className='h-[130px] w-[130px] max-[375px]:h-[100px] max-[375px]:w-[100px]'>
+                      <img
+                        src={getPbImageURL(matchingRoom, cartImg)}
+                        alt={item.title}
+                        className='h-full w-full rounded-md object-cover'
+                      />
+                      <figcaption className='sr-only'>{item.title}</figcaption>
+                    </figure>
+                  )}
                   {img && (
                     <figure className='h-[130px] w-[130px] max-[375px]:h-[100px] max-[375px]:w-[100px]'>
                       <img
@@ -56,7 +81,16 @@ function WishList({
                       <figcaption className='sr-only'>{item.title}</figcaption>
                     </figure>
                   )}
-                  <div className='flex flex-col gap-1 font-semibold  min-[375px]:pb-2'>
+                  {cartHotel && matchingRoom && (
+                    <div className='flex flex-col font-semibold min-[375px]:gap-0.5'>
+                      <div className=''>{matchingRoom.title}</div>
+                      <div className='text-sm text-gray3'>체크인: {item.checkin.slice(0, 10)}</div>
+                      <div className='text-sm text-gray3'>
+                        체크아웃: {item.checkout.slice(0, 10)}
+                      </div>
+                    </div>
+                  )}
+                  <div className='flex flex-col gap-1 font-semibold min-[375px]:pb-2'>
                     {!cart && (
                       <Link to={`/${link}/${item.id}`} className='font-bold min-[375px]:text-lg'>
                         {item.title}
@@ -117,8 +151,8 @@ WishList.propTypes = {
   link: PropTypes.string,
   handleDelete: PropTypes.func,
   hotel: PropTypes.bool,
+  leisure: PropTypes.bool,
   img: PropTypes.string,
-  filterData: PropTypes.array,
   cartHotel: PropTypes.bool,
   handleCheckbox: PropTypes.func,
   buttonClass: PropTypes.string,
