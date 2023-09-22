@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
@@ -45,6 +46,9 @@ function MyBookingPage() {
     }
   }, [matchingOrderIds]);
 
+  if (isLoading || isOrderDataLoading || isRoomDataLoading || isHotelDataLoading) {
+    return <Spinner />;
+  }
   if (orderData) {
     matchingOrderIds = orderData
       .filter((order) => order.username === userData.username)
@@ -70,9 +74,6 @@ function MyBookingPage() {
   let dates = Object.keys(groupedUserOrders);
   let firstOrders = dates.map((date) => groupedUserOrders[date][0]);
 
-  if (isLoading || isOrderDataLoading || isRoomDataLoading || isHotelDataLoading) {
-    return <Spinner />;
-  }
   return (
     <>
       <MetaTag title='나의 예약' description='예약 내역' />
@@ -109,6 +110,7 @@ function MyBookingPage() {
                 return (
                   <MyList
                     key={order.id}
+                    link={`/MyBookingDetailPage/${order.created.slice(0, 10)}`}
                     handler=''
                     title={
                       `${order.hotelTitle}` +

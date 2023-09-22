@@ -114,7 +114,7 @@ function MyPage() {
                 <img
                   src={avatarSrc}
                   alt='프로필사진'
-                  className='absolute left-1/2 top-1/2 ml-[-45px] mt-3 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-cover shadow-md 
+                  className='absolute left-1/2 top-1/2 ml-[-45px] mt-3 aspect-square max-h-[90px] min-h-[90px] min-w-[90px] max-w-[90px] rounded-full border-2 border-secondary bg-gray object-cover shadow-md sm:mt-[30px]
           md:ml-[-50px] md:mt-[28px] md:max-h-[100px] md:max-w-[100px] lg:ml-[-60px] lg:mt-[15px] lg:max-h-[120px] lg:max-w-[120px]'
                 />
               </div>
