@@ -20,7 +20,7 @@ function LocationSideButtonList({category, data}) {
         
         return(
           <li key={item} aria-label={item} className='hover:text-black w-[100%] text-gray2 font-[0.7rem] px-4  text-[0.9rem] border-b-[0.1rem] border-[#E1E1E1] text-center'>
-            <Link to={`${hotelCategory[0].category}`} key={item} className='block py-7'>
+            <Link to={`${hotelCategory[0].category}`} key={item} className='block py-6 md:py-7'>
               {item}
             </Link>
           </li>

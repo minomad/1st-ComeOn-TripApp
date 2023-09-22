@@ -209,7 +209,7 @@ function MyChatPage() {
                           <div className='relative w-full pl-3'>
                             <form action='' onSubmit={handleSendMessage} className=' flex w-full'>
                               <MyInput
-                                inputRef={inputRef}
+                                ref={inputRef}
                                 id='newchat'
                                 placeholder=''
                                 label='채팅입력'
