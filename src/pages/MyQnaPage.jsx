@@ -43,7 +43,7 @@ function MyQnaPage() {
     if (!qnaData || qnaData.length === 0) {
       toast('❌ 작성된 QnA가 없습니다.');
     } else {
-      toast.success('QnA 데이터 로드 성공');
+      toast.success('가져오는 중');
     }
   }, [qnaData]);
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -72,7 +72,7 @@ function LeisurePage() {
         <div className='mx-5 mt-[-70px] rounded-[4px] border border-[#e6e6e6] bg-white px-4 pt-6'>
           <h3 className='text-[18px] font-bold'>인기놀거리 10% 쿠폰할인</h3>
           <span className='text-[14px] font-medium text-primary'>
-            여름 놀거리 야놀자에서 쿠폰받고 즐기자!
+            여름 놀거리 야무지개놀자에서 쿠폰받고 즐기자!
           </span>
           <Entertainment data={leisureData} selectCategory={'인기'} />
           <a

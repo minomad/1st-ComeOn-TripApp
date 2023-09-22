@@ -6,15 +6,13 @@ import LeisureProductInfo from '@/components/LeisureProductInfo';
 import Spinner from '@/components/Spinner';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CartController from '../components/CartController';
 import Button from '../components/Button';
-
-import toast from 'react-hot-toast';
-import useStore from '@/store/zustand';
+import CartController from '../components/CartController';
 import useAuthStore from '@/store/useAuthStore';
+import toast from 'react-hot-toast';
 
 function LeisureDetailPage() {
   const { id } = useParams();
@@ -28,7 +26,7 @@ function LeisureDetailPage() {
   
   // const carts = useStore((state) => state.carts);
   const productData = data?.expand?.product;
-  console.log(productData);
+
   const user = useAuthStore((state) => state.user);
   const userId = user.id;
 
