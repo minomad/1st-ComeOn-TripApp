@@ -1,7 +1,7 @@
 import React from 'react';
 
 // eslint-disable-next-line react/display-name
-const MyQnaTemplate = React.forwardRef((props, formref) => {
+const MyQnaTemplate = React.forwardRef((props, ref) => {
   const {
     onReset,
     onSubmit,
@@ -19,7 +19,7 @@ const MyQnaTemplate = React.forwardRef((props, formref) => {
     <form
       className='flex h-full w-full flex-col justify-between'
       encType='multipart/form-data'
-      ref={formref}
+      ref={ref}
       onReset={onReset}
       onSubmit={onSubmit}
     >
