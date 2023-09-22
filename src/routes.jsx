@@ -36,7 +36,8 @@ const ExhibitionDetailPage = lazy(() => import('./pages/ExhibitionDetailPage'));
 const SearchPage = lazy(() => import('./pages/SearchPage'));
 const SearchDetailPage = lazy(() => import('./pages/SearchDetailPage'));
 const CartPage = lazy(() => import('./pages/CartPage'));
-const BookingPage = lazy(() => import('./pages/BookingPage'));
+const HotelBookingPage = lazy(() => import('./pages/HotelBookingPage'));
+// const LeisureBookingPage = lazy(() => import('./pages/LeisureBookingPage'));
 const SignInPage = lazy(() => import('./pages/SignInPage'));
 const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 const FindPage = lazy(() => import('./pages/FindPage'));
@@ -87,7 +88,8 @@ const router = createBrowserRouter([
       { path: 'search/:category', element: <SearchDetailPage /> },
       { path: 'search/location/:category', element: <LocationDetailPage /> },
       { path: 'cart', element: <CartPage /> },
-      { path: 'booking/:id/:hotel/:title/:checkin/:checkout', element: <BookingPage /> },
+      { path: 'booking/:id/:hotel/:title/:checkin/:checkout', element: <HotelBookingPage /> },
+      // { path: 'booking/:id/:leisure/:title/', element: <LeisureBookingPage /> },
       { path: 'signin', element: <SignInPage /> },
       { path: 'signup', element: <SignUpPage /> },
       { path: 'find', element: <FindPage /> },
