@@ -9,7 +9,6 @@ import Guest from '@/components/Guest';
 import HotelInfoCategory from '@/components/HotelInfoCategory';
 import WishList from '@/components/WishList';
 import MetaTag from '@/components/MetaTag';
-import useStorage from '../Hook/useStorage';
 
 function WishPage() {
   const isAuth = useAuthStore((state) => state.isAuth);

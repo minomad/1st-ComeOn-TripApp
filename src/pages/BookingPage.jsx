@@ -73,7 +73,7 @@ function BookingPage() {
 
   return (
     <>
-      <MetaTag title='예약' description='호텔/리조트 예약' />
+      <MetaTag title='예약' description='호텔/리조트 숙소 예약하는 페이지' />
       <Header back='back' className='mr-7 text-xl font-semibold' title='예약' />
       <section className='px-4 pb-20'>
         <h2 className='mx-auto flex max-w-[39rem] justify-center border-b border-gray px-4 pt-2 text-xl font-bold'>

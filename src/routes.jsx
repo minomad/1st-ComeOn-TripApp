@@ -9,6 +9,7 @@ const AroundPage = lazy(() => import('./pages/AroundPage'));
 const WishPage = lazy(() => import('./pages/WishPage'));
 const MyPage = lazy(() => import('./pages/MyPage'));
 const MyBookingPage = lazy(() => import('./pages/MyBookingPage'));
+const MyBookingDetailPage = lazy(() => import('./pages/MyBookingDetailPage'));
 const MyReviewPage = lazy(() => import('./pages/MyReviewPage'));
 const MyChatPage = lazy(() => import('./pages/MyChatPage'));
 const MyQnaPage = lazy(() => import('./pages/MyQnaPage'));
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
       { path: 'wish', element: <WishPage /> },
       { path: 'mypage', element: <MyPage /> },
       { path: 'mypage/mybooking', element: <MyBookingPage /> },
+      { path: 'MyBookingDetailPage/:date', element: <MyBookingDetailPage /> },
       { path: 'mypage/myreview', element: <MyReviewPage /> },
       { path: 'mypage/mychatroom', element: <MyChatPage /> },
       { path: 'mypage/myinfo', element: <MyInfoPage /> },

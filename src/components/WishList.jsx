@@ -2,11 +2,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { Link } from 'react-router-dom';
-import Button from './Button';
-import Input from './Input';
-import PropTypes from 'prop-types';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
+import PropTypes from 'prop-types';
+import Button from './Button';
+import Input from './Input';
 
 function WishList({
   wish,
