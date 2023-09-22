@@ -10,7 +10,7 @@ import Guest from '@/components/Guest';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import MyForm from '@/components/MyForm';
-import MyInput from '@/components/myInput';
+import MyInput from '@/components/MyInput';
 import MetaTag from '@/components/MetaTag';
 import useAuthStore from '@/store/useAuthStore';
 
@@ -233,7 +233,7 @@ function MyInfoChangePage() {
                       name='nickName'
                       label='별명입력'
                       labelClass='sr-only'
-                      inputRef={nickNameRef}
+                      ref={nickNameRef}
                       onChange={(e) => setNickName(e.target.value)}
                       className='font-thin sm:w-72'
                     ></MyInput>
@@ -248,7 +248,7 @@ function MyInfoChangePage() {
                       name='password'
                       label='비밀번호'
                       labelClass='sr-only'
-                      inputRef={passwordRef}
+                      ref={passwordRef}
                       placeholder='비밀번호'
                       className={`font-thin sm:w-72 `}
                     ></MyInput>
@@ -263,7 +263,7 @@ function MyInfoChangePage() {
                       name='passwordCheck'
                       label='비밀번호 확인'
                       labelClass='sr-only'
-                      inputRef={passwordConfirmRef}
+                      ref={passwordConfirmRef}
                       placeholder='비밀번호확인'
                       className={`font-thin sm:w-72 `}
                     ></MyInput>
@@ -285,7 +285,7 @@ function MyInfoChangePage() {
                       accept='*.jpg,*.png,*.jpeg,*.webp,*.avif'
                       id='bgimg'
                       name='bgimg'
-                      inputRef={bgImgRef}
+                      ref={bgImgRef}
                       onChange={handleUpload}
                       label='배경이미지'
                       labelClass='sr-only'
@@ -316,7 +316,7 @@ function MyInfoChangePage() {
                       accept='*.jpg,*.png,*.jpeg,*.webp,*.avif'
                       id='avatar'
                       name='avatar'
-                      inputRef={avatarRef}
+                      ref={avatarRef}
                       label='프로필사진'
                       labelClass='sr-only'
                       onChange={handleUpload}
