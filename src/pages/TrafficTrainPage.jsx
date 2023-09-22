@@ -63,7 +63,7 @@ function TrafficTrainPage() {
           <img src='/leisure-infoOrange.png' alt='안내' className='' />
           <span className='text-[14px] leading-[16px]'>
             [안내] 철도 노조 파업 예고에 따라 9/14(목)~9/18(월) 기차 일부 노선의 중지가 예상됩니다.
-            야놀자 공지를 확인해주세요.
+            공지를 확인해주세요.
           </span>
         </div>
         <div className='mt-4 rounded-[4px] border border-[#e6e6e6] '>
