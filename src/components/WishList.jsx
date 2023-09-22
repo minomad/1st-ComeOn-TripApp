@@ -25,7 +25,9 @@ function WishList({
   handleBooked,
 }) {
   const { getListData } = usePocketData('room');
-  const { data: roomData } = useQuery(['cartHotel'], () => getListData());
+  const { data: roomData } = useQuery(['cartHotel'], () =>
+    getListData({ fields: 'img,id,collectionId' }),
+  );
 
   return (
     <>
