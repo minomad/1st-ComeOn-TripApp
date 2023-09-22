@@ -42,10 +42,10 @@ function MyPage() {
         const url = getPbImageURL(user, 'bgimg');
         setBgImgSrc(url);
       } catch (error) {
-        setBgImgSrc(images[randomIndex]); // 기본 랜덤 이미지로 설정
+        setBgImgSrc(images[randomIndex]);
       }
     } else {
-      setBgImgSrc(images[randomIndex]); // user.bgimg가 없는 경우 기본 랜덤 이미지로 설정
+      setBgImgSrc(images[randomIndex]);
     }
   }, [user]);
 

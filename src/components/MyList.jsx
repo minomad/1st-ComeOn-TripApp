@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getPbImageURL } from '@/utils/getPbImageURL';
 
 function MyList({
   src = '/Myzipedairplane.jpg',

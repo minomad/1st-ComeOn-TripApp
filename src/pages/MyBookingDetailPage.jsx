@@ -1,25 +1,82 @@
 import { useEffect } from 'react';
-import { useState, useRef } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
+import { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { getPbImageURL } from '@/utils/getPbImageURL';
-import { useNavigate, useParams } from 'react-router-dom';
-import pb from '@/api/pocketbase';
+import { useParams } from 'react-router-dom';
 import Guest from '@/components/Guest';
 import Header from '@/components/Header';
 import MetaTag from '@/components/MetaTag';
 import Spinner from '@/components/Spinner';
 import useAuthStore from '@/store/useAuthStore';
-import MyForm from '@/components/MyForm';
-import Input from '@/components/Input';
+
 import Button from '@/components/Button';
+import MyOrderList from '../components/MyOrderList';
+import { numberWithComma } from '@/utils/numberWithComma';
 
 function MyBookingDetailPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
   const { date } = useParams();
-  console.log(date);
+  const { getIdData: getUser } = usePocketData('users');
+  const { getListData: getHotelList } = usePocketData('hotel');
+  const { getListData: getOrderList } = usePocketData('order');
+  const { getListData: getRoomList } = usePocketData('room');
+  const { getIdData: getOrder } = usePocketData('order');
+  const { getIdData: getHotel } = usePocketData('hotel');
+  const { getIdData: getRoom } = usePocketData('room');
+  const [orders, setOrders] = useState([]);
+  const id = user?.id;
+  const { data: userData, isLoading } = useQuery(['users', id], () => getUser(id));
+
+  const { data: orderData, isLoading: isOrderDataLoading } = useQuery(['order'], getOrderList);
+
+  const { data: hotelData, isLoading: isHotelDataLoading } = useQuery(['hotel'], getHotelList);
+
+  const { data: roomData, isLoading: isRoomDataLoading } = useQuery(['room'], getRoomList);
+
+  let matchingOrderIds;
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const fetchedOrders = await Promise.all(matchingOrderIds.map((orderId) => getOrder(orderId)));
+      setOrders(fetchedOrders);
+    };
+
+    if (matchingOrderIds) {
+      fetchOrders();
+    }
+  }, [matchingOrderIds]);
+  if (isLoading || isOrderDataLoading || isRoomDataLoading || isHotelDataLoading) {
+    return <Spinner />;
+  }
+
+  if (orderData) {
+    matchingOrderIds = orderData
+      .filter((order) => order.username === userData.username)
+      .map((order) => order.id);
+  }
+
+  let userOrders = orderData
+    ? orderData.filter((order) => order.username === userData.username)
+    : [];
+
+  let groupedUserOrders = userOrders.reduce((grouped, order) => {
+    let date = order.created.slice(0, 10);
+
+    if (!grouped[date]) {
+      grouped[date] = [];
+    }
+
+    grouped[date].push(order);
+
+    return grouped;
+  }, {});
+
+  let dates = Object.keys(groupedUserOrders);
+  const totalPrice = groupedUserOrders[date]?.reduce((total, order) => total + order.price, 0);
+
   return (
     <>
       <MetaTag title='예약 상세' description='예약 상세' />
@@ -46,71 +103,46 @@ function MyBookingDetailPage() {
               className='flex w-full  flex-shrink flex-grow flex-col  items-center'
               // onSubmit={handleSubmit}
             >
-              <li className='w-full max-w-md flex-row bg-red-500 p-2'>
-                <div className='flex w-full flex-shrink-0 flex-grow-0 flex-row flex-wrap justify-between gap-y-2 bg-yellow-500'>
-                  <div className='aspect-square h-auto w-[49%] overflow-hidden rounded-2xl bg-blue-500 p-1'>
-                    <div className='mr-3 box-border aspect-square  h-14  w-14 flex-shrink-0 overflow-hidden rounded-2xl  bg-slate-100 lg:h-24 lg:w-24'>
-                      <img src='/' alt='/' className=' aspect-square h-full w-full' />
-                    </div>
-                    <div>dsasdsad</div>
-                    <div>dsasdsad</div>
-                    <div>dsasdsad</div>
-                  </div>
-                  <div className='aspect-square w-[49%] bg-blue-500'>
-                    <div className='mr-3 box-border aspect-square  h-10  w-10 flex-shrink-0 overflow-hidden rounded-2xl  bg-slate-100 lg:h-24 lg:w-24'>
-                      <img src='/' alt='/' className=' aspect-square h-full w-full' />
-                    </div>
-                    <div>dsasdsad</div>
-                    <div>dsasdsad</div>
-                    <div>dsasdsad</div>
-                  </div>
-                  <div className='aspect-square w-[49%] bg-blue-500'>
-                    <div className='mr-3 box-border aspect-square  h-10  w-10 flex-shrink-0 overflow-hidden rounded-2xl  bg-slate-100 lg:h-24 lg:w-24'>
-                      <img src='/' alt='/' className=' aspect-square h-full w-full' />
-                    </div>
-                    <div>dsasdsad</div>
-                    <div>dsasdsad</div>
-                    <div>dsasdsad</div>
-                  </div>
-                  <div className='aspect-square w-[49%] bg-blue-500'>
-                    <div className='mr-3 box-border aspect-square  h-10  w-10 flex-shrink-0 overflow-hidden rounded-2xl  bg-slate-100 lg:h-24 lg:w-24'>
-                      <img src='/' alt='/' className=' aspect-square h-full w-full' />
-                    </div>
-                    <div>dsasdsad</div>
-                    <div>dsasdsad</div>
-                    <div>dsasdsad</div>
-                  </div>
+              <li className='w-full max-w-md flex-row px-2 py-4'>
+                <div className='flex w-full flex-shrink-0 flex-grow-0 flex-row flex-wrap justify-between gap-y-2 '>
+                  {groupedUserOrders[date]?.map((order) => {
+                    const hotelItem = hotelData.find((hotel) => hotel.id === order.hotelId);
+                    const roomItem = roomData.find((room) => room.id === order.roomId);
+
+                    return (
+                      <MyOrderList
+                        to={`/hotel/${hotelItem.id}`}
+                        key={order.id}
+                        name={hotelItem.title}
+                        info={roomItem.title}
+                        info2={order.checkin.slice(0, 10)}
+                        info3={order.checkout.slice(5, 10)}
+                        src={getPbImageURL(hotelItem, 'img')}
+                        info4={` ${numberWithComma(order.price)}`}
+                      />
+                    );
+                  })}
                 </div>
               </li>
-              <div className='w-full border-t-[1px] border-slate-300 pt-3 '>
-                😘 마지막 단계 - 비밀번호 검증
-              </div>
-              <div className='flex w-full max-w-md justify-center' aria-required='true'>
-                <Input
-                  // inputRef={passwordRef}
-                  type='password'
-                  label='비밀번호 확인'
-                  id='passwordConfirm'
-                  placeholder='비밀번호 확인'
-                  className='mb-4 mt-3 h-9 w-full border-b border-gray p-2 outline-primary'
-                  labelClass='sr-only'
-                  // onChange={handlePasswordChange}
-                />
-              </div>
+              <li
+                className='w-full border-b-[1px] border-t-[1px] 
+              border-slate-300 px-8 py-3 md:px-12 md:py-8'
+              >
+                <div className='flex justify-between font-bold '>
+                  <div className='text'>총금액</div>
+                  <p>{` ${numberWithComma(totalPrice)}`} ￦</p>
+                </div>
+              </li>
 
               <Button
                 type='submit'
                 className={`mb-18 w-full max-w-md rounded-lg border py-2 text-center font-light text-primary outline-primary `}
-                // onClick={() => updateMessage('탈퇴가 완료되었습니다.')}
-                // disabled={!isFormValid}
               >
                 <div className='flex items-end justify-center'>
-                  <p className='text-xs font-light text-slate-400'>안녕..</p>탈퇴하기
+                  <p className='text-xs font-light text-slate-400'></p>환불하기
                 </div>
               </Button>
-              <div role='alert' aria-live='assertive' aria-atomic='true' className='sr-only'>
-                {/* {toastMessage} */}
-              </div>
+              <div role='alert' aria-live='assertive' aria-atomic='true' className='sr-only'></div>
             </ul>
             <Toaster
               toastOptions={{
