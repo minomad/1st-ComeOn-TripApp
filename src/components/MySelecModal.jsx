@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function MySelecModal({
@@ -20,11 +20,9 @@ function MySelecModal({
       }
     }
 
-    // 클릭 이벤트 리스너 등록
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      // 컴포넌트 언마운트 시 리스너 제거
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [onClose]);

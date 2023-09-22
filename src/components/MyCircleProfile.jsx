@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
+import Button from '@/components/Button';
 import { getPbImageURL } from '@/utils/getPbImageURL';
-import useAuthStore from '../store/useAuthStore';
+import useAuthStore from '@/store/useAuthStore';
 
 function MyCircleProfile({ towhere, imgalt = '내 프로필 사진' }) {
   const user = useAuthStore((state) => state.user);
@@ -23,7 +23,7 @@ function MyCircleProfile({ towhere, imgalt = '내 프로필 사진' }) {
       <Button
         type='button'
         className='relative mt-12 h-full overflow-hidden rounded-full border-2 border-secondary bg-gray shadow-md'
-        style={{ width: '120px', height: '120px' }} // adjust this as needed
+        style={{ width: '120px', height: '120px' }}
       >
         <Link to={towhere}>
           <img

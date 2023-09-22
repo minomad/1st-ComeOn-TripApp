@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { usePocketData } from '@/api/usePocketData';
 import { getPbImageURL } from '@/utils/getPbImageURL';
@@ -10,7 +8,7 @@ import Header from '@/components/Header';
 import MyList from '@/components/MyList';
 import Spinner from '@/components/Spinner';
 import MetaTag from '@/components/MetaTag';
-import useAuthStore from '../store/useAuthStore';
+import useAuthStore from '@/store/useAuthStore';
 import MyCircleProfile from '@/components/MyCircleProfile';
 
 function MyBookingPage() {
@@ -19,19 +17,15 @@ function MyBookingPage() {
   const { getIdData: getUser } = usePocketData('users');
   const { getListData: getHotelList } = usePocketData('hotel');
   const { getListData: getOrderList } = usePocketData('order');
-  const { getListData: getRoomList } = usePocketData('room');
   const { getIdData: getOrder } = usePocketData('order');
-  // const { getIdData: getHotel } = usePocketData('hotel');
-  // const { getIdData: getRoom } = usePocketData('hotel');
   const [orders, setOrders] = useState([]);
+
   const id = user?.id;
   const { data: userData, isLoading } = useQuery(['users', id], () => getUser(id));
 
   const { data: orderData, isLoading: isOrderDataLoading } = useQuery(['order'], getOrderList);
 
   const { data: hotelData, isLoading: isHotelDataLoading } = useQuery(['hotel'], getHotelList);
-
-  const { data: roomData, isLoading: isRoomDataLoading } = useQuery(['room'], getRoomList);
 
   let matchingOrderIds;
 
@@ -46,7 +40,7 @@ function MyBookingPage() {
     }
   }, [matchingOrderIds]);
 
-  if (isLoading || isOrderDataLoading || isRoomDataLoading || isHotelDataLoading) {
+  if (isLoading || isOrderDataLoading || isHotelDataLoading) {
     return <Spinner />;
   }
   if (orderData) {

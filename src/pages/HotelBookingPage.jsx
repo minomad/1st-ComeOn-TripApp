@@ -11,7 +11,7 @@ import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import MetaTag from '@/components/MetaTag';
 
-function BookingPage() {
+function HotelBookingPage() {
   const { id, hotel, title, checkin, checkout } = useParams();
   const { getIdData } = usePocketData('room');
   const { createData: createOrder } = usePocketData('order');
@@ -73,7 +73,7 @@ function BookingPage() {
 
   return (
     <>
-      <MetaTag title='예약' description='호텔/리조트 숙소 예약하는 페이지' />
+      <MetaTag title={`${title} 예약`} description='호텔/리조트 숙소 예약하는 페이지' />
       <Header back='back' className='mr-7 text-xl font-semibold' title='예약' />
       <section className='px-4 pb-20'>
         <h2 className='mx-auto flex max-w-[39rem] justify-center border-b border-gray px-4 pt-2 text-xl font-bold'>
@@ -138,4 +138,4 @@ function BookingPage() {
     </>
   );
 }
-export default BookingPage;
+export default HotelBookingPage;
