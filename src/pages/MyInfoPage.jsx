@@ -45,9 +45,9 @@ function MyInfoPage() {
 
             <div className='mb-32 flex w-full flex-col items-center justify-center text-center'>
               <div
-                className={`relative h-11 w-60 rounded-full border-[1px] ${
+                className={`relative h-11 w-64 rounded-full border-[1px] ${
                   isFormValid ? 'border-primary' : ' border-red-500'
-                }  bg-lightPurple text-center align-middle text-xs font-semibold text-secondary shadow-md md:mb-8 md:h-[7vh] md:w-[30vh] md:py-5`}
+                }  md:h-[7vh]md:py-5 bg-lightPurple text-center align-middle text-xs font-semibold text-secondary shadow-md md:mb-8`}
               >
                 <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform whitespace-nowrap'>
                   정보 변경을 위해 로그인 시 사용하시는 <br />
