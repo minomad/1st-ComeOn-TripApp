@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getPbImageURL } from '@/utils/getPbImageURL';
-import useAuthStore from '../store/useAuthStore';
+import useAuthStore from '@/store/useAuthStore';
 
 function MyChatMessage({ message, children, date }) {
   const user = useAuthStore((state) => state.user);

@@ -81,13 +81,13 @@ function MyInfoChangePage() {
       nickName = nickNameRef.current.value;
     }
 
-    if (bgImgRef.current) {
-      bgimg = bgImgRef.current.files;
-    }
+    // if (bgImgRef.current) {
+    //   bgimg = bgImgRef.current.files;
+    // }
 
-    if (avatarRef.current) {
-      avatar = avatarRef.current.files;
-    }
+    // if (avatarRef.current) {
+    //   avatar = avatarRef.current.files;
+    // }
 
     const password = passwordRef?.current?.value;
     const passwordConfirm = passwordConfirmRef?.current?.value;
@@ -197,7 +197,7 @@ function MyInfoChangePage() {
             <MyForm
               className='flex w-full flex-shrink  flex-grow flex-col items-center overflow-hidden'
               onSubmit={handleSubmit}
-              formRef={formRef}
+              ref={formRef}
             >
               <ul className='flex w-full max-w-md flex-col gap-1'>
                 <li>

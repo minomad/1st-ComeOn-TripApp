@@ -12,7 +12,7 @@ import Spinner from '@/components/Spinner';
 import useAuthStore from '@/store/useAuthStore';
 
 import Button from '@/components/Button';
-import MyOrderList from '../components/MyOrderList';
+import MyOrderList from '@/components/MyOrderList';
 import { numberWithComma } from '@/utils/numberWithComma';
 
 function MyBookingDetailPage() {
@@ -24,8 +24,6 @@ function MyBookingDetailPage() {
   const { getListData: getOrderList } = usePocketData('order');
   const { getListData: getRoomList } = usePocketData('room');
   const { getIdData: getOrder } = usePocketData('order');
-  const { getIdData: getHotel } = usePocketData('hotel');
-  const { getIdData: getRoom } = usePocketData('room');
   const [orders, setOrders] = useState([]);
   const id = user?.id;
   const { data: userData, isLoading } = useQuery(['users', id], () => getUser(id));
@@ -74,7 +72,6 @@ function MyBookingDetailPage() {
     return grouped;
   }, {});
 
-  let dates = Object.keys(groupedUserOrders);
   const totalPrice = groupedUserOrders[date]?.reduce((total, order) => total + order.price, 0);
 
   return (
@@ -99,10 +96,7 @@ function MyBookingDetailPage() {
               <span className='text-primary'>{date} </span>결제 내역
             </article>
 
-            <ul
-              className='flex w-full  flex-shrink flex-grow flex-col  items-center'
-              // onSubmit={handleSubmit}
-            >
+            <ul className='flex w-full  flex-shrink flex-grow flex-col  items-center'>
               <li className='w-full max-w-md flex-row px-2 py-4'>
                 <div className='flex w-full flex-shrink-0 flex-grow-0 flex-row flex-wrap justify-between gap-y-2 '>
                   {groupedUserOrders[date]?.map((order) => {
