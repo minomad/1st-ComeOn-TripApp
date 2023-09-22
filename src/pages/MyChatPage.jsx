@@ -24,8 +24,6 @@ function MyChatPage() {
   const [isSending, setIsSending] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
-  //! 메시지보내기
-
   useEffect(() => {
     async function realtimeChat() {
       await pb.collection('chats').subscribe('*', async ({ action, record }) => {
@@ -47,8 +45,6 @@ function MyChatPage() {
       pb.collection('chats').unsubscribe('*');
     };
   }, []);
-
-  // !
 
   const handleImageClick = (message) => {
     const imageUrl = getPbImageURL(message, 'img');
@@ -133,7 +129,6 @@ function MyChatPage() {
                       {messages.map((message, index) => (
                         <div key={index}>
                           <MyChatMessage message={message.text} date={message.created.slice(0, 10)}>
-                            {/* 이미지가 있는 경우만 렌더링 */}
                             {message.img && (
                               <div className='m-2 flex h-12 w-12 items-center align-middle'>
                                 <img
@@ -191,7 +186,6 @@ function MyChatPage() {
                           </button>
                           {previewUrl && (
                             <div className='absolute top-[-100px] z-40 h-24 w-24 rounded-sm bg-slate-200 p-2 shadow-md'>
-                              {/* 삭제 버튼 */}
                               <button
                                 onClick={() => setPreviewUrl(null)}
                                 className='absolute left-[-5px] top-[-15px] h-2 w-2 align-middle text-xl text-primary '

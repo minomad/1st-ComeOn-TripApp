@@ -1,11 +1,6 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function MyBasicButton({ towhere, type, handler, onClick, children, ...restProps }) {
-  const [isActive, setIsActive] = useState('');
-  const handleIsActive = (name) => {
-    setIsActive(name);
-  };
+function MyBasicButton({ towhere, type, onClick, children, ...restProps }) {
   return (
     <Link
       to={towhere}

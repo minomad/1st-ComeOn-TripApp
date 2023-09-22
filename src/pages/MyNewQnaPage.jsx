@@ -20,8 +20,6 @@ function MyNewQnaPage() {
 
   const id = user?.id;
 
-  // const { data: userData } = useQuery(['users', id], () => getUser(id));
-
   const titleRef = useRef(null);
   const textRef = useRef(null);
   const photoRef = useRef(null);
