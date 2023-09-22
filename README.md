@@ -1,10 +1,10 @@
-# 1루와 야무지개놀자🦁
+# 1루와 야! 무지개 놀자~✈️
 
 ![배너](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/95375c34-6c3d-4974-99f9-a044fa3052e0)
 
 배포 URL: [야! 무지개 놀자~](https://1st-come-on-trip-app.vercel.app)   
 
-프로젝트 기간 : 2023년 8월 30일 ~ 2023년 9월 24일   
+프로젝트 기간 : 2023년 8월 29일 ~ 2023년 9월 24일   
 
 ## 프로젝트 소개
 YOUNG CHILLER들을 위한 HIP한 여행앱
@@ -186,3 +186,7 @@ YOUNG CHILLER들을 위한 HIP한 여행앱
 
 
 ## 💬프로젝트 소감
+### ✈️ 강경민
+### ✈️ 김종윤
+### ✈️ 신명화
+### ✈️ 장효윤
