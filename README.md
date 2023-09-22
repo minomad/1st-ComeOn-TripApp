@@ -1,6 +1,6 @@
 # 1루와 야무지개놀자🦁
 
-![배너](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/c47c7348-3bda-49da-a7c0-8e79b3d952e5)
+![배너](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/95375c34-6c3d-4974-99f9-a044fa3052e0)
 
 배포 URL: [야! 무지개 놀자~](https://1st-come-on-trip-app.vercel.app)   
 
