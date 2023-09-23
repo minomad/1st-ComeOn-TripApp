@@ -4,15 +4,15 @@ import LeisureInfoCategory from '@/components/LeisureInfoCategory';
 import LeisureProduct from '@/components/LeisureProduct';
 import LeisureProductInfo from '@/components/LeisureProductInfo';
 import Spinner from '@/components/Spinner';
+import useAuthStore from '@/store/useAuthStore';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import CartController from '../components/CartController';
-import useAuthStore from '@/store/useAuthStore';
-import toast from 'react-hot-toast';
 
 function LeisureDetailPage() {
   const { id } = useParams();
@@ -57,18 +57,6 @@ function LeisureDetailPage() {
       });
     }
   };
-
-  // const handleCart = async () => {
-  //   await updateUser(userId, {
-  //     'cartLeisure+': carts.map((obj)=>obj.id),
-  //   });
-
-  //   toast.success('장바구니에 담겼습니다.');
-  //   queryClient.invalidateQueries(['users']);
-  // };
-
-
-   
 
  
 
@@ -134,7 +122,7 @@ function LeisureDetailPage() {
 
         {selectCategory === '상품선택' && <LeisureProduct data={data} productData={productData} />}
         {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
-        <CartController userId={userId} id={id} />
+        <CartController userId={userId} id={id} data={data} productData={productData} user={user} />
       </section>
     </>
   );

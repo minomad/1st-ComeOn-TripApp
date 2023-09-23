@@ -1,13 +1,9 @@
 import { numberWithComma } from '../utils/numberWithComma';
-
 import LeisureButton from './LeisureButton';
-// import useStore from '@/store/zustand';
+
 
 function LeisureProduct({ data, productData }) {
-  // const carts = useStore((state) => state.carts);
-  // console.log(carts.length);
-  // const test = carts.map(obj => obj.id);
-  // console.log(test);
+ 
   return (
     <section className='mx-5'>
       <div className='my-3 flex justify-center rounded-[4px] bg-[#fef8f2] py-2'>

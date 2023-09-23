@@ -1,8 +1,9 @@
 import Header from '@/components/Header';
-import { useState } from 'react';
-import TrafficCategory from '../components/TrafficCategory';
-import SelectModal from '../components/SelectModal';
 import Input from '@/components/Input';
+import { useState } from 'react';
+import SelectModal from '../components/SelectModal';
+import TrafficCategory from '../components/TrafficCategory';
+import MetaTag from '@/components/MetaTag';
 
 function TrafficTrainPage() {
   const [selectCategory, setSelectCategory] = useState('편도');
@@ -50,6 +51,7 @@ function TrafficTrainPage() {
   const category = ['편도', '왕복'];
   return (
     <>
+      <MetaTag title='기차' description='기차' />
       <Header
         search='search'
         back='back'
