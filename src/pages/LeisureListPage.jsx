@@ -1,7 +1,7 @@
-import Header from '@/components/Header';
 import { usePocketData } from '@/api/usePocketData';
-import { useQuery } from '@tanstack/react-query';
+import Header from '@/components/Header';
 import { getPbImageURL } from '@/utils/getPbImageURL';
+import { useQuery } from '@tanstack/react-query';
 
 function LeisureListPage() {
   const { getListData: getExhibitionListData } = usePocketData('exhibitionList');
