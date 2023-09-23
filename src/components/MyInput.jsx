@@ -2,7 +2,7 @@ import React from 'react';
 
 // eslint-disable-next-line react/display-name
 const MyInput = React.forwardRef(
-  ({ label, type, id, placeholder, className, labelClass, ...restProps }, ref) => {
+  ({ label, type, id, placeholder, className, labelClass, children, ...restProps }, ref) => {
     return (
       <>
         <input
@@ -14,6 +14,7 @@ const MyInput = React.forwardRef(
           className={className}
           {...restProps}
         />
+        {children}
         <label htmlFor={id} className={labelClass}>
           {label}
         </label>

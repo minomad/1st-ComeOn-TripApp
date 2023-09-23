@@ -62,7 +62,7 @@ function MyList({
               src='/myBlueArrow.svg'
               className={`absolute right-2 w-5 opacity-0 
             ${isActive ? 'sm:opacity-100' : ''}`}
-              alt=''
+              alt='상세보기'
             />
           </div>
         </div>
