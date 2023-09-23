@@ -4,6 +4,7 @@ import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
+import { MetaTag } from '@/components/MetaTag';
 
 function LeisureBrandPage() {
   const { getListData: getLeisureData } = usePocketData('leisure');
@@ -52,6 +53,7 @@ function LeisureBrandPage() {
 
   return (
     <>
+      <MetaTag title='브랜드관' description='브랜드관' />
       <Header
         className='ml-10 text-xl font-semibold '
         back='back'

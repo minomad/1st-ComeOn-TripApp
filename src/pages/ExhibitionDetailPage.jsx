@@ -35,6 +35,7 @@ function ExhibitionDetailPage() {
 
   return (
     <>
+      
       <Header className='ml-10 text-xl font-semibold ' back='back' search='search' cart='cart' />
       <section className='pb-[100px]'>
         <img className='w-full' key={data.id} src={getPbImageURL(data, 'main')} alt={brand} />

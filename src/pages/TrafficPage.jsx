@@ -9,6 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { A11y, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { MetaTag } from '@/components/MetaTag';
 
 function TrafficPage() {
   const { getListData: getTrafficData } = usePocketData('traffic');
@@ -16,6 +17,7 @@ function TrafficPage() {
 
   return (
     <>
+    <MetaTag title='교통' description='교통' />
       <Header
         className='ml-10 text-xl font-semibold'
         back='back'
