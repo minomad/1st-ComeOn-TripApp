@@ -80,6 +80,8 @@ function HotelRoomDetailPage() {
       return;
     }
 
+   
+
     const checkIn = checkInRef.current.value;
     const checkOut = checkOutRef.current.value;
 
@@ -91,6 +93,9 @@ function HotelRoomDetailPage() {
       setIsShowPayment(true);
     }
   };
+
+  const today = new Date();
+  const formattedDate = today.toISOString().split('T')[0]; 
 
   const handlePayment = () => {
     const checkIn = checkInRef.current.value;
@@ -184,6 +189,7 @@ function HotelRoomDetailPage() {
               id='checkin'
               className='font-semibold focus:outline-none'
               labelClass='sr-only'
+              min={formattedDate}
             />
           </div>
           <div className='flex flex-col items-center'>
@@ -195,6 +201,7 @@ function HotelRoomDetailPage() {
               id='checkout'
               className='font-semibold focus:outline-none'
               labelClass='sr-only'
+              min={formattedDate}
             />
           </div>
         </div>
