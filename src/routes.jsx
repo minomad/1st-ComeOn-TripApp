@@ -21,6 +21,7 @@ const MyInfoChangePage = lazy(() => import('./pages/MyInfoChangePage'));
 const HotelPage = lazy(() => import('./pages/HotelPage'));
 const HotelDetailPage = lazy(() => import('./pages/HotelDetailPage'));
 const HotelRoomDetailPage = lazy(() => import('./pages/HotelRoomDetailPage'));
+const HotelEditPage = lazy(() => import('./pages/HotelEditPage'));
 const AirlinePage = lazy(() => import('./pages/AirlinePage'));
 const TrafficPage = lazy(() => import('./pages/TrafficPage'));
 const TrafficTrainPage = lazy(() => import('./pages/TrafficTrainPage'));
@@ -71,6 +72,7 @@ const router = createBrowserRouter([
       { path: 'mypage/mywithdrawal', element: <MyWithdrawalPage /> },
       { path: 'hotel', element: <HotelPage /> },
       { path: 'hotel/:id', element: <HotelDetailPage /> },
+      { path: 'hotel/edit/:id', element: <HotelEditPage /> },
       { path: 'rooms/:id/:hotel/:title', element: <HotelRoomDetailPage /> },
       { path: 'airline', element: <AirlinePage /> },
       { path: 'traffic', element: <TrafficPage /> },

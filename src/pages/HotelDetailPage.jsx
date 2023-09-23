@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { toast, Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -25,7 +25,6 @@ function HotelDetailPage() {
   const { updateData: updateUser } = usePocketData('users');
   const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
-
   const { data: hotelData, isLoading } = useQuery(['hotel', id], () =>
     getHotel(id, { expand: 'room, review' }),
   );
@@ -35,11 +34,12 @@ function HotelDetailPage() {
   const info = ['숙소선택', '소개', '시설/서비스', '후기'];
   const roomData = hotelData?.expand?.room;
   const reviewData = hotelData?.expand?.review;
+  const userId = user?.id;
+  const admin = 'wo2jejtn6yi1wwu';
 
   const { storageData: isActive, update, remove } = useStorage(id, false);
 
   const handleWish = () => {
-    const userId = user?.id;
     update(!isActive);
 
     if (!isActive) {
@@ -55,6 +55,12 @@ function HotelDetailPage() {
       remove(id);
     }
   };
+
+  useEffect(() => {
+    if (!isActive) {
+      remove(id);
+    }
+  }, []);
 
   const handleShowMap = () => {
     setIsShowMap(!isShowMap);
@@ -110,6 +116,16 @@ function HotelDetailPage() {
                 <span>{hotelData.star}</span>
                 <span>({hotelData.count})</span>
               </div>
+              {admin === userId && (
+                <div className='flex justify-end'>
+                  <Link
+                    to={`/hotel/edit/${hotelData.id}`}
+                    className='font-bold text-accent border px-2 rounded-md'
+                  >
+                    호텔 정보 수정하기
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

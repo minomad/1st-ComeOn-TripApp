@@ -146,10 +146,6 @@ function CartPage() {
 
     toast.success('결제가 완료되었습니다.');
     queryClient.invalidateQueries(['userCart']);
-    setTimeout(() => {
-      toast.dismiss();
-      navigate('/');
-    }, 1500);
   };
 
   if (isLoading) {
@@ -158,7 +154,7 @@ function CartPage() {
 
   return (
     <>
-      <MetaTag title='장바구니' description="호텔,레저 장바구니 페이지" />
+      <MetaTag title='장바구니' description='호텔,레저 장바구니 페이지' />
       <Header back='back' search='search' title='장바구니' className='text-xl font-semibold' />
       <section className='mx-auto pb-40'>
         <h3 className='sr-only'>장바구니</h3>
@@ -203,7 +199,7 @@ function CartPage() {
           </>
         )}
 
-        {selectCategory === '레저' && isAuth && !cartLeisure && <WishCart cart={true} />}
+        {selectCategory === '레저' && isAuth && !cartLeisure && <WishCart cart={true} link=''/>}
 
         {selectCategory === '레저' && isAuth && cartLeisure && (
           <>
