@@ -26,7 +26,7 @@ function WishCart({ link, heart, hotel, leisure, cart }) {
         )}
         <Link
           to={`/${link}`}
-          className='my-2 rounded border px-20 py-2  text-center text-gray2 hover:text-primary'
+          className='my-2 rounded border px-20 py-2 text-center text-gray2 hover:text-primary'
         >
           {hotel && <p>숙소 보러가기</p>}
           {leisure && <p>레저 보러가기</p>}
