@@ -35,8 +35,8 @@ function CartController({ userId,id }) {
       </div>
       <span className='text-[12px] text-[#919191] text-end'>결제 단계에서 쿠폰 적용시 추가 할인 가능</span>
       <div className='flex justify-between gap-2 font-bold'>
-        <button className='py-2 px-4 border w-[50%] border-primary rounded-[4px] text-primary' onClick={handleCart}>장바구니 담기</button>
-        <button className='py-2 px-4 border w-[50%] bg-primary text-white rounded-[4px]'>바로 구매하기</button>
+        <button className='py-2 px-4 border w-[100%] border-primary rounded-[4px] text-primary' onClick={handleCart}>장바구니 담기</button>
+        
       </div>
     </div>
   ) : null;

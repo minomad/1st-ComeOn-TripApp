@@ -14,6 +14,7 @@ function MySelecModal({
   const modalRef = useRef();
 
   useEffect(() => {
+    modalRef.current.focus();
     function handleClickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         onClose();
@@ -35,9 +36,15 @@ function MySelecModal({
       <section
         className='absolute right-1/2 top-[5%] z-50 translate-x-1/2 translate-y-1/2 sm:top-[13%]'
         ref={modalRef}
+        aria-modal='true'
+        role='dialog'
+        aria-describedby='modal-description'
+        tabIndex='-1'
       >
         <div className='h-60 w-72 rounded-lg border-[1px] bg-white  bg-opacity-70 p-4 font-semibold shadow-md'>
-          <div className='p-6 text-center text-lg'>{children}</div>
+          <div id='modal-description' className='p-6 text-center text-lg'>
+            {children}
+          </div>
           <div className='fixed bottom-4 right-4 flex gap-3 text-white'>
             <Link
               to={MoveTo}

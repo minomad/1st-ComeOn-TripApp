@@ -155,11 +155,13 @@ function MyPage() {
                     option1='채팅'
                     option2='취소'
                   >
-                    <div>상담원 통화 가능 시간</div>
-                    <div>평일(공휴일 제외)</div>
-                    <div>09:00~17:00</div>
-                    <div>02-1234-5678</div>
-                    <div>채팅으로 연결할까요?</div>
+                    <div aria-labelledby='modal-description'>
+                      <p>상담원 통화 가능 시간</p>
+                      <p>평일(공휴일 제외)</p>
+                      <p>09:00~17:00</p>
+                      <p>02-1234-5678</p>
+                      <p>채팅으로 연결할까요?</p>
+                    </div>
                   </MySelecModal>
                 )}
               </li>
@@ -194,11 +196,12 @@ function MyPage() {
                     option2='탈퇴'
                     MoveTo2='mywithdrawal'
                   >
-                    <div>정말 탈퇴하시나요?</div>
-                    <div>2023.09.06 기준</div>
-                    <div>가입자 23m 돌파</div>
-                    <div>불편사항</div>
-                    <div>☎️02-1234-5678</div>
+                    <div aria-labelledby='modal-description'></div>
+                    <p>정말 탈퇴하시나요?</p>
+                    <p>2023.09.06 기준</p>
+                    <p>가입자 23m 돌파</p>
+                    <p>불편사항</p>
+                    <p>☎️02-1234-5678</p>
                   </MySelecModal>
                 )}
               </li>

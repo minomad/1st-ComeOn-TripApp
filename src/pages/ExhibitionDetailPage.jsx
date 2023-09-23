@@ -18,7 +18,7 @@ function ExhibitionDetailPage() {
   const { data, isLoading } = useQuery(['exhibition', id], () => getIdData(id, { expand: 'product' }));
   
   const productData = data?.expand?.product;
-  console.log(productData);
+  
 
   const [selectCategory, setSelectCategory] = useState('상품선택');
 
@@ -35,6 +35,7 @@ function ExhibitionDetailPage() {
 
   return (
     <>
+      
       <Header className='ml-10 text-xl font-semibold ' back='back' search='search' cart='cart' />
       <section className='pb-[100px]'>
         <img className='w-full' key={data.id} src={getPbImageURL(data, 'main')} alt={brand} />

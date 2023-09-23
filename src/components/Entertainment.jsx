@@ -1,6 +1,6 @@
-import { numberWithComma } from '../utils/numberWithComma';
+import { Link, useParams } from 'react-router-dom';
 import { getPbImageURL } from '../utils/getPbImageURL';
-import { useParams, Link } from 'react-router-dom';
+import { numberWithComma } from '../utils/numberWithComma';
 
 function Entertainment({ data, selectCategory }) {
   let { id } = useParams();

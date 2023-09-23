@@ -25,7 +25,9 @@ function WishList({
   handleBooked,
 }) {
   const { getListData } = usePocketData('room');
-  const { data: roomData } = useQuery(['cartHotel'], () => getListData());
+  const { data: roomData } = useQuery(['cartHotel'], () =>
+    getListData({ fields: 'img,id,collectionId,title' }),
+  );
 
   return (
     <>
@@ -35,9 +37,9 @@ function WishList({
             const matchingRoom = roomData?.find((roomItem) => roomItem.id === item.roomId);
             return (
               <motion.article
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
+                exit={{ opacity: 0, x: 30 }}
                 transition={{ duration: 0.5 }}
                 key={item.id}
                 className='relative mx-auto mt-3 flex w-full max-w-[39rem] flex-col rounded-lg bg-lightPurple p-5 max-[375px]:p-3'
