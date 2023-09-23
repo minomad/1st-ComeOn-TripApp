@@ -1,9 +1,9 @@
-import { Helmet } from 'react-helmet-async';
-import Header from '@/components/Header';
 import Category from '@/components/Category';
-import { useState } from 'react';
-import SelectModal from '../components/SelectModal';
+import Header from '@/components/Header';
 import Input from '@/components/Input';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import SelectModal from '../components/SelectModal';
 
 function AirlinePage() {
   const [selectCategory, setSelectCategory] = useState('왕복');

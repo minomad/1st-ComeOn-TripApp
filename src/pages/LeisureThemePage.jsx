@@ -1,11 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { usePocketData } from '../api/usePocketData';
 import Header from '@/components/Header';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { usePocketData } from '../api/usePocketData';
 import Entertainment from '../components/Entertainment';
 import LeisureCategory from '../components/LeisureCategory';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 
 function LeisureThemePage() {
   const { getListData: getLeisureData } = usePocketData('leisure');

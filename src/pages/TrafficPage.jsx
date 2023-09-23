@@ -1,15 +1,14 @@
-import Header from '@/components/Header';
 import { usePocketData } from '@/api/usePocketData';
-import { useQuery } from '@tanstack/react-query';
-import { getPbImageURL } from '../utils/getPbImageURL';
+import Header from '@/components/Header';
 import { numberWithComma } from '@/utils/numberWithComma';
-import TrafficReserveButton from '../components/TrafficReserveButton';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-
-import { Navigation, A11y } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import TrafficReserveButton from '../components/TrafficReserveButton';
+import { getPbImageURL } from '../utils/getPbImageURL';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { A11y, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 function TrafficPage() {
   const { getListData: getTrafficData } = usePocketData('traffic');

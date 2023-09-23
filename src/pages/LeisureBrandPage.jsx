@@ -1,9 +1,9 @@
 import { usePocketData } from '@/api/usePocketData';
+import Header from '@/components/Header';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
-import { useParams, Link } from 'react-router-dom';
-import Header from '@/components/Header';
+import { Link, useParams } from 'react-router-dom';
 
 function LeisureBrandPage() {
   const { getListData: getLeisureData } = usePocketData('leisure');

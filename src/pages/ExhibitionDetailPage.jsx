@@ -18,7 +18,7 @@ function ExhibitionDetailPage() {
   const { data, isLoading } = useQuery(['exhibition', id], () => getIdData(id, { expand: 'product' }));
   
   const productData = data?.expand?.product;
-  console.log(productData);
+  
 
   const [selectCategory, setSelectCategory] = useState('상품선택');
 

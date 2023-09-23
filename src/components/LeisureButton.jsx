@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { shape, string } from 'prop-types';
 import useStore from '@/store/zustand';
+import { shape, string } from 'prop-types';
+import { useState } from 'react';
 
 function LeisureButton({ item }) {
 	// 컴포넌트 상태
