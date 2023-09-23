@@ -84,11 +84,14 @@ function MyWithdrawalPage() {
             className='mx-auto mb-20 mt-0 w-[90%]
       flex-col rounded-3xl border-[1px] border-slate-300 p-6 text-sm shadow-lg sm:max-w-[500px] sm:text-base'
           >
-            <article className='flex-shrink flex-grow whitespace-normal break-keep  border-b-[1px] border-slate-300 pb-2  text-center text-sm font-extralight sm:text-base'>
-              안녕하세요.<span className='font-semibold'>{user.username} 회원님</span> 그 동안 저희
-              <span className='font-semibold text-primary'> 야무지개 놀자</span> 를 이용해주셔서
-              감사합니다. 탈퇴를 도와드리기 전 몇가지 선택지에 선택을 해주시면 서비스 개선에 적극
-              반영하겠습니다.
+            <article className='flex-shrink flex-grow whitespace-normal break-keep  border-b-[1px] border-slate-300 pb-2  text-center text-sm font-extralight sm:text-base '>
+              <div role='text' aria-live='polite' tabIndex='0'>
+                안녕하세요.<span className='font-semibold'>{user.username} 회원님</span> 그 동안
+                저희
+                <span className='font-semibold text-primary'> 야무지개 놀자</span> 를 이용해주셔서
+                감사합니다. 탈퇴를 도와드리기 전 몇가지 선택지에 선택을 해주시면 서비스 개선에 적극
+                반영하겠습니다.
+              </div>
             </article>
 
             <MyForm
@@ -101,7 +104,9 @@ function MyWithdrawalPage() {
                   className='flex w-full max-w-md flex-col gap-2'
                   aria-required='true'
                 >
-                  <div className='pt-2'>이용 기간을 알려주세요.</div>
+                  <div className='flex pt-2' tabIndex='0'>
+                    이용 기간을 알려주세요. <p> &#40;필수 선택 &#41;</p>
+                  </div>
                   <li>
                     <Input
                       type='radio'
@@ -148,7 +153,9 @@ function MyWithdrawalPage() {
                   className='flex w-full max-w-md flex-col gap-2'
                   aria-required='true'
                 >
-                  <div className='border-t-[1px] border-slate-300 pt-2'>서비스품질은 어땠나요?</div>
+                  <div className='flex border-t-[1px] border-slate-300 pt-2' tabIndex='0'>
+                    서비스품질은 어땠나요? <p> &#40;필수 선택 &#41;</p>
+                  </div>
                   <li>
                     <Input
                       type='radio'
@@ -207,7 +214,9 @@ function MyWithdrawalPage() {
                   className='flex w-full max-w-md flex-col gap-2'
                   aria-required='true'
                 >
-                  <div className='border-t-[1px] border-slate-300 pt-2 '>탈퇴사유를 알려주세요</div>
+                  <div className='flex border-t-[1px] border-slate-300 pt-2 ' tabIndex='0'>
+                    탈퇴사유를 알려주세요 <p> &#40;필수 선택 &#41;</p>
+                  </div>
                   <li>
                     <Input
                       type='checkbox'
@@ -252,8 +261,11 @@ function MyWithdrawalPage() {
                   </li>
                 </ul>
               </div>
-              <div className='w-full border-t-[1px] border-slate-300 pt-3 '>
-                😘 마지막 단계 - 비밀번호 검증
+              <div className='flex w-full border-t-[1px] border-slate-300 pt-3 ' tabIndex='0'>
+                😘 마지막 단계 - 비밀번호<p> &#40;필수 입력 &#41;</p>
+                <span className='sr-only' role='text'>
+                  현재 계정의 비밀번호를 입력해주세요.
+                </span>
               </div>
               <div className='flex w-full max-w-md justify-center' aria-required='true'>
                 <Input

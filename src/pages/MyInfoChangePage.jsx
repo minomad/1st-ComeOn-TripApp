@@ -25,6 +25,8 @@ function MyInfoChangePage() {
   const passwordRef = useRef(null);
   const passwordConfirmRef = useRef(null);
   const [fileName, setFileName] = useState('');
+  const [bgFileName, setBgFileName] = useState(''); // 배경 이미지 파일명을 위한 상태
+  const [avatarFileName, setAvatarFileName] = useState(''); // 프로필 이미지 파일명을 위한 상태
   const [avatarSrc, setAvatarSrc] = useState('/My-ProfileBasic.jpeg');
   const [selectedImage, setSelectedImage] = useState('');
   const [bgImgSrc, setBgImgSrc] = useState(selectedImage);
@@ -80,14 +82,6 @@ function MyInfoChangePage() {
     if (nickNameRef.current) {
       nickName = nickNameRef.current.value;
     }
-
-    // if (bgImgRef.current) {
-    //   bgimg = bgImgRef.current.files;
-    // }
-
-    // if (avatarRef.current) {
-    //   avatar = avatarRef.current.files;
-    // }
 
     const password = passwordRef?.current?.value;
     const passwordConfirm = passwordConfirmRef?.current?.value;
@@ -154,18 +148,16 @@ function MyInfoChangePage() {
         image: URL.createObjectURL(file),
         label: file.name,
       }));
-      setFileName(fileImages[0].label);
-
-      const formData = new FormData();
-      formData.append('avatar', files[0]);
 
       let reader = new FileReader();
 
       reader.onloadend = () => {
         if (e.target.id === 'avatar') {
           setAvatarSrc(reader.result);
+          setAvatarFileName(fileImages[0].label); // 프로필 이미지 파일명 업데이트
         } else if (e.target.id === 'bgimg') {
           setBgImgSrc(reader.result);
+          setBgFileName(fileImages[0].label); // 배경 이미지 파일명 업데이트
         }
       };
 
@@ -263,7 +255,7 @@ function MyInfoChangePage() {
                   <div className='flex w-full  pb-[4px]  text-sm sm:py-3 sm:text-base '>
                     <p className='mr-4 flex-shrink-0 flex-grow-0 font-semibold'>배경 이미지</p>
                     <p className='w-24 flex-shrink-0 overflow-hidden overflow-ellipsis whitespace-nowrap font-thin sm:w-32 md:w-72'>
-                      {fileName || user.bgimg}
+                      {bgFileName || user.bgimg}
                     </p>
                   </div>
                   <label htmlFor='bgimg' className='sr-only'>
@@ -294,7 +286,7 @@ function MyInfoChangePage() {
                   <div className='flex w-full  pb-[4px]  text-sm sm:py-3 sm:text-base '>
                     <p className='mr-4 flex-shrink-0 flex-grow-0 font-semibold'>프로필 이미지</p>
                     <p className='w-24 flex-shrink-0 overflow-hidden overflow-ellipsis whitespace-nowrap font-thin sm:w-32 md:w-72'>
-                      {fileName || user.avatar}
+                      {avatarFileName || user.avatar}
                     </p>
                   </div>
                   <label htmlFor='avatar' className='sr-only'>
