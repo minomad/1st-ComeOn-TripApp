@@ -17,6 +17,7 @@ import useAuthStore from '@/store/useAuthStore';
 import Button from '@/components/Button';
 import MetaTag from '@/components/MetaTag';
 import useStorage from '@/Hook/useStorage';
+import { useEffect } from 'react';
 
 function HotelDetailPage() {
   const { id } = useParams();
@@ -35,11 +36,11 @@ function HotelDetailPage() {
   const info = ['숙소선택', '소개', '시설/서비스', '후기'];
   const roomData = hotelData?.expand?.room;
   const reviewData = hotelData?.expand?.review;
+  const userId = user?.id;
 
   const { storageData: isActive, update, remove } = useStorage(id, false);
 
   const handleWish = () => {
-    const userId = user?.id;
     update(!isActive);
 
     if (!isActive) {
@@ -55,6 +56,12 @@ function HotelDetailPage() {
       remove(id);
     }
   };
+
+  useEffect(() => {
+    if (!isActive) {
+      remove(id);
+    }
+  }, []);
 
   const handleShowMap = () => {
     setIsShowMap(!isShowMap);
