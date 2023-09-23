@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { A11y, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { MetaTag } from '@/components/MetaTag';
+import MetaTag  from '@/components/MetaTag';
 
 function TrafficPage() {
   const { getListData: getTrafficData } = usePocketData('traffic');

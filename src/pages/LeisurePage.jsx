@@ -8,7 +8,7 @@ import LeisureLink from '@/components/LeisureLink';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MetaTag } from '@/components/MetaTag';
+import MetaTag from '@/components/MetaTag';
 
 function LeisurePage() {
   const { getListData: getLeisureData } = usePocketData('leisure');
