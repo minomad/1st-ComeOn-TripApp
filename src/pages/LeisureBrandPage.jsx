@@ -4,7 +4,7 @@ import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
-import { MetaTag } from '@/components/MetaTag';
+import  MetaTag  from '@/components/MetaTag';
 
 function LeisureBrandPage() {
   const { getListData: getLeisureData } = usePocketData('leisure');

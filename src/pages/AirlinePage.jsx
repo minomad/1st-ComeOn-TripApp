@@ -4,7 +4,7 @@ import Input from '@/components/Input';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import SelectModal from '../components/SelectModal';
-import { MetaTag } from '@/components/MetaTag';
+import  MetaTag  from '@/components/MetaTag';
 
 function AirlinePage() {
   const [selectCategory, setSelectCategory] = useState('왕복');

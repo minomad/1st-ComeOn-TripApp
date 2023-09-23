@@ -122,7 +122,7 @@ function LeisureDetailPage() {
 
         {selectCategory === '상품선택' && <LeisureProduct data={data} productData={productData} />}
         {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
-        <CartController userId={userId} id={id} data={data} productData={productData} user={user} />
+        <CartController userId={userId} id={id} />
       </section>
     </>
   );
