@@ -32,7 +32,7 @@ function TrafficCarPage() {
         className='ml-10 text-xl font-semibold'
         title='렌터카'
       />
-      <section>
+      <section className='pb-20'>
         <h2 className='sr-only'>렌터카 페이지</h2>
         <img src='/traffic-car.png' alt='렌터카' />
         <LeisureCategory
