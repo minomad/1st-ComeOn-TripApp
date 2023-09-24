@@ -15,7 +15,7 @@ YOUNG CHILLER들을 위한 청량한 여행앱!
 
 ## 🦁목차
 
-1. [팀 소개](#🌈팀-소개)
+1. [팀 소개](#팀-소개)
 2. [담당 페이지](#💻담당-페이지)
 3. [기술 스택](#📚기술-스택)
 4. [프로젝트 구조](#📁프로젝트-구조)
@@ -245,10 +245,7 @@ YOUNG CHILLER들을 위한 청량한 여행앱!
 
 | 국내 리스트 | 해외 리스트 | 상세 페이지 |
 | :-----------: | :-----------: | :-----------: |
-| ![호텔1](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/7de036ea-e8df-446a-ae91-49fbb892f0cd) | ![호텔2](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/e41ad3e3-fa28-4e03-8104-2d61421f1a26) | ![호텔3](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/d6b4fed7-ad6a-4fa5-8f16-a63e24a9bba1)
- |
-
-### 호텔 상세 페이지
+| ![호텔1](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/7de036ea-e8df-446a-ae91-49fbb892f0cd) | ![호텔2](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/e41ad3e3-fa28-4e03-8104-2d61421f1a26) | ![호텔3](https://github.com/FRONTENDSCHOOL6/1st-ComeOn-TripApp/assets/131448929/d6b4fed7-ad6a-4fa5-8f16-a63e24a9bba1) |
 
 | 호텔 위치 | 호텔 소개 | 호텔 후기 |
 | :-----------: | :-----------: | :-----------: |
