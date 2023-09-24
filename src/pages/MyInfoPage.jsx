@@ -6,8 +6,9 @@ import Header from '@/components/Header';
 import Button from '@/components/Button';
 import MyInput from '@/components/MyInput';
 import MetaTag from '@/components/MetaTag';
-import useAuthStore from '../store/useAuthStore';
+import useAuthStore from '@/store/useAuthStore';
 import MyCircleProfile from '@/components/MyCircleProfile';
+import debounce from '@/utils/debounce';
 
 function MyInfoPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -18,23 +19,14 @@ function MyInfoPage() {
   const handleInfoChange = () => {
     navigate('myinfochange');
   };
-  const [debouncedPassword, setDebouncedPassword] = useState('');
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      setDebouncedPassword(password);
-    }, 500);
-
-    return () => clearTimeout(timerId);
-  }, [password]);
-
-  useEffect(() => {
-    if (debouncedPassword.length >= 6) {
+    if (password.length >= 6) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
     }
-  }, [debouncedPassword]); // debouncedPassword 의존성 추가
+  }, [password]);
 
   return (
     <>
@@ -62,16 +54,16 @@ function MyInfoPage() {
                   정보 변경을 위해 로그인 시 사용하시는 <br />
                   비밀번호를 입력해주세요.
                 </p>
+                <p
+                  className='sr-only absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform whitespace-nowrap'
+                  role='text'
+                  tabIndex='0'
+                  aria-live='polite'
+                >
+                  정보 변경을 위해 로그인 시 사용하시는 <br />
+                  비밀번호를 입력해주세요.
+                </p>
               </div>
-              <p
-                className='sr-only absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform whitespace-nowrap'
-                role='text'
-                tabIndex='0'
-                aria-live='polite'
-              >
-                정보 변경을 위해 로그인 시 사용하시는 <br />
-                비밀번호를 입력해주세요.
-              </p>
               <MyInput
                 type='password'
                 id='password'
@@ -79,7 +71,7 @@ function MyInfoPage() {
                 className='mt-10 h-11 w-72 border-b-[1px] border-neutral-200 sm:w-80'
                 label='비밀번호'
                 labelClass='sr-only'
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={debounce((e) => setPassword(e.target.value), 1000)}
               ></MyInput>
               <Button
                 onClick={handleInfoChange}
