@@ -1,23 +1,24 @@
 import { usePocketData } from '@/api/usePocketData';
-import Header from '@/components/Header';
-import LeisureInfoCategory from '@/components/LeisureInfoCategory';
-import LeisureProduct from '@/components/LeisureProduct';
-import LeisureProductInfo from '@/components/LeisureProductInfo';
-import Spinner from '@/components/Spinner';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CartController from '../components/CartController';
+import { Toaster } from 'react-hot-toast';
+import Header from '@/components/Header';
+import LeisureInfoCategory from '@/components/LeisureInfoCategory';
+import LeisureProduct from '@/components/LeisureProduct';
+import LeisureProductInfo from '@/components/LeisureProductInfo';
+import Spinner from '@/components/Spinner';
+import CartController from '@/components/CartController';
 function TrafficCarDetailPage() {
   let { id } = useParams();
 
   const { getIdData } = usePocketData('traffic');
   const { data, isLoading } = useQuery(['traffic', id], () => getIdData(id, { expand: 'product' }));
-  
+
   const productData = data?.expand?.product;
-  
+
   const [selectCategory, setSelectCategory] = useState('상품선택');
 
   if (isLoading) {
@@ -34,7 +35,7 @@ function TrafficCarDetailPage() {
   return (
     <>
       <Header className='ml-10 text-xl font-semibold ' back='back' search='search' cart='cart' />
-      <section className='pb-[100px]'>
+      <section className='pb-[140px]'>
         <img className='w-full' key={data.id} src={getPbImageURL(data, 'main')} alt={brand} />
         <div className='mx-5 my-4'>
           <div className='flex justify-between'>
@@ -89,6 +90,7 @@ function TrafficCarDetailPage() {
         {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
         <CartController />
       </section>
+      <Toaster />
     </>
   );
 }

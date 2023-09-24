@@ -1,13 +1,13 @@
 import { usePocketData } from '@/api/usePocketData';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Category from '@/components/Category';
 import Entertainment from '@/components/Entertainment';
 import Exhibition from '@/components/Exhibition';
 import Header from '@/components/Header';
 import LeisureBrand from '@/components/LeisureBrand';
 import LeisureLink from '@/components/LeisureLink';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import MetaTag from '@/components/MetaTag';
 
 function LeisurePage() {
@@ -31,7 +31,7 @@ function LeisurePage() {
         cart='cart'
         title='레저/티켓'
       />
-      <section>
+      <section className='pb-20'>
         <h2 className='sr-only'>레저 페이지</h2>
         <div className='flex justify-between px-4 text-[10px]'>
           <Link to='/leisure/테마파크'>

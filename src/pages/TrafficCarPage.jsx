@@ -1,11 +1,12 @@
 import { usePocketData } from '@/api/usePocketData';
-import Header from '@/components/Header';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LeisureCategory from '../components/LeisureCategory';
+import Header from '@/components/Header';
+import LeisureCategory from '@/components/LeisureCategory';
+
 function TrafficCarPage() {
   const [selectCategory, setSelectCategory] = useState('전체');
   const category = ['전체', '제주이용권', '내륙이용권'];

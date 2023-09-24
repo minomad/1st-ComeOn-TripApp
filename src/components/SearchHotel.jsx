@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import SearchFavorite, { SearchFavoriteSecond } from './SearchFavorite';
+import useStorage from '@/Hook/useStorage';
+import debounce from '@/utils/debounce';
 import Input from './Input';
 import CustomDate from './CustomDate';
-import debounce from '../utils/debounce';
 import SearchResult from './SearchResult';
 import NumberOfPeople from './NumberOfPeople';
-import useStorage from '../Hook/useStorage';
 import SearchRecent from './SearchRecent';
 
 function SearchHotel({ data }) {
@@ -18,6 +18,9 @@ function SearchHotel({ data }) {
   const [searchedData, setSearchedData] = useState('');
   const number = ['1', '2', '3', '4'];
   let filterData;
+
+  const today = new Date();
+  const formattedDate = today.toISOString().split('T')[0];
 
   const { storageData: searchData, update } = useStorage('searchData', []);
 
@@ -38,17 +41,17 @@ function SearchHotel({ data }) {
     setSearchedData(e);
   };
   const resetText = () => {
-    setUserInput('')
+    setUserInput('');
   };
   const searchEnter = (e) => {
     e.preventDefault();
-  
+
     if (userInput !== '') {
       const recentSearch = [...searchData, userInput];
       update(recentSearch);
       setSearchedData(true);
     }
-  }
+  };
 
   switch (userInput) {
     case '서울':
@@ -98,8 +101,9 @@ function SearchHotel({ data }) {
               type='date'
               id='hotelDate'
               placeholder='지역, 숙소명 키워드로 찾아보세요'
-              className=' mx-3 mt-2 pr-3 w-[75%] pl-4 md:pl-10 text-[0.95rem] font-semibold focus:outline-none md:text-[1rem]'
+              className=' mx-3 mt-2 w-[75%] pl-4 pr-3 text-[0.95rem] font-semibold focus:outline-none md:pl-10 md:text-[1rem]'
               labelClass='sr-only'
+              min={formattedDate}
             />
           </form>
           <NumberOfPeople
@@ -112,11 +116,11 @@ function SearchHotel({ data }) {
             NumberBoxclassName='left-[3.5rem]  top-[1.6rem] w-[4rem] text-center bg-white rounded-md shadow-md'
           />
         </div>
-        
+
         {userInput ? <SearchResult data={filterData} state={state} /> : ''}
-        
+
         {userInput ? <SearchResult data={searched} state={state} /> : ''}
-       
+
         {!userInput ? (
           <section className='pb-[8rem]'>
             <article className='mx-auto mt-7 w-[88%] md:w-[78%]'>
@@ -145,6 +149,3 @@ function SearchHotel({ data }) {
 }
 
 export default SearchHotel;
-
-
-

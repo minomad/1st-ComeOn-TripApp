@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '@/components/Button';
 import { getPbImageURL } from '@/utils/getPbImageURL';
+import Button from '@/components/Button';
 import useAuthStore from '@/store/useAuthStore';
 
 function MyCircleProfile({ towhere, imgalt = '내 프로필 사진' }) {

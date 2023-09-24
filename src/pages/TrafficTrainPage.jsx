@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
-import { useState } from 'react';
-import SelectModal from '../components/SelectModal';
-import TrafficCategory from '../components/TrafficCategory';
+import SelectModal from '@/components/SelectModal';
+import TrafficCategory from '@/components/TrafficCategory';
 import MetaTag from '@/components/MetaTag';
 
 function TrafficTrainPage() {
@@ -12,6 +12,9 @@ function TrafficTrainPage() {
   const [departure, setDeparture] = useState('서울');
   const [arrival, setArrival] = useState('선택');
   const [click, setClick] = useState('출발');
+
+  const today = new Date();
+  const formattedDate = today.toISOString().split('T')[0];
 
   const clickDeparture = () => {
     setClick('출발');
@@ -112,10 +115,10 @@ function TrafficTrainPage() {
               <Input
                 label='날짜'
                 type='date'
-                id='숙소날짜'
-                placeholder='지역, 숙소명 키워드로 찾아보세요'
+                id='departure'
                 className=' ml-4 mt-2 text-[1rem] font-semibold focus:outline-none'
                 labelClass='sr-only'
+                min={formattedDate}
               />
             </form>
             {selectCategory === '왕복' && (
@@ -126,10 +129,10 @@ function TrafficTrainPage() {
                   <Input
                     label='날짜'
                     type='date'
-                    id='숙소날짜'
-                    placeholder='지역, 숙소명 키워드로 찾아보세요'
+                    id='arrival'
                     className=' ml-4 mt-2 text-[1rem] font-semibold focus:outline-none'
                     labelClass='sr-only'
+                    min={formattedDate}
                   />
                 </form>
               </>

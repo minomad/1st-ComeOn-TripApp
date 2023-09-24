@@ -1,12 +1,14 @@
+import { useState } from 'react';
 import Category from '@/components/Category';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
-import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import SelectModal from '../components/SelectModal';
-import  MetaTag  from '@/components/MetaTag';
+import SelectModal from '@/components/SelectModal';
+import MetaTag from '@/components/MetaTag';
+import useAuthStore from '@/store/useAuthStore';
 
 function AirlinePage() {
+  const isAuth = useAuthStore((state) => state.isAuth);
+
   const [selectCategory, setSelectCategory] = useState('왕복');
   const category = ['왕복', '편도'];
 
@@ -15,6 +17,9 @@ function AirlinePage() {
   const [departure, setDeparture] = useState('서울');
   const [arrival, setArrival] = useState('선택');
   const [click, setClick] = useState('왕복');
+
+  const today = new Date();
+  const formattedDate = today.toISOString().split('T')[0];
 
   const clickDeparture = () => {
     setClick('왕복');
@@ -81,11 +86,8 @@ function AirlinePage() {
   return (
     <>
       <MetaTag title='항공 예약' description='항공 예약' />
-      <Helmet>
-        <title>야무지개놀자 항공</title>
-      </Helmet>
       <Header back='back' search='search' title='항공' className='text-xl font-semibold' />
-      <section>
+      <section className='pb-20'>
         <div className='flex flex-col items-center justify-center'>
           <img src='/airplane.png' alt='비행기' className='w-[90px]' />
           <span>설레는 여행의 즐거운 시작</span>
@@ -170,6 +172,7 @@ function AirlinePage() {
               label='날짜'
               type='date'
               className=' ml-4 mt-2 text-[1rem] font-semibold focus:outline-none'
+              min={formattedDate}
             />
           </form>
           {selectCategory === '왕복' && (
@@ -181,17 +184,27 @@ function AirlinePage() {
                   label='날짜'
                   type='date'
                   className=' ml-4 mt-2 text-[1rem] font-semibold focus:outline-none'
+                  min={formattedDate}
                 />
               </form>
             </div>
           )}
           <div className='my-1 h-[1px] bg-[#cccccc]'></div>
-        <button type='button' className='py-3 bg-[#cccccc] w-full rounded-[8px] mt-3 text-white font-bold text-[18px]'>항공편 검색</button>
+          <button
+            type='button'
+            className='mt-3 w-full rounded-[8px] bg-[#cccccc] py-3 text-[18px] font-bold text-white'
+          >
+            항공편 검색
+          </button>
         </div>
-        <div className='flex flex-col text-center text-[12px] p-3 bg-[#fbfbfb] border-t border-b border-[#f2f2f2]'>
-          <span>항공은 야무지개놀자 회원만 예약할 수 있습니다.</span>
-          <a href="/signin" className='underline underline-offset-1'>로그인하기</a>
-        </div>
+        {!isAuth && (
+          <div className='flex flex-col border-b border-t border-[#f2f2f2] bg-[#fbfbfb] p-3 text-center text-[12px]'>
+            <span>항공은 야무지개놀자 회원만 예약할 수 있습니다.</span>
+            <a href='/signin' className='underline underline-offset-1'>
+              로그인하기
+            </a>
+          </div>
+        )}
       </section>
     </>
   );

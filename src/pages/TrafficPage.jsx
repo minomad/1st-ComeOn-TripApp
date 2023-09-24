@@ -1,15 +1,15 @@
 import { usePocketData } from '@/api/usePocketData';
-import Header from '@/components/Header';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import TrafficReserveButton from '../components/TrafficReserveButton';
-import { getPbImageURL } from '../utils/getPbImageURL';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import { getPbImageURL } from '@/utils/getPbImageURL';
 import { A11y, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import MetaTag  from '@/components/MetaTag';
+import Header from '@/components/Header';
+import MetaTag from '@/components/MetaTag';
+import TrafficReserveButton from '@/components/TrafficReserveButton';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 function TrafficPage() {
   const { getListData: getTrafficData } = usePocketData('traffic');
@@ -17,7 +17,7 @@ function TrafficPage() {
 
   return (
     <>
-    <MetaTag title='교통' description='교통' />
+      <MetaTag title='교통' description='교통' />
       <Header
         className='ml-10 text-xl font-semibold'
         back='back'
@@ -25,7 +25,7 @@ function TrafficPage() {
         cart='cart'
         title='교통'
       />
-      <section className='px-5'>
+      <section className='px-5 pb-20'>
         <h2 className='sr-only'>교통 페이지</h2>
         <ul className='flex justify-around'>
           <li>
@@ -87,7 +87,7 @@ function TrafficPage() {
               {trafficData?.map((item) => (
                 <SwiperSlide key={item.id}>
                   <Link to={`/carDetail/${item.id}`} key={item.id}>
-                    <div >
+                    <div>
                       <div className='w-[140px]'>
                         <img
                           src={getPbImageURL(item, 'thumbnail')}

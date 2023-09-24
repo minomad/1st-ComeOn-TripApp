@@ -261,7 +261,7 @@ function MyInfoChangePage() {
                   <label htmlFor='bgimg' className='sr-only'>
                     배경사진
                   </label>
-                  <div className='relative table h-[150px] w-full bg-slate-200  text-center text-sm sm:h-[250px] sm:py-3 sm:text-base '>
+                  <div className='relative min-h-[150px] w-full  bg-slate-200 text-sm sm:min-h-[250px] sm:py-3 sm:text-base '>
                     <MyInput
                       type='file'
                       accept='*.jpg,*.png,*.jpeg,*.webp,*.avif'

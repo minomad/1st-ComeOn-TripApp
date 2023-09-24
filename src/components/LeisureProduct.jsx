@@ -1,4 +1,4 @@
-import { numberWithComma } from '../utils/numberWithComma';
+import { numberWithComma } from '@/utils/numberWithComma';
 import LeisureButton from './LeisureButton';
 
 

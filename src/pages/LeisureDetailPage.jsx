@@ -1,32 +1,40 @@
 import { usePocketData } from '@/api/usePocketData';
+import { getPbImageURL } from '@/utils/getPbImageURL';
+import { numberWithComma } from '@/utils/numberWithComma';
+import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { toast, Toaster } from 'react-hot-toast';
 import Header from '@/components/Header';
 import LeisureInfoCategory from '@/components/LeisureInfoCategory';
 import LeisureProduct from '@/components/LeisureProduct';
 import LeisureProductInfo from '@/components/LeisureProductInfo';
 import Spinner from '@/components/Spinner';
 import useAuthStore from '@/store/useAuthStore';
-import { getPbImageURL } from '@/utils/getPbImageURL';
-import { numberWithComma } from '@/utils/numberWithComma';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
-import Button from '../components/Button';
-import CartController from '../components/CartController';
+import Button from '@/components/Button';
+import CartController from '@/components/CartController';
+import useStorage from '@/Hook/useStorage';
 
 function LeisureDetailPage() {
   const { id } = useParams();
 
   const [selectCategory, setSelectCategory] = useState('상품선택');
-  const [isActive, setIsactive] = useState(false);
+  const { storageData: isActive, update, remove } = useStorage(id, false);
 
   const { getIdData } = usePocketData('leisure');
   const { data, isLoading } = useQuery(['leisure', id], () => getIdData(id, { expand: 'product' }));
   const { updateData: updateUser } = usePocketData('users');
-  
+
+  useEffect(() => {
+    if (!isActive) {
+      remove(id);
+    }
+  }, []);
+
   // const carts = useStore((state) => state.carts);
   const productData = data?.expand?.product;
 
+  const isAuth = useAuthStore((state) => state.isAuth);
   const user = useAuthStore((state) => state.user);
   const userId = user.id;
 
@@ -43,7 +51,7 @@ function LeisureDetailPage() {
   const discountPrice = price * (100 - discount) * 0.01;
 
   const handleWish = () => {
-    setIsactive(!isActive);
+    update(!isActive);
 
     if (!isActive) {
       toast.success('찜 목록에 추가했습니다.');
@@ -55,28 +63,28 @@ function LeisureDetailPage() {
       updateUser(userId, {
         'wishLeisure-': id,
       });
+      remove(id);
     }
   };
-
- 
 
   return (
     <>
       <Header className='ml-10 text-xl font-semibold ' back='back' search='search' cart='cart' />
-      <section className='pb-[100px]'>
+      <section className='pb-[140px]'>
         <img className='w-full' key={data.id} src={getPbImageURL(data, 'main')} alt={brand} />
         <div className='mx-5 my-4'>
           <div className='flex justify-between'>
             <span className='text-[20px] font-bold'>{title}</span>
             <div className='mt-1 flex gap-2'>
-              <Button>
-                <img
-                  src={isActive ? '/heartActive.svg' : '/hotel-heartBlack.svg'}
-                  alt='찜'
-                  className='h-7 w-7 cursor-pointer'
-                  onClick={handleWish}
-                />
-              </Button>
+              {isAuth && (
+                <Button type='button' onClick={handleWish}>
+                  <img
+                    src={isActive ? '/heartActive.svg' : '/hotel-heartBlack.svg'}
+                    alt='찜'
+                    className='h-7 w-7 cursor-pointer'
+                  />
+                </Button>
+              )}
             </div>
           </div>
           <div className='my-3 flex flex-col'>
@@ -124,6 +132,23 @@ function LeisureDetailPage() {
         {selectCategory === '이용안내' && <LeisureProductInfo data={data} />}
         <CartController userId={userId} id={id} />
       </section>
+      <Toaster
+        toastOptions={{
+          duration: 900,
+          success: {
+            style: {
+              background: '#5D6FFF',
+              color: 'white',
+            },
+          },
+          error: {
+            style: {
+              background: '#E03B69',
+              color: 'white',
+            },
+          },
+        }}
+      />
     </>
   );
 }
