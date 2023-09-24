@@ -18,6 +18,9 @@ function AirlinePage() {
   const [arrival, setArrival] = useState('선택');
   const [click, setClick] = useState('왕복');
 
+  const today = new Date();
+  const formattedDate = today.toISOString().split('T')[0];
+
   const clickDeparture = () => {
     setClick('왕복');
   };
@@ -169,6 +172,7 @@ function AirlinePage() {
               label='날짜'
               type='date'
               className=' ml-4 mt-2 text-[1rem] font-semibold focus:outline-none'
+              min={formattedDate}
             />
           </form>
           {selectCategory === '왕복' && (
@@ -180,6 +184,7 @@ function AirlinePage() {
                   label='날짜'
                   type='date'
                   className=' ml-4 mt-2 text-[1rem] font-semibold focus:outline-none'
+                  min={formattedDate}
                 />
               </form>
             </div>
