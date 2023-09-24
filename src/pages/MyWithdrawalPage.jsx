@@ -8,6 +8,7 @@ import Button from '@/components/Button';
 import MyForm from '@/components/MyForm';
 import MetaTag from '@/components/MetaTag';
 import useAuthStore from '@/store/useAuthStore';
+import debounce from '@/utils/debounce';
 
 function MyWithdrawalPage() {
   const isAuth = useAuthStore((state) => state.isAuth);
@@ -276,7 +277,7 @@ function MyWithdrawalPage() {
                   placeholder='비밀번호 확인'
                   className='mb-4 mt-3 h-9 w-full border-b border-gray p-2 outline-primary'
                   labelClass='sr-only'
-                  onChange={handlePasswordChange}
+                  onChange={debounce(handlePasswordChange, 1000)}
                 />
               </div>
 
