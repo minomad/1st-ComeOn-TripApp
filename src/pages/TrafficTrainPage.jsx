@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
-import { useState } from 'react';
-import SelectModal from '../components/SelectModal';
-import TrafficCategory from '../components/TrafficCategory';
+import SelectModal from '@/components/SelectModal';
+import TrafficCategory from '@/components/TrafficCategory';
 import MetaTag from '@/components/MetaTag';
 
 function TrafficTrainPage() {

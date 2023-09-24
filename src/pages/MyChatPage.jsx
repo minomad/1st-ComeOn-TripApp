@@ -1,9 +1,9 @@
-import Header from '@/components/Header';
-import useAuthStore from '@/store/useAuthStore';
 import { toast, Toaster } from 'react-hot-toast';
 import { useState, useRef, useEffect } from 'react';
 import { getPbImageURL } from '@/utils/getPbImageURL';
-import pb from '../api/pocketbase';
+import Header from '@/components/Header';
+import useAuthStore from '@/store/useAuthStore';
+import pb from '@/api/pocketbase';
 import Guest from '@/components/Guest';
 import MyInput from '@/components/MyInput';
 import MetaTag from '@/components/MetaTag';

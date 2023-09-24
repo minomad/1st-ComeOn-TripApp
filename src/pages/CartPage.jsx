@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { usePocketData } from '@/api/usePocketData';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast, Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import useAuthStore from '@/store/useAuthStore';
 import Spinner from '@/components/Spinner';
@@ -23,8 +22,6 @@ function CartPage() {
   const [selectCartItem, setSelectCartItem] = useState([]);
   const [selectCategory, setSelectCategory] = useState('숙소');
   const tag = ['숙소', '레저'];
-
-  const navigate = useNavigate();
 
   const userId = user?.id;
 
@@ -199,7 +196,7 @@ function CartPage() {
           </>
         )}
 
-        {selectCategory === '레저' && isAuth && !cartLeisure && <WishCart cart={true} link=''/>}
+        {selectCategory === '레저' && isAuth && !cartLeisure && <WishCart cart={true} link='' />}
 
         {selectCategory === '레저' && isAuth && cartLeisure && (
           <>

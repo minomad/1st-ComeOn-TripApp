@@ -1,10 +1,10 @@
 import { usePocketData } from '@/api/usePocketData';
-import Header from '@/components/Header';
 import { getPbImageURL } from '@/utils/getPbImageURL';
 import { numberWithComma } from '@/utils/numberWithComma';
 import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
-import  MetaTag  from '@/components/MetaTag';
+import Header from '@/components/Header';
+import MetaTag from '@/components/MetaTag';
 
 function LeisureBrandPage() {
   const { getListData: getLeisureData } = usePocketData('leisure');
@@ -13,7 +13,6 @@ function LeisureBrandPage() {
   let { id } = useParams();
   let filterData;
   filterData = leisureData?.filter((leisure) => leisure.brand === `${id}`);
-  
 
   let bg;
   let description;
@@ -27,8 +26,8 @@ function LeisureBrandPage() {
       공간으로 여러분들을 초대합니다.`;
       logo = '/leisure-everland.png';
       check = [
-        '기다림 없이 야놀자 모바일 입장권 제시 후 바로 입장할 수 있습니다.',
-        'MY 야놀자 국내여행 예약내역에서 모바일 입장권을 확인하세요.',
+        '기다림 없이 야무지개놀자 모바일 입장권 제시 후 바로 입장할 수 있습니다.',
+        'MY 야무지개놀자 국내여행 예약내역에서 모바일 입장권을 확인하세요.',
       ];
       break;
     case '롯데월드':
@@ -61,7 +60,7 @@ function LeisureBrandPage() {
         cart='cart'
         title={id}
       />
-      <section>
+      <section className='pb-20'>
         <div className='relative'>
           <img src={bg} alt={id} className='z-0 w-full' />
           <div className='absolute bottom-[-40px] right-[50%] z-10 mx-auto h-[80px] w-[80px] translate-x-2/4 rounded-[4px] bg-white shadow-xl'>

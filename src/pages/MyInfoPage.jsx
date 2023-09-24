@@ -6,7 +6,7 @@ import Header from '@/components/Header';
 import Button from '@/components/Button';
 import MyInput from '@/components/MyInput';
 import MetaTag from '@/components/MetaTag';
-import useAuthStore from '../store/useAuthStore';
+import useAuthStore from '@/store/useAuthStore';
 import MyCircleProfile from '@/components/MyCircleProfile';
 
 function MyInfoPage() {
